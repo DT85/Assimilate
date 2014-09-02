@@ -42,9 +42,13 @@ BEGIN_MESSAGE_MAP(CAnimPicker, CDialog)
 	ON_LBN_DBLCLK(IDC_LIST_BOTH, OnDblclkListBoth)
 	ON_LBN_DBLCLK(IDC_LIST_LEGS, OnDblclkListLegs)
 	ON_LBN_DBLCLK(IDC_LIST_TORSO, OnDblclkListTorso)
+	ON_LBN_DBLCLK(IDC_LIST_FACE, OnDblclkListFace)
+	ON_LBN_DBLCLK(IDC_LIST_VM, OnDblclkListVM)
 	ON_LBN_SELCHANGE(IDC_LIST_LEGS, OnSelchangeListLegs)
 	ON_LBN_SELCHANGE(IDC_LIST_TORSO, OnSelchangeListTorso)
 	ON_LBN_SELCHANGE(IDC_LIST_BOTH, OnSelchangeListBoth)
+	ON_LBN_SELCHANGE(IDC_LIST_FACE, OnSelchangeListFace)
+	ON_LBN_SELCHANGE(IDC_LIST_VM, OnSelchangeListVM)
 	ON_BN_CLICKED(IDC_CHECK_FILTEROUTUSED, OnCheckFilteroutused)
 	ON_WM_DESTROY()
 	//}}AFX_MSG_MAP
@@ -65,9 +69,13 @@ void CAnimPicker::FillListBoxes()
 	CListBox* boxLegs = (CListBox*)GetDlgItem(IDC_LIST_LEGS);
 	CListBox* boxTorso= (CListBox*)GetDlgItem(IDC_LIST_TORSO);
 	CListBox* boxBoth = (CListBox*)GetDlgItem(IDC_LIST_BOTH);
+	CListBox* boxFace = (CListBox*)GetDlgItem(IDC_LIST_FACE);
+	CListBox* boxVM = (CListBox*)GetDlgItem(IDC_LIST_VM);
 	boxLegs->ResetContent();
 	boxTorso->ResetContent();
 	boxBoth->ResetContent();
+	boxFace->ResetContent();
+	boxVM->ResetContent();
 
 	CModel* theModel = ghAssimilateView->GetDocument()->GetCurrentUserSelectedModel();
 	ASSERT(theModel);
@@ -101,6 +109,8 @@ void CAnimPicker::FillListBoxes()
 				case ET_BOTH:	listBoxPtr = boxBoth;	break;
 				case ET_TORSO:	listBoxPtr = boxTorso;	break;
 				case ET_LEGS:	listBoxPtr = boxLegs;	break;
+				case ET_FACE:	listBoxPtr = boxFace;	break;
+				case ET_VM:		listBoxPtr = boxVM;		break;
 				default:		ASSERT(0);				break;	
 			}
 			if (listBoxPtr)
@@ -165,6 +175,32 @@ void CAnimPicker::OnDblclkListTorso()
 	}
 }
 
+void CAnimPicker::OnDblclkListFace() 
+{
+// not needed now...
+//
+//	CListBox*	boxFace = (CListBox*)GetDlgItem(IDC_LIST_FACE);	
+//				boxFace->GetText(boxFace->GetCurSel(),m_psReturnString);	
+
+	if (ReturnStringIsValid())
+	{
+		EndDialog( IDOK );
+	}
+}
+
+void CAnimPicker::OnDblclkListVM() 
+{
+// not needed now...
+//
+//	CListBox*	boxVM = (CListBox*)GetDlgItem(IDC_LIST_VM);	
+//				boxVM->GetText(boxVM->GetCurSel(),m_psReturnString);	
+
+	if (ReturnStringIsValid())
+	{
+		EndDialog( IDOK );
+	}
+}
+
 
 bool CAnimPicker::ReturnStringIsValid()
 {
@@ -220,6 +256,20 @@ void CAnimPicker::OnSelchangeListTorso()
 void CAnimPicker::OnSelchangeListBoth() 
 {
 	CListBox* listbox = (CListBox*)GetDlgItem(IDC_LIST_BOTH);
+	
+	HandleSelectionChange(listbox);
+}
+
+void CAnimPicker::OnSelchangeListFace() 
+{
+	CListBox* listbox = (CListBox*)GetDlgItem(IDC_LIST_FACE);
+	
+	HandleSelectionChange(listbox);
+}
+
+void CAnimPicker::OnSelchangeListVM() 
+{
+	CListBox* listbox = (CListBox*)GetDlgItem(IDC_LIST_VM);
 	
 	HandleSelectionChange(listbox);
 }

@@ -1,6 +1,6 @@
 // Sequences.h
 
-#define MAX_ADDITIONAL_SEQUENCES 4
+#define MAX_ADDITIONAL_SEQUENCES 5
 #define iDEFAULTSEQFRAMESPEED 20
 
 class CModel;
@@ -22,6 +22,7 @@ typedef enum
 	ET_TORSO,
 	ET_LEGS,
 	ET_FACE,
+	ET_VM,
 	ET_INVALID,
 
 } ENUMTYPE;
@@ -159,22 +160,27 @@ public:
 	CString	m_AnimationEnum3;
 	CString	m_AnimationEnum4;
 	CString	m_AnimationEnum5;
+	CString	m_AnimationEnum6;
 	int		m_frameCount2;
 	int		m_frameCount3;
 	int		m_frameCount4;
 	int		m_frameCount5;
+	int		m_frameCount6;
 	int		m_frameSpeed2;
 	int		m_frameSpeed3;
 	int		m_frameSpeed4;
 	int		m_frameSpeed5;
+	int		m_frameSpeed6;
 	int		m_iLoopFrame2;
 	int		m_iLoopFrame3;
 	int		m_iLoopFrame4;
 	int		m_iLoopFrame5;
+	int		m_iLoopFrame6;
 	int		m_startFrame2;
 	int		m_startFrame3;
 	int		m_startFrame4;
 	int		m_startFrame5;
+	int		m_startFrame6;
 	BOOL	m_bGenLoopFrame;
 	//}}AFX_DATA
 
@@ -203,31 +209,38 @@ protected:
 	afx_msg void OnButtonChooseanimationenum3();
 	afx_msg void OnButtonChooseanimationenum4();
 	afx_msg void OnButtonChooseanimationenum5();
+	afx_msg void OnButtonChooseanimationenum6();
 	afx_msg void OnButtonClearanimationenum();
 	afx_msg void OnButtonClearanimationenum2();
 	afx_msg void OnButtonClearanimationenum3();
 	afx_msg void OnButtonClearanimationenum4();
 	afx_msg void OnButtonClearanimationenum5();
+	afx_msg void OnButtonClearanimationenum6();
 	afx_msg void OnKillfocusStartframe();
 	afx_msg void OnKillfocusStartframe2();
 	afx_msg void OnKillfocusStartframe3();
 	afx_msg void OnKillfocusStartframe4();
 	afx_msg void OnKillfocusStartframe5();
+	afx_msg void OnKillfocusStartframe6();
 	afx_msg void OnKillfocusLoopframe();
 	afx_msg void OnKillfocusLoopframe2();
 	afx_msg void OnKillfocusLoopframe3();
 	afx_msg void OnKillfocusLoopframe4();
 	afx_msg void OnKillfocusLoopframe5();
+	afx_msg void OnKillfocusLoopframe6();
+	afx_msg void OnKillfocusFramespeed6();
 	afx_msg void OnKillfocusFramespeed5();
 	afx_msg void OnKillfocusFramespeed4();
 	afx_msg void OnKillfocusFramespeed3();
 	afx_msg void OnKillfocusFramespeed2();
 	afx_msg void OnKillfocusFramespeed();
+	afx_msg void OnKillfocusFramecount6();
 	afx_msg void OnKillfocusFramecount5();
 	afx_msg void OnKillfocusFramecount4();
 	afx_msg void OnKillfocusFramecount3();
 	afx_msg void OnKillfocusFramecount2();
 	afx_msg void OnKillfocusFramecount();
+	afx_msg void OnKillfocusEditAnimationenum6();
 	afx_msg void OnKillfocusEditAnimationenum5();
 	afx_msg void OnKillfocusEditAnimationenum4();
 	afx_msg void OnKillfocusEditAnimationenum3();

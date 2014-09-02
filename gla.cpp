@@ -155,9 +155,9 @@ int GLA_ReadHeader(LPCSTR psFilename)
 		delete(filebin);
 		return 0;
 	}
-	if (pGLAHeader->version != MDXA_VERSION && pGLAHeader->version != MDXA_VERSION_QUAT)
+	if (pGLAHeader->version != MDXA_VERSION && pGLAHeader->version != MDXA_VERSION_QUAT && pGLAHeader->version != MDXA_VERSION_SOF2)
 	{
-		ErrorBox(va("Error: GLA header version is %d, expecting %d or %d!\n", pGLAHeader->version, MDXA_VERSION, MDXA_VERSION_QUAT));
+		ErrorBox(va("Error: GLA header version is %d, expecting 4, 5 or 6!\n", pGLAHeader->version, MDXA_VERSION, MDXA_VERSION_QUAT, MDXA_VERSION_SOF2));
 		delete(filebin);
 		return 0;
 	}

@@ -647,6 +647,10 @@ ENUMTYPE GetEnumTypeFromString(LPCSTR lpString)
 		{
 			return ET_FACE;
 		}
+		if (!strnicmp(lpString,"VM_",3))
+		{
+			return ET_VM;
+		}
 	}
 
 	return ET_INVALID;
@@ -754,6 +758,8 @@ int CSequence::GetDisplayIconForTree(CModel *pModel)
 		case ET_BOTH:		return ObjID_ENUMBOTH;
 		case ET_TORSO:		return ObjID_ENUMTORSO;
 		case ET_LEGS:		return ObjID_ENUMLEGS;
+		case ET_FACE:		return ObjID_ENUMFACE;
+		case ET_VM:			return ObjID_ENUMVM;
 	}
 
 	ASSERT(0);
@@ -798,7 +804,7 @@ LPCSTR CSequence::GetDisplayNameForTree(CModel* pModel, bool bIncludeAnimEnum, b
 	}
 	
 	string += GetName();
-	ACCOUNTFORWIDTH(250);	
+	ACCOUNTFORWIDTH(300);	
 	
 	if (bIncludeAnimEnum && strlen(GetEnum()))	//ValidEnum())
 	{
@@ -1269,22 +1275,27 @@ CSequencePropPage::CSequencePropPage() : CPropertyPage(CSequencePropPage::IDD)
 	m_AnimationEnum3 = _T("");
 	m_AnimationEnum4 = _T("");
 	m_AnimationEnum5 = _T("");
+	m_AnimationEnum6 = _T("");
 	m_frameCount2 = 0;
 	m_frameCount3 = 0;
 	m_frameCount4 = 0;
 	m_frameCount5 = 0;
+	m_frameCount6 = 0;
 	m_frameSpeed2 = 0;
 	m_frameSpeed3 = 0;
 	m_frameSpeed4 = 0;
 	m_frameSpeed5 = 0;
+	m_frameSpeed6 = 0;
 	m_iLoopFrame2 = 0;
 	m_iLoopFrame3 = 0;
 	m_iLoopFrame4 = 0;
 	m_iLoopFrame5 = 0;
+	m_iLoopFrame6 = 0;
 	m_startFrame2 = 0;
 	m_startFrame3 = 0;
 	m_startFrame4 = 0;
 	m_startFrame5 = 0;
+	m_startFrame6 = 0;
 	m_bGenLoopFrame = FALSE;
 	//}}AFX_DATA_INIT
 }
@@ -1307,22 +1318,27 @@ void CSequencePropPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT_ANIMATIONENUM3, m_AnimationEnum3);
 	DDX_Text(pDX, IDC_EDIT_ANIMATIONENUM4, m_AnimationEnum4);
 	DDX_Text(pDX, IDC_EDIT_ANIMATIONENUM5, m_AnimationEnum5);
+	DDX_Text(pDX, IDC_EDIT_ANIMATIONENUM6, m_AnimationEnum6);
 	DDX_Text(pDX, IDC_FRAMECOUNT2, m_frameCount2);
 	DDX_Text(pDX, IDC_FRAMECOUNT3, m_frameCount3);
 	DDX_Text(pDX, IDC_FRAMECOUNT4, m_frameCount4);
 	DDX_Text(pDX, IDC_FRAMECOUNT5, m_frameCount5);
+	DDX_Text(pDX, IDC_FRAMECOUNT6, m_frameCount6);
 	DDX_Text(pDX, IDC_FRAMESPEED2, m_frameSpeed2);
 	DDX_Text(pDX, IDC_FRAMESPEED3, m_frameSpeed3);
 	DDX_Text(pDX, IDC_FRAMESPEED4, m_frameSpeed4);
 	DDX_Text(pDX, IDC_FRAMESPEED5, m_frameSpeed5);
+	DDX_Text(pDX, IDC_FRAMESPEED6, m_frameSpeed6);
 	DDX_Text(pDX, IDC_LOOPFRAME2, m_iLoopFrame2);
 	DDX_Text(pDX, IDC_LOOPFRAME3, m_iLoopFrame3);
 	DDX_Text(pDX, IDC_LOOPFRAME4, m_iLoopFrame4);
 	DDX_Text(pDX, IDC_LOOPFRAME5, m_iLoopFrame5);
+	DDX_Text(pDX, IDC_LOOPFRAME6, m_iLoopFrame6);
 	DDX_Text(pDX, IDC_STARTFRAME2, m_startFrame2);
 	DDX_Text(pDX, IDC_STARTFRAME3, m_startFrame3);
 	DDX_Text(pDX, IDC_STARTFRAME4, m_startFrame4);
 	DDX_Text(pDX, IDC_STARTFRAME5, m_startFrame5);
+	DDX_Text(pDX, IDC_STARTFRAME6, m_startFrame6);
 	DDX_Check(pDX, IDC_CHECK_GENLOOPFRAME, m_bGenLoopFrame);
 	//}}AFX_DATA_MAP
 }
@@ -1335,31 +1351,38 @@ BEGIN_MESSAGE_MAP(CSequencePropPage, CPropertyPage)
 	ON_BN_CLICKED(IDC_BUTTON_CHOOSEANIMATIONENUM3, OnButtonChooseanimationenum3)
 	ON_BN_CLICKED(IDC_BUTTON_CHOOSEANIMATIONENUM4, OnButtonChooseanimationenum4)
 	ON_BN_CLICKED(IDC_BUTTON_CHOOSEANIMATIONENUM5, OnButtonChooseanimationenum5)
+	ON_BN_CLICKED(IDC_BUTTON_CHOOSEANIMATIONENUM6, OnButtonChooseanimationenum6)
 	ON_BN_CLICKED(IDC_BUTTON_CLEARANIMATIONENUM, OnButtonClearanimationenum)
 	ON_BN_CLICKED(IDC_BUTTON_CLEARANIMATIONENUM2, OnButtonClearanimationenum2)
 	ON_BN_CLICKED(IDC_BUTTON_CLEARANIMATIONENUM3, OnButtonClearanimationenum3)
 	ON_BN_CLICKED(IDC_BUTTON_CLEARANIMATIONENUM4, OnButtonClearanimationenum4)
 	ON_BN_CLICKED(IDC_BUTTON_CLEARANIMATIONENUM5, OnButtonClearanimationenum5)
+	ON_BN_CLICKED(IDC_BUTTON_CLEARANIMATIONENUM6, OnButtonClearanimationenum6)
 	ON_EN_KILLFOCUS(IDC_STARTFRAME, OnKillfocusStartframe)
 	ON_EN_KILLFOCUS(IDC_STARTFRAME2, OnKillfocusStartframe2)
 	ON_EN_KILLFOCUS(IDC_STARTFRAME3, OnKillfocusStartframe3)
 	ON_EN_KILLFOCUS(IDC_STARTFRAME4, OnKillfocusStartframe4)
 	ON_EN_KILLFOCUS(IDC_STARTFRAME5, OnKillfocusStartframe5)
+	ON_EN_KILLFOCUS(IDC_STARTFRAME6, OnKillfocusStartframe6)
 	ON_EN_KILLFOCUS(IDC_LOOPFRAME, OnKillfocusLoopframe)
 	ON_EN_KILLFOCUS(IDC_LOOPFRAME2, OnKillfocusLoopframe2)
 	ON_EN_KILLFOCUS(IDC_LOOPFRAME3, OnKillfocusLoopframe3)
 	ON_EN_KILLFOCUS(IDC_LOOPFRAME4, OnKillfocusLoopframe4)
 	ON_EN_KILLFOCUS(IDC_LOOPFRAME5, OnKillfocusLoopframe5)
+	ON_EN_KILLFOCUS(IDC_LOOPFRAME6, OnKillfocusLoopframe6)
+	ON_EN_KILLFOCUS(IDC_FRAMESPEED6, OnKillfocusFramespeed6)
 	ON_EN_KILLFOCUS(IDC_FRAMESPEED5, OnKillfocusFramespeed5)
 	ON_EN_KILLFOCUS(IDC_FRAMESPEED4, OnKillfocusFramespeed4)
 	ON_EN_KILLFOCUS(IDC_FRAMESPEED3, OnKillfocusFramespeed3)
 	ON_EN_KILLFOCUS(IDC_FRAMESPEED2, OnKillfocusFramespeed2)
 	ON_EN_KILLFOCUS(IDC_FRAMESPEED, OnKillfocusFramespeed)
+	ON_EN_KILLFOCUS(IDC_FRAMECOUNT6, OnKillfocusFramecount6)
 	ON_EN_KILLFOCUS(IDC_FRAMECOUNT5, OnKillfocusFramecount5)
 	ON_EN_KILLFOCUS(IDC_FRAMECOUNT4, OnKillfocusFramecount4)
 	ON_EN_KILLFOCUS(IDC_FRAMECOUNT3, OnKillfocusFramecount3)
 	ON_EN_KILLFOCUS(IDC_FRAMECOUNT2, OnKillfocusFramecount2)
 	ON_EN_KILLFOCUS(IDC_FRAMECOUNT, OnKillfocusFramecount)
+	ON_EN_KILLFOCUS(IDC_EDIT_ANIMATIONENUM6, OnKillfocusEditAnimationenum6)
 	ON_EN_KILLFOCUS(IDC_EDIT_ANIMATIONENUM5, OnKillfocusEditAnimationenum5)
 	ON_EN_KILLFOCUS(IDC_EDIT_ANIMATIONENUM4, OnKillfocusEditAnimationenum4)
 	ON_EN_KILLFOCUS(IDC_EDIT_ANIMATIONENUM3, OnKillfocusEditAnimationenum3)
@@ -1471,6 +1494,24 @@ void CSequencePropPage::OnButtonChooseanimationenum5()
 	}
 }
 
+void CSequencePropPage::OnButtonChooseanimationenum6() 
+{
+	char sReturnString[200];	// OTT
+
+	if (UpdateData(DIALOG_TO_DATA))
+	{		
+		CAnimPicker animDialog(&sReturnString[0]);
+		if (animDialog.DoModal()==IDOK)
+		{
+			SetModified(true);	// enable the apply button
+			DEFAULT_FROM_MASTER(6);
+			m_AnimationEnum6 = sReturnString;			
+			UpdateData(DATA_TO_DIALOG);	
+			HandleAllItemsGraying();
+		}		
+	}
+}
+
 
 void CSequencePropPage::OnButtonClearanimationenum() 
 {
@@ -1527,6 +1568,17 @@ void CSequencePropPage::OnButtonClearanimationenum5()
 	}
 }
 
+void CSequencePropPage::OnButtonClearanimationenum6() 
+{
+	if (UpdateData(DIALOG_TO_DATA))
+	{
+		SetModified(true);	// enable the apply button
+		m_AnimationEnum6 = "";
+		UpdateData(DATA_TO_DIALOG);	
+		HandleAllItemsGraying();				
+	}
+}
+
 void CSequencePropPage::OnCancel() 
 {
 	UpdateData(DATA_TO_DIALOG);		// stops a nasty bug in MFC whereby having crap data (eg 'a' in an int-box) gets you stuck in a loop if you ESC from a prop page
@@ -1558,6 +1610,11 @@ void CSequencePropPage::OnKillfocusStartframe5()
 	ONKILLFOCUS;	
 }
 
+void CSequencePropPage::OnKillfocusStartframe6() 
+{
+	ONKILLFOCUS;	
+}
+
 void CSequencePropPage::OnKillfocusLoopframe() 
 {
 	ONKILLFOCUS;	
@@ -1579,6 +1636,16 @@ void CSequencePropPage::OnKillfocusLoopframe4()
 }
 
 void CSequencePropPage::OnKillfocusLoopframe5() 
+{
+	ONKILLFOCUS;	
+}
+
+void CSequencePropPage::OnKillfocusLoopframe6() 
+{
+	ONKILLFOCUS;	
+}
+
+void CSequencePropPage::OnKillfocusFramespeed6() 
 {
 	ONKILLFOCUS;	
 }
@@ -1608,6 +1675,11 @@ void CSequencePropPage::OnKillfocusFramespeed()
 	ONKILLFOCUS;	
 }
 
+void CSequencePropPage::OnKillfocusFramecount6() 
+{
+	ONKILLFOCUS;	
+}
+
 void CSequencePropPage::OnKillfocusFramecount5() 
 {
 	ONKILLFOCUS;	
@@ -1629,6 +1701,11 @@ void CSequencePropPage::OnKillfocusFramecount2()
 }
 
 void CSequencePropPage::OnKillfocusFramecount() 
+{
+	ONKILLFOCUS;	
+}
+
+void CSequencePropPage::OnKillfocusEditAnimationenum6() 
 {
 	ONKILLFOCUS;	
 }
@@ -1680,10 +1757,11 @@ void CSequencePropPage::OkOrApply()
 	OK_ADDITIONAL(3);
 	OK_ADDITIONAL(4);
 	OK_ADDITIONAL(5);
+	OK_ADDITIONAL(6);
 
 	// ensure I don't forget any future expansions by putting the next index in the sequence in an err-check...
 	//
-	#if !(6 == (MAX_ADDITIONAL_SEQUENCES+2))
+	#if !(7 == (MAX_ADDITIONAL_SEQUENCES+2))
 	#error Need more OK_ code...
 	#endif
 
@@ -1732,10 +1810,11 @@ BOOL CSequencePropPage::OnInitDialog()
 	INIT_ADDITIONAL(3);
 	INIT_ADDITIONAL(4);
 	INIT_ADDITIONAL(5);
+	INIT_ADDITIONAL(6);
 
 	// ensure I don't forget any future expansions by putting the next index in the sequence in an err-check...
 	//
-	#if !(6 == (MAX_ADDITIONAL_SEQUENCES+2))
+	#if !(7 == (MAX_ADDITIONAL_SEQUENCES+2))
 	#error Need more INIT_ code...
 	#endif
 
@@ -1773,10 +1852,11 @@ void CSequencePropPage::HandleAdditionalEditBoxesGraying()
 	GRAY_ADDITIONAL(3);
 	GRAY_ADDITIONAL(4);
 	GRAY_ADDITIONAL(5);
+	GRAY_ADDITIONAL(6);
 
 	// ensure I don't forget any future expansions by putting the next index in the sequence in an err-check...
 	//
-	#if !(6 == (MAX_ADDITIONAL_SEQUENCES+2))
+	#if !(7 == (MAX_ADDITIONAL_SEQUENCES+2))
 	#error Need more gray-handler code...
 	#endif
 }

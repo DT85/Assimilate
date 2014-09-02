@@ -1,4 +1,4 @@
-//Microsoft Developer Studio generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
 
@@ -27,18 +27,18 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE DISCARDABLE 
+1 TEXTINCLUDE 
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE DISCARDABLE 
+2 TEXTINCLUDE 
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE DISCARDABLE 
+3 TEXTINCLUDE 
 BEGIN
     "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
     "#define _AFX_NO_OLE_RESOURCES\r\n"
@@ -50,7 +50,6 @@ BEGIN
     "LANGUAGE 9, 1\r\n"
     "#pragma code_page(1252)\r\n"
     "#endif //_WIN32\r\n"
-    "#include ""res\\Assimilate.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
     "#include ""afxres.rc""         // Standard components\r\n"
     "#include ""afxprint.rc""       // printing/print preview resources\r\n"
     "#endif\r\n"
@@ -67,23 +66,23 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON    DISCARDABLE     "res\\Assimilate.ico"
-IDR_ASSIMITYPE          ICON    DISCARDABLE     "res\\AssimilateDoc.ico"
+IDR_MAINFRAME           ICON                    "res\\Assimilate.ico"
+IDR_ASSIMITYPE          ICON                    "res\\AssimilateDoc.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Bitmap
 //
 
-IDR_MAINFRAME           BITMAP  MOVEABLE PURE   "res\\Toolbar.bmp"
-IDB_TREEIMAGES          BITMAP  DISCARDABLE     "res\\treeimag.bmp"
+IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
+IDB_TREEIMAGES          BITMAP                  "res\\treeimag.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Toolbar
 //
 
-IDR_MAINFRAME TOOLBAR DISCARDABLE  23, 21
+IDR_MAINFRAME TOOLBAR  23, 21
 BEGIN
     BUTTON      ID_FILE_NEW
     BUTTON      ID_FILE_OPEN
@@ -111,7 +110,7 @@ END
 // Menu
 //
 
-IDR_MAINFRAME MENU PRELOAD DISCARDABLE 
+IDR_MAINFRAME MENU 
 BEGIN
     POPUP "&File"
     BEGIN
@@ -139,17 +138,15 @@ BEGIN
         MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
         MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
         MENUITEM SEPARATOR
-        MENUITEM "Resequence",                  IDM_RESEQUENCE
         MENUITEM "Build Model",                 IDM_BUILD
         MENUITEM "Validate",                    IDM_VALIDATE
         MENUITEM "View current model via ModView", 
                                                 ID_EDIT_LAUNCHMODVIEWONCURRENT
 
         MENUITEM SEPARATOR
-        MENUITEM "Validate "" *.CAR /s ""     ( aka .CAR WASH :-)", 
-                                                IDM_CARWASH
+        MENUITEM "Validate "" *.CAR(s) """,     IDM_CARWASH
         MENUITEM SEPARATOR
-        MENUITEM "Build every CAR file in the project....     ""Hurrrrr.....Big Jobs!""", 
+        MENUITEM "Build every CAR file in the project.... ", 
                                                 ID_EDIT_BUILDALL
         MENUITEM "Build dependant models",      IDM_EDIT_BUILDDEPENDANT
         MENUITEM SEPARATOR
@@ -177,7 +174,7 @@ END
 // Accelerator
 //
 
-IDR_MAINFRAME ACCELERATORS PRELOAD MOVEABLE PURE 
+IDR_MAINFRAME ACCELERATORS 
 BEGIN
     "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
     "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
@@ -201,24 +198,24 @@ END
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 235, 55
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_ABOUTBOX DIALOGEX 0, 0, 214, 89
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About Assimilate"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
-    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
-    LTEXT           "Assimilate Version 2.1",IDC_STATIC,40,10,119,8,
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,21,20
+    LTEXT           "Assimilate Version 3.0",IDC_STATIC,40,10,119,8,
                     SS_NOPREFIX
-    LTEXT           "Copyright (C) 1999 Raven Software",IDC_STATIC,39,24,119,
-                    10
-    DEFPUSHBUTTON   "OK",IDOK,178,7,50,14,WS_GROUP
-    LTEXT           "Written by M.Crowns, S.Cork",IDC_STATIC,39,38,121,8
+    LTEXT           "Copyright (C) 1999 Raven Software, updated 2014",
+                    IDC_STATIC,39,24,165,21
+    DEFPUSHBUTTON   "OK",IDOK,81,60,50,14,WS_GROUP
+    LTEXT           "Written by M.Crowns, S.Cork",IDC_STATIC,39,37,121,8
 END
 
-IDD_PP_MODEL DIALOG DISCARDABLE  0, 0, 309, 359
-STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+IDD_PP_MODEL DIALOGEX 0, 0, 309, 359
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Model"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     GROUPBOX        "Build Parameters ",IDC_STATIC,7,6,295,346
     CONTROL         "Skew 90 (only use this if you REALLY need to, i.e. leave it alone!)",
@@ -240,8 +237,8 @@ BEGIN
     LTEXT           "Z",IDC_STATIC,163,167,8,8
     EDITTEXT        IDC_EDIT_SCALE,182,83,41,14,ES_AUTOHSCROLL
     LTEXT           "Scale (default = 1.0)",IDC_STATIC,226,85,64,8
-    CONTROL         "Make EF1-type .skin file",IDC_CHECK_MAKESKIN,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,17,49,91,10
+    CONTROL         "Make .skin file",IDC_CHECK_MAKESKIN,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,17,49,61,10
     CONTROL         "Remove duplicate verts from mesh during compile",
                     IDC_CHECK_LOSEDUPVERTS,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,17,39,172,10
@@ -256,14 +253,14 @@ BEGIN
     CONTROL         "Keep ""motion"" bone",IDC_CHECK_KEEPMOTIONBONE,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,17,60,87,10
     CONTROL         "Uses ( older ) pre-quaternian animation-compression",
-                    IDC_CHECK_PREQUAT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    25,101,194,10
+                    IDC_CHECK_PREQUAT,"Button",BS_AUTOCHECKBOX | WS_DISABLED | 
+                    WS_TABSTOP,25,101,194,10
 END
 
-IDD_PP_SEQUENCE DIALOG DISCARDABLE  0, 0, 542, 175
-STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+IDD_PP_SEQUENCE DIALOGEX 0, 0, 542, 201
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Sequence"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     LTEXT           "Start Frame",IDC_STATIC,78,10,37,8
     LTEXT           "Frame Count",IDC_STATIC,124,10,41,8
@@ -316,17 +313,26 @@ BEGIN
                     ES_READONLY
     PUSHBUTTON      "Choose",IDC_BUTTON_CHOOSEANIMATIONENUM5,455,111,36,13
     PUSHBUTTON      "Clear",IDC_BUTTON_CLEARANIMATIONENUM5,491,111,36,13
-    LTEXT           "File Path:",IDC_STATIC,7,142,36,8
-    EDITTEXT        IDC_PATH,75,140,186,14,ES_AUTOHSCROLL
+    LTEXT           "File Path:",IDC_STATIC,7,172,36,8
+    EDITTEXT        IDC_PATH,75,170,186,14,ES_AUTOHSCROLL
     CONTROL         "GenLoopFrame",IDC_CHECK_GENLOOPFRAME,"Button",
                     BS_AUTOCHECKBOX | BS_LEFT | BS_TOP | BS_MULTILINE | 
                     WS_TABSTOP,266,32,64,10
+    LTEXT           "Additional #5",IDC_STATIC,8,130,42,8
+    EDITTEXT        IDC_STARTFRAME6,75,128,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_FRAMECOUNT6,123,128,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_LOOPFRAME6,171,128,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_FRAMESPEED6,219,128,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_ANIMATIONENUM6,333,128,120,14,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    PUSHBUTTON      "Choose",IDC_BUTTON_CHOOSEANIMATIONENUM6,455,128,36,13
+    PUSHBUTTON      "Clear",IDC_BUTTON_CLEARANIMATIONENUM6,491,128,36,13
 END
 
-IDD_PP_PROPERTIES DIALOG DISCARDABLE  0, 0, 235, 159
-STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+IDD_PP_PROPERTIES DIALOGEX 0, 0, 235, 159
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Preferences"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     RTEXT           "Enum file:",IDC_STATIC,18,7,32,8
     EDITTEXT        IDC_ENUM,53,7,160,12,ES_AUTOHSCROLL
@@ -341,38 +347,44 @@ BEGIN
                     IDC_STATIC,7,65,219,8
     PUSHBUTTON      "Default all fields for StarWars Single Player",
                     IDC_BUTTON_DEFAULTS,12,110,211,14
-    PUSHBUTTON      "Default all fields for StarWars Multi Player (subject to change)",
-                    IDC_BUTTON_DEFAULTS_MULTI,12,129,211,14
     CONTROL         "MultiPlayer",IDC_CHECK_MULTIPLAYER,"Button",
                     BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,10,94,51,10
     LTEXT           "( Ignore this dumb field, I'll lose it later )",
                     IDC_STATIC,87,23,121,8
+    PUSHBUTTON      "Default all fields for StarWars Multi Player (subject to change)",
+                    IDC_BUTTON_DEFAULTS_MULTI,12,129,211,14
 END
 
-IDD_ANIMPICKER DIALOG DISCARDABLE  0, 0, 549, 423
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_ANIMPICKER DIALOGEX 0, 0, 549, 463
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Animation Picker"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
-    PUSHBUTTON      "Cancel",IDCANCEL,479,380,50,14
-    LISTBOX         IDC_LIST_LEGS,20,23,160,352,LBS_NOINTEGRALHEIGHT | 
+    PUSHBUTTON      "Cancel",IDCANCEL,479,434,50,14
+    LISTBOX         IDC_LIST_LEGS,20,23,160,183,LBS_NOINTEGRALHEIGHT | 
                     WS_VSCROLL | WS_TABSTOP
     LTEXT           "LEGS_xxxx",IDC_STATIC,82,11,37,8
-    LISTBOX         IDC_LIST_TORSO,193,23,160,352,LBS_NOINTEGRALHEIGHT | 
+    LISTBOX         IDC_LIST_TORSO,193,23,160,184,LBS_NOINTEGRALHEIGHT | 
                     WS_VSCROLL | WS_TABSTOP
     LTEXT           "TORSO_xxxx",IDC_STATIC,248,11,44,8
-    LISTBOX         IDC_LIST_BOTH,370,23,160,352,LBS_NOINTEGRALHEIGHT | 
+    LISTBOX         IDC_LIST_BOTH,370,23,160,184,LBS_NOINTEGRALHEIGHT | 
                     WS_VSCROLL | WS_TABSTOP
     LTEXT           "BOTH_xxxx",IDC_STATIC,429,11,38,8
-    LTEXT           "( Double-click an entry to select. Entries beginning with ( * ) are already in use )",
-                    IDC_STATIC,154,381,247,8
-    LTEXT           "",IDC_STATIC_COMMENT,22,398,444,8
+    LTEXT           "Double-click an entry to select. Entries beginning with ( * ) are already in use.",
+                    IDC_STATIC,158,437,258,14
     CONTROL         "Filter-out used",IDC_CHECK_FILTEROUTUSED,"Button",
-                    BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,415,380,59,14
+                    BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,415,434,59,14
+    LISTBOX         IDC_LIST_FACE,19,234,160,183,LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LISTBOX         IDC_LIST_VM,193,234,160,184,LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "FACE_xxxx",IDC_STATIC,82,223,36,8
+    LTEXT           "VM_xxxx",IDC_STATIC,248,223,29,8
+    LTEXT           "",IDC_STATIC_COMMENT,371,237,159,155
 END
 
-IDD_DIALOG_YESNOYESNOALL DIALOG DISCARDABLE  0, 0, 308, 114
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_DIALOG_YESNOYESNOALL DIALOG  0, 0, 308, 114
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Decision needed..."
 FONT 8, "MS Sans Serif"
 BEGIN
@@ -388,8 +400,8 @@ BEGIN
     CTEXT           "static",IDC_STATIC6,16,60,277,9,SS_CENTERIMAGE
 END
 
-IDD_BUILD_ALL DIALOG DISCARDABLE  0, 0, 186, 87
-STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_BUILD_ALL DIALOG  0, 0, 186, 87
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Build-Models"
 FONT 8, "MS Sans Serif"
 BEGIN
@@ -404,7 +416,6 @@ BEGIN
 END
 
 
-#ifndef _MAC
 /////////////////////////////////////////////////////////////////////////////
 //
 // Version
@@ -427,18 +438,14 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "Comments", "\0"
-            VALUE "CompanyName", "Raven Software\0"
-            VALUE "FileDescription", "Helps assimilate .ase and .xsi files into ST:Voy config files\0"
-            VALUE "FileVersion", "2.0\0"
-            VALUE "InternalName", "Assimilate\0"
-            VALUE "LegalCopyright", "Copyright (C) 1999\0"
-            VALUE "LegalTrademarks", "\0"
-            VALUE "OriginalFilename", "Assimilate.EXE\0"
-            VALUE "PrivateBuild", "\0"
-            VALUE "ProductName", "Assimilate Application\0"
-            VALUE "ProductVersion", "2.0\0"
-            VALUE "SpecialBuild", "\0"
+            VALUE "CompanyName", "Raven Software"
+            VALUE "FileDescription", "Helps assimilate .ase and .xsi files into ST:Voy config files"
+            VALUE "FileVersion", "3.0"
+            VALUE "InternalName", "Assimilate"
+            VALUE "LegalCopyright", "Copyright (C) 1999"
+            VALUE "OriginalFilename", "Assimilate.EXE"
+            VALUE "ProductName", "Assimilate Application"
+            VALUE "ProductVersion", "3.0"
         END
     END
     BLOCK "VarFileInfo"
@@ -447,8 +454,6 @@ BEGIN
     END
 END
 
-#endif    // !_MAC
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -456,14 +461,14 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO DISCARDABLE 
+GUIDELINES DESIGNINFO 
 BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 228
+        RIGHTMARGIN, 207
         TOPMARGIN, 7
-        BOTTOMMARGIN, 48
+        BOTTOMMARGIN, 82
     END
 
     IDD_PP_MODEL, DIALOG
@@ -479,7 +484,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 535
         TOPMARGIN, 7
-        BOTTOMMARGIN, 168
+        BOTTOMMARGIN, 194
     END
 
     IDD_PP_PROPERTIES, DIALOG
@@ -495,7 +500,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 542
         TOPMARGIN, 7
-        BOTTOMMARGIN, 416
+        BOTTOMMARGIN, 456
     END
 
     IDD_DIALOG_YESNOYESNOALL, DIALOG
@@ -522,18 +527,18 @@ END
 // String Table
 //
 
-STRINGTABLE PRELOAD DISCARDABLE 
+STRINGTABLE 
 BEGIN
     IDR_MAINFRAME           "Assimilate\n\nAssimilate\nAssimilate Files (*.car)\n.car\nAssimilate.Document\nAssimilate Document"
 END
 
-STRINGTABLE PRELOAD DISCARDABLE 
+STRINGTABLE 
 BEGIN
     AFX_IDS_APP_TITLE       "Assimilate"
     AFX_IDS_IDLEMESSAGE     "Ready"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     ID_INDICATOR_EXT        "EXT"
     ID_INDICATOR_CAPS       "CAP"
@@ -543,7 +548,7 @@ BEGIN
     ID_INDICATOR_REC        "REC"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     ID_FILE_NEW             "Create a new document\nNew"
     ID_FILE_OPEN            "Open an existing document\nOpen"
@@ -556,13 +561,13 @@ BEGIN
     ID_FILE_PRINT_PREVIEW   "Display full pages\nPrint Preview"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
     ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     ID_FILE_MRU_FILE1       "Open this document"
     ID_FILE_MRU_FILE2       "Open this document"
@@ -582,18 +587,18 @@ BEGIN
     ID_FILE_MRU_FILE16      "Open this document"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
     ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     ID_EDIT_CLEAR           "Erase the selection\nErase"
     ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
@@ -608,13 +613,13 @@ BEGIN
     ID_EDIT_REDO            "Redo the previously undone action\nRedo"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
     ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     AFX_IDS_SCSIZE          "Change the window size"
     AFX_IDS_SCMOVE          "Change the window position"
@@ -625,18 +630,18 @@ BEGIN
     AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     AFX_IDS_SCRESTORE       "Restore the window to normal size"
     AFX_IDS_SCTASKLIST      "Activate Task List"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     AFX_IDS_PREVIEW_CLOSE   "Close print preview mode\nCancel Preview"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     IDM_ADDFILES            "Add files"
     IDM_EXTERNAL            "Creates the external data file"
@@ -646,12 +651,12 @@ BEGIN
     ID_VIEW_FRAMEDETAILS    "Various frame info stuff, may well be removed after app finished"
     IDM_BUILD               "Performs a build on all models within this QDT/CAR file\nBuild"
     IDM_VALIDATE            "Validate: Checks for existance of all model files\nValidate"
-    IDM_CARWASH             "Validates every .CAR file in baseq down (big job)\nValidate all ( CAR-wash )"
+    IDM_CARWASH             "Validates every .CAR file in base"
     ID_EDIT_BUILDALL        "Builds everything in the current single or multiplayer dir\nBuild all models"
     IDM_EDIT_BUILDDEPENDANT "Build all models who are dependant on the skeleton produced by this CAR file\nBuild model + all dependants"
 END
 
-STRINGTABLE DISCARDABLE 
+STRINGTABLE 
 BEGIN
     ID_VIEW_FRAMEDETAILSONADDITIONALSEQUENCES 
                             "Displays frame details on additional sequences, as opposed to primary"
@@ -680,8 +685,6 @@ END
 LANGUAGE 9, 1
 #pragma code_page(1252)
 #endif //_WIN32
-// DT EDIT - File does not exist
-//#include "res\Assimilate.rc2"  // non-Microsoft Visual C++ edited resources
 #include "afxres.rc"         // Standard components
 #include "afxprint.rc"       // printing/print preview resources
 #endif

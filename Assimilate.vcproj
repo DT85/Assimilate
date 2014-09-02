@@ -235,7 +235,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="Assimilate.rc">
+				RelativePath=".\Assimilate.rc">
 			</File>
 			<File
 				RelativePath="AssimilateDoc.cpp">
@@ -805,9 +805,6 @@
 				RelativePath="res\Assimilate.ico">
 			</File>
 			<File
-				RelativePath="res\Assimilate.rc2">
-			</File>
-			<File
 				RelativePath="res\AssimilateDoc.ico">
 			</File>
 			<File
@@ -825,5 +822,8 @@
 		</File>
 	</Files>
 	<Globals>
+		<Global
+			Name="RESOURCE_FILE"
+			Value="./Assimilate.rc"/>
 	</Globals>
 </VisualStudioProject>

@@ -44,10 +44,14 @@ protected:
 	afx_msg void OnDblclkListBoth();
 	afx_msg void OnDblclkListLegs();
 	afx_msg void OnDblclkListTorso();
+	afx_msg void OnDblclkListFace();
+	afx_msg void OnDblclkListVM();
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSelchangeListLegs();
 	afx_msg void OnSelchangeListTorso();
 	afx_msg void OnSelchangeListBoth();
+	afx_msg void OnSelchangeListFace();
+	afx_msg void OnSelchangeListVM();
 	afx_msg void OnCheckFilteroutused();
 	afx_msg void OnDestroy();
 	//}}AFX_MSG

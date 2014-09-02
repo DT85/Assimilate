@@ -28,6 +28,7 @@
 #define MDXM_VERSION		4
 #define MDXA_VERSION		4
 #define MDXA_VERSION_QUAT	5
+#define MDXA_VERSION_SOF2	6
 
 // (Note that since there is now a "<modelname>_info.txt" file written out by carcass any changes made in here that
 //		introduce new data should also be reflected in the info-output)

@@ -1,5 +1,5 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Developer Studio generated include file.
+// Microsoft Visual C++ generated include file.
 // Used by Assimilate.rc
 //
 #define IDYESTOALL                      3
@@ -50,14 +50,22 @@
 #define IDC_FRAMECOUNT5                 1026
 #define IDC_FRAMESPEED5                 1027
 #define IDC_LOOPFRAME5                  1028
+#define IDC_STARTFRAME6                 1029
 #define IDC_BUTTON_CHOOSEANIMATIONENUM  1030
 #define IDC_BUTTON_CHOOSEANIMATIONENUM2 1031
 #define IDC_BUTTON_CHOOSEANIMATIONENUM3 1032
 #define IDC_BUTTON_CHOOSEANIMATIONENUM4 1033
 #define IDC_BUTTON_CHOOSEANIMATIONENUM5 1034
+#define IDC_FRAMECOUNT6                 1035
+#define IDC_LOOPFRAME6                  1036
 #define IDC_LIST_LEGS                   1037
+#define IDC_FRAMESPEED6                 1037
 #define IDC_LIST_TORSO                  1038
+#define IDC_BUTTON_CHOOSEANIMATIONENUM6 1038
 #define IDC_LIST_BOTH                   1039
+#define IDC_LIST_LEGS2                  1040
+#define IDC_LIST_FACE                   1040
+#define IDC_LIST_VM                     1041
 #define IDC_EDIT_ANIMATIONENUM          1049
 #define IDC_STATIC_COMMENT              1050
 #define IDC_EDIT_ANIMATIONENUM2         1050
@@ -66,6 +74,7 @@
 #define IDC_EDIT_ANIMATIONENUM4         1052
 #define IDC_BUTTON_DEFAULTS_MULTI       1052
 #define IDC_EDIT_ANIMATIONENUM5         1053
+#define IDC_EDIT_ANIMATIONENUM6         1054
 #define IDC_BUTTON_CLEARANIMATIONENUM   1058
 #define IDC_BUTTON_CLEARANIMATIONENUM2  1059
 #define IDC_STATIC1                     1059
@@ -78,6 +87,7 @@
 #define IDC_BUTTON_CLEARANIMATIONENUM5  1062
 #define IDC_STATIC4                     1062
 #define IDC_STATIC5                     1063
+#define IDC_BUTTON_CLEARANIMATIONENUM6  1063
 #define IDC_STATIC6                     1064
 #define IDC_CHECK_SKEW90                1064
 #define IDC_EDIT_SKELPATH               1065
