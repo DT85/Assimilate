@@ -179,21 +179,6 @@ int CALLBACK TreeCompareFunc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 			// (strcmp almost returns correct values, except the results are signed anynums, not explicitly -1/0/1)
 			//
 			return ITEM1_MATCHES_ITEM2;
-/*
-			int i = strcmp(seq1->GetEnum(),seq2->GetEnum());
-
-			if (i<0)
-			{
-				return ITEM1_BEFORE_ITEM2;
-			}
-
-			if (i>0)
-			{
-				return ITEM1_AFTER_ITEM2;
-			}
-
-			return ITEM1_MATCHES_ITEM2;
-*/
 		}
 		break;
 	}
@@ -318,10 +303,7 @@ void CAssimilateView::SortTree()
 //
 void CAssimilateView::UpdateTree()
 {
-	/* DT EDIT - This re-sorts the .car files animation list in alphabetical order which can be very bad. Commenting this out 
-	             leaves the .car file animation list order as-is which is needed for Raven's supplied "humanoid.car" so animations 
-				 aren't broken ingame.*/
-	//SortTree();		// sorts tree according to enum names, sorts model according to new tree
+	//SortTree();		// sorts tree alphabetically, ignoring the ordering in the .CAR
 
 	HTREEITEM hTreeItem_Model = GetTreeCtrl().GetRootItem();	// "klingon"
 

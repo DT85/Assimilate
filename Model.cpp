@@ -4,6 +4,8 @@
 #include "Includes.h"
 #include <assert.h>
 
+#pragma warning( disable : 4018) //'<' signed/unsigned mismatch on lines 1494, 1545 & 1567
+
 #define sANIMATION_CFG_NAME "animation.cfg"
 #define sANIMATION_PRE_NAME "animation.pre"
 
@@ -1540,7 +1542,7 @@ BOOL CModelPropPage::OnInitDialog()
 
 void CModelPropPage::DelPCJEntry(int iIndex)
 {
-	if (iIndex < m_PCJList.size())
+	if (iIndex<m_PCJList.size())
 	{
 		m_PCJList.erase(m_PCJList.begin() + iIndex);
 	}
@@ -1562,7 +1564,7 @@ int CModelPropPage::GetPCJEntries(void)
 
 LPCSTR CModelPropPage::GetPCJEntry(int iIndex)
 {		
-	if (iIndex < m_PCJList.size())
+	if (iIndex<m_PCJList.size())
 	{
 		return (LPCSTR) m_PCJList[iIndex];
 	}

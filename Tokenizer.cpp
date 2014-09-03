@@ -9,6 +9,8 @@
 #endif
 #include "Tokenizer.h"
 
+#pragma warning( disable : 4018) //'>' signed/unsigned mismatch line 629
+
 
 enum
 {
