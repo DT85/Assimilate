@@ -26,11 +26,12 @@ using namespace std;
 #include "YesNoYesAllNoAll.h"
 
 #define bDEFAULT_MULTIPLAYER_MODE false
-#define sDEFAULT_ENUM_FILENAME	"w:/bin/gamesource/anims.h"	// "q:/bin_nt/SourceForBehavEd/anims.h"	//"d:/source/startrek/utils4/assimilate/anims.h"
-#define sDEFAULT_ENUM_FILENAME_MULTI "w:/bin/gamesource/anims.h"	//"d:/source/startrek/utils4/assimilate/anims.h"
-#define sDEFAULT_QDATA_LOCATION	"k:\\util\\carcass.exe"	// "q:/bin_nt/q3data.exe"
-#define sDEFAULT_QUAKEDIR		"w:/Game/base/"			// "q:/quake/baseEF/"
-#define dwDEFAULT_BUFFERSIZE	4096					// 1024 (having this is pretty gay)
+#define sDEFAULT_ENUM_FILENAME	"w:/gamesource/anims.h"
+#define sDEFAULT_ENUM_FILENAME_MULTI "w:/gamesource/anims.h"
+#define sDEFAULT_QDATA_LOCATION	"w:/Tools/carcass.exe"
+#define sDEFAULT_QUAKEDIR		"C:/Program Files/LucasArts/Star Wars JK II Jedi Outcast/GameData/base/"
+#define sDEFAULT_QUAKEDIRJA		"C:/Program Files/LucasArts/Star Wars Jedi Knight Jedi Academy/GameData/base/"
+#define dwDEFAULT_BUFFERSIZE	4096
 
 #define DATA_TO_DIALOG FALSE
 #define DIALOG_TO_DATA TRUE
