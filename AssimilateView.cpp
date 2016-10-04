@@ -345,8 +345,8 @@ PlayerMode_e CAssimilateView::GetSingleOrMultiPlayerMode()
 
 	if (psEnumFilename && !stricmp(psEnumFilename,sDEFAULT_ENUM_FILENAME))
 		ePlayerMode = eMODE_SINGLE;
-	else
-	if (psEnumFilename && !stricmp(psEnumFilename,sDEFAULT_ENUM_FILENAME_MULTI))
+
+	else if (psEnumFilename && !stricmp(psEnumFilename,sDEFAULT_ENUM_FILENAME_MULTI))
 		ePlayerMode = eMODE_MULTI;
 
 	return ePlayerMode;
@@ -361,7 +361,8 @@ void CAssimilateView::SetFirstModelTitleAndMode()
 	if (curModel)
 	{
 		HTREEITEM hTreeItem = tree.GetRootItem();
-		tree.SetItemText(hTreeItem, va("%s: ( %s )",curModel->GetName(), (ePlayerMode == eMODE_SINGLE)?"Single-Player Mode":(ePlayerMode == eMODE_MULTI)?"Multi-Player Mode":"Unknown Mode - Prefs not setup?"));
+		//tree.SetItemText(hTreeItem, va("%s: ( %s )", curModel->GetName(), ePlayerMode == eMODE_SINGLE ? "Preferences set to Single-Player Mode" : ePlayerMode == eMODE_MULTI ? "Preferences set to Multi-Player Mode":"Preferences are user-defined."));
+		tree.SetItemText(hTreeItem, va("%s:", curModel->GetName()));
 	}
 }
 

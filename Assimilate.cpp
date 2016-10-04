@@ -299,7 +299,7 @@ bool CAssimilateApp::SetQDataFilename(LPCTSTR filename)
 	m_QDataFilename = name;
 	return true;
 }
-	
+
 bool CAssimilateApp::SetBufferSize(DWORD buffersize)
 {
 	if (buffersize != m_buffersize)
@@ -549,8 +549,7 @@ void CAssimilateApp::OnProperties()
 			{
 				InfoBox("Since you're now using the single player enum table but you weren't previously, be warned that certain sequences may be sorted slightly differently.\n\nTHIS WILL STILL WORK FINE, but may affect (eg) WinDiff, or cause non-alphabetical sort order which could make things harder to find\n\n\nIf this bothers you, do a NEW (without saving) and reload this model now");
 			}
-			else
-			if (ePlayerMode == eMODE_MULTI)
+			else if (ePlayerMode == eMODE_MULTI)
 			{
 				InfoBox("Attention! Multiplayer sequence order is fixed, but switching to the multiplayer settings from different settings can result in badly-sorted sequence order.\n\nYou should now do a NEW (without saving) and reload this model");
 			}
@@ -670,7 +669,7 @@ void CAssimilatePropPage::OnButtonDefaults()
 	if (m_enumfilename.IsEmpty()	||
 		m_qdata.IsEmpty()			||
 		m_csQuakeDir.IsEmpty()		||
-		GetYesNo("Override all fields with single player defaults,\n\nAre you Sure?")
+		GetYesNo("Override all fields with Jedi Outcast defaults,\n\nAre you Sure?")
 		)
 	{
 		m_bMultiPlayer  = false;
@@ -691,14 +690,14 @@ void CAssimilatePropPage::OnButtonDefaultsMulti()
 	if (m_enumfilename.IsEmpty()	||
 		m_qdata.IsEmpty()			||
 		m_csQuakeDir.IsEmpty()		||
-		GetYesNo("Override all fields with multi player defaults,\n\nAre you Sure?")
+		GetYesNo("Override all fields with Jedi Academy defaults,\n\nAre you Sure?")
 		)
 	{
-		m_bMultiPlayer  = true;
+		m_bMultiPlayer  = false;
 		m_enumfilename	= sDEFAULT_ENUM_FILENAME_MULTI;
 		m_qdata			= sDEFAULT_QDATA_LOCATION;
 		m_buffsize		= dwDEFAULT_BUFFERSIZE;
-		m_csQuakeDir	= sDEFAULT_QUAKEDIR;	
+		m_csQuakeDir	= sDEFAULT_QUAKEDIRJA;	
 
 		UpdateData(false);	// vars -> dialog
 	}	

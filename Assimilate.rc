@@ -203,10 +203,10 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About Assimilate"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
-    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,21,20
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
     LTEXT           "Assimilate Version 3.0",IDC_STATIC,40,10,119,8,
                     SS_NOPREFIX
-    LTEXT           "Copyright (C) 1999 Raven Software, updated 2014",
+    LTEXT           "Copyright (C) 1999 Raven Software, updated 2016",
                     IDC_STATIC,39,24,165,21
     DEFPUSHBUTTON   "OK",IDOK,81,60,50,14,WS_GROUP
     LTEXT           "Written by M.Crowns, S.Cork",IDC_STATIC,39,37,121,8
@@ -214,35 +214,36 @@ END
 
 IDD_PP_MODEL DIALOGEX 0, 0, 309, 359
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "Model"
+CAPTION "Model Properties"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
-    GROUPBOX        "Build Parameters ",IDC_STATIC,7,6,295,346
+    GROUPBOX        "",IDC_STATIC,7,6,295,346
     CONTROL         "Skew 90 (only use this if you REALLY need to, i.e. leave it alone!)",
-                    IDC_CHECK_SKEW90,"Button",BS_AUTOCHECKBOX | WS_DISABLED | 
-                    WS_TABSTOP,17,18,222,10
-    CONTROL         "Smooth all surfaces",IDC_CHECK_SMOOTH_ALL,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,17,28,77,10
+                    IDC_CHECK_SKEW90,"Button",BS_AUTOCHECKBOX | NOT 
+                    WS_VISIBLE | WS_DISABLED | WS_TABSTOP,17,58,222,10
+    CONTROL         "Smooth all surfaces (overrides mesh normals)",
+                    IDC_CHECK_SMOOTH_ALL,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,17,15,157,10
     GROUPBOX        "Skeleton",IDC_STATIC,17,75,277,74
     EDITTEXT        IDC_EDIT_SKELPATH,23,127,263,14,ES_AUTOHSCROLL | 
                     WS_GROUP
-    LTEXT           "Path,  eg ""models/players/interrogator/interrogator""  ( no extension )",
-                    IDC_STATIC_SKELPATH,24,116,239,11
-    GROUPBOX        "Origin - Adjust",IDC_STATIC,17,155,277,31
+    LTEXT           "Path and filename  (example ""models/players/_humanoid/_humanoid"" no extension)",
+                    IDC_STATIC_SKELPATH,24,115,267,11
+    GROUPBOX        "Origin Adjustment",IDC_STATIC,17,155,277,31
     EDITTEXT        IDC_EDIT_ORIGINX,31,165,52,14,ES_AUTOHSCROLL
     EDITTEXT        IDC_EDIT_ORIGINY,99,165,55,14,ES_AUTOHSCROLL
     EDITTEXT        IDC_EDIT_ORIGINZ,172,165,49,14,ES_AUTOHSCROLL
     LTEXT           "X",IDC_STATIC,23,167,8,8
     LTEXT           "Y",IDC_STATIC,91,167,8,8
     LTEXT           "Z",IDC_STATIC,163,167,8,8
-    EDITTEXT        IDC_EDIT_SCALE,182,83,41,14,ES_AUTOHSCROLL
-    LTEXT           "Scale (default = 1.0)",IDC_STATIC,226,85,64,8
+    EDITTEXT        IDC_EDIT_SCALE,245,83,41,14,ES_AUTOHSCROLL
+    LTEXT           "Scale:",IDC_STATIC,222,87,21,8
     CONTROL         "Make .skin file",IDC_CHECK_MAKESKIN,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,17,49,61,10
-    CONTROL         "Remove duplicate verts from mesh during compile",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,17,36,61,10
+    CONTROL         "Remove duplicate vertices from meshes",
                     IDC_CHECK_LOSEDUPVERTS,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,17,39,172,10
-    CONTROL         "Makes it's own skeleton",IDC_CHECK_MAKESKEL,"Button",
+                    WS_TABSTOP,17,26,141,10
+    CONTROL         "Creates its own skeleton",IDC_CHECK_MAKESKEL,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,25,87,92,10
     GROUPBOX        "PCJ List",IDC_PCJ_STATIC,17,191,277,151
     LISTBOX         IDC_LIST_PCJ,24,204,263,109,LBS_SORT | 
@@ -250,11 +251,12 @@ BEGIN
     EDITTEXT        IDC_EDIT_PCJ,23,319,130,14,ES_AUTOHSCROLL
     PUSHBUTTON      "<---- Add to PCJ list",IDC_BUTTON_PCJ,157,319,68,14
     PUSHBUTTON      "Delete PCJ entry",IDC_BUTTON_DELPCJ,226,319,61,14
-    CONTROL         "Keep ""motion"" bone",IDC_CHECK_KEEPMOTIONBONE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,17,60,87,10
+    CONTROL         "Keep ""motion"" bone (only if there is a ""motion"" bone present)",
+                    IDC_CHECK_KEEPMOTIONBONE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,17,47,246,10
     CONTROL         "Uses ( older ) pre-quaternian animation-compression",
-                    IDC_CHECK_PREQUAT,"Button",BS_AUTOCHECKBOX | WS_DISABLED | 
-                    WS_TABSTOP,25,101,194,10
+                    IDC_CHECK_PREQUAT,"Button",BS_AUTOCHECKBOX | NOT 
+                    WS_VISIBLE | WS_DISABLED | WS_TABSTOP,25,101,194,10
 END
 
 IDD_PP_SEQUENCE DIALOGEX 0, 0, 542, 201
@@ -334,25 +336,24 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Preferences"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
-    RTEXT           "Enum file:",IDC_STATIC,18,7,32,8
-    EDITTEXT        IDC_ENUM,53,7,160,12,ES_AUTOHSCROLL
-    PUSHBUTTON      "...",IDC_ENUM_BROWSE,213,7,15,11
-    RTEXT           "Buffer size:",IDC_STATIC,18,22,32,8
-    EDITTEXT        IDC_BUFFSIZE,53,22,32,12,ES_AUTOHSCROLL
-    RTEXT           "Compiler:",IDC_STATIC,18,36,32,8
-    EDITTEXT        IDC_QDATA,53,37,160,12,ES_AUTOHSCROLL
-    PUSHBUTTON      "...",IDC_QDATA_BROWSE,213,37,15,11
-    EDITTEXT        IDC_QUAKEDIR,53,75,160,12,ES_AUTOHSCROLL
-    LTEXT           "Quake Dir:       eg: Q:\\quake\\baseq3\\               ( note trailing '\\'  )",
-                    IDC_STATIC,7,65,219,8
-    PUSHBUTTON      "Default all fields for StarWars Single Player",
-                    IDC_BUTTON_DEFAULTS,12,110,211,14
-    CONTROL         "MultiPlayer",IDC_CHECK_MULTIPLAYER,"Button",
-                    BS_AUTOCHECKBOX | BS_LEFTTEXT | WS_TABSTOP,10,94,51,10
-    LTEXT           "( Ignore this dumb field, I'll lose it later )",
-                    IDC_STATIC,87,23,121,8
-    PUSHBUTTON      "Default all fields for StarWars Multi Player (subject to change)",
+    RTEXT           "Animation Enum File:",IDC_STATIC,11,11,66,8
+    EDITTEXT        IDC_ENUM,81,8,129,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "...",IDC_ENUM_BROWSE,211,9,15,11
+    RTEXT           "Carcass:",IDC_STATIC,45,28,32,8
+    EDITTEXT        IDC_QDATA,81,24,129,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "...",IDC_QDATA_BROWSE,211,25,15,11
+    EDITTEXT        IDC_QUAKEDIR,63,55,159,12,ES_AUTOHSCROLL
+    LTEXT           "Base Directory:",IDC_STATIC,11,57,49,8
+    PUSHBUTTON      "Default all fields to Jedi Outcast",IDC_BUTTON_DEFAULTS,
+                    12,110,211,14
+    PUSHBUTTON      "Default all fields to Jedi Academy",
                     IDC_BUTTON_DEFAULTS_MULTI,12,129,211,14
+    CONTROL         "MultiPlayer",IDC_CHECK_MULTIPLAYER,"Button",
+                    BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | 
+                    WS_DISABLED | WS_TABSTOP,23,94,51,10
+    RTEXT           "Buffer size:",IDC_STATIC,3,80,55,8,NOT WS_VISIBLE
+    EDITTEXT        IDC_BUFFSIZE,63,76,32,12,ES_AUTOHSCROLL | NOT WS_VISIBLE | 
+                    WS_DISABLED
 END
 
 IDD_ANIMPICKER DIALOGEX 0, 0, 549, 463
@@ -372,8 +373,8 @@ BEGIN
     LTEXT           "BOTH_xxxx",IDC_STATIC,429,11,38,8
     LTEXT           "Double-click an entry to select. Entries beginning with ( * ) are already in use.",
                     IDC_STATIC,158,437,258,14
-    CONTROL         "Filter-out used",IDC_CHECK_FILTEROUTUSED,"Button",
-                    BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,415,434,59,14
+    CONTROL         "Filter Used Entries",IDC_CHECK_FILTEROUTUSED,"Button",
+                    BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,404,434,70,14
     LISTBOX         IDC_LIST_FACE,19,234,160,183,LBS_NOINTEGRALHEIGHT | 
                     WS_VSCROLL | WS_TABSTOP
     LISTBOX         IDC_LIST_VM,193,234,160,184,LBS_NOINTEGRALHEIGHT | 
@@ -400,17 +401,17 @@ BEGIN
     CTEXT           "static",IDC_STATIC6,16,60,277,9,SS_CENTERIMAGE
 END
 
-IDD_BUILD_ALL DIALOG  0, 0, 186, 87
+IDD_BUILD_ALL DIALOGEX 0, 0, 186, 87
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Build-Models"
-FONT 8, "MS Sans Serif"
+CAPTION "Mass Compile"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,27,66,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,106,66,50,14
     EDITTEXT        IDC_EDIT_BUILDPATH,15,25,154,14,ES_AUTOHSCROLL
     LTEXT           "Game path to start at:    ( eg ""models/players"" )",
                     IDC_STATIC,17,15,149,8
-    CONTROL         "Pre-Validate all CAR files before build",
+    CONTROL         "Pre-Validate all .car files before mass compile",
                     IDC_CHECK_PREVALIDATECARS,"Button",BS_AUTOCHECKBOX | 
                     BS_MULTILINE | WS_TABSTOP,15,46,155,14
 END

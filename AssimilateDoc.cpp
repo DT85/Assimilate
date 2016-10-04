@@ -2003,7 +2003,7 @@ void CAssimilateDoc::OnCarWashActual()
 
 	if (!strStartDir.GetLength())
 	{			
-		ErrorBox("Quake path not known at this point. Prefs not setup?");
+		ErrorBox("Quake path not known at this point. Check preferences are set correctly.");
 		gbCarwashErrorsOccured = true;
 		return;
 //		if (!GetYesNo("Quake path not known at this point because you've not loaded anything yet\n\nShould I assume " "\"" sASSUMEPATH "\"" "?"))
@@ -2790,7 +2790,7 @@ void CAssimilateDoc::OnEditBuildDependant()
 		{
 			// should never happen...
 			//
-			ErrorBox("Base path not known at this point. Prefs not setup?");
+			ErrorBox("Base path not known at this point. Check preferences are set correctly.");
 			return;
 		}
 
@@ -2993,7 +2993,7 @@ void CAssimilateDoc::OnEditBuildall()
 
 	if (!strStartDir.GetLength())
 	{
-		ErrorBox("Base path not known at this point. Prefs not setup?");
+		ErrorBox("Base path not known at this point. Check preferences are set correctly.");
 		return;
 	}
 
@@ -3348,12 +3348,12 @@ void CAssimilateDoc::OnEditLaunchmodviewoncurrent()
 {
 	char sExecString[MAX_PATH];
 
-	sprintf(sExecString,"start %s.glm",Filename_WithoutExt(m_strPathName));
+	sprintf(sExecString, "start %s.glm", Filename_WithoutExt(m_strPathName));
 
-	if (RunApp(sExecString))
+	if (RunApp (sExecString))
 	{
 		// ok...
-		//		
+		//
 	}
 	else
 	{
