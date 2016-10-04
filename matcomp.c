@@ -234,4 +234,3 @@ void MC_UnCompress(float mat[3][4],const unsigned char * comp)
 	mat[2][2]=MC_Norms[uval][2];
 
 }
-

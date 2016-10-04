@@ -1,5 +1,3 @@
-// Sequences.cpp
-
 #include "Stdafx.h"
 #include "Includes.h"
 #include "gla.h"
@@ -59,12 +57,6 @@ void CSequence::Delete()
 		free(m_sound);
 		m_sound = NULL;
 	}
-	// now a cstring
-//	if (m_enum != NULL)
-//	{
-//		free(m_enum);
-//		m_enum = NULL;
-//	}
 
 	for (int i=0; i<MAX_ADDITIONAL_SEQUENCES; i++)
 	{
@@ -87,9 +79,9 @@ CSequence* CSequence::CreateFromFile(LPCTSTR path, CComment* comments)
 	retval->_Init(false,!!(strstr(path,".gla")),name, 0, 0, 0, iDEFAULTSEQFRAMESPEED,iDEFAULTSEQFRAMESPEED,comments);	// (noticed) this fills in certain fields wrongly until the next 2 lines correct them
 	retval->DeriveName();
 	retval->ReadHeader();
-	//
+
 	// at this point the m_path member is wrong because it contains the full path including "\quake\...", so...
-	//
+
 	CString newPath = retval->GetPath();	
 	Filename_RemoveBASEQ(newPath);
 	retval->SetPath(newPath);	
@@ -117,7 +109,7 @@ void ReadXSIHeader(LPCSTR psFilename, int &iStartFrame, int &iFrameCount, int &i
 	OutputDebugString(va("ReadXSIHeader(): %s\n",psFilename));
 
 	// let's try the fast way of reading first, by scanning directly for the header value if it's a 3.0 file...
-	//
+
 	{
 		bool bGotInfo = false;
 		FILE *fp = fopen(psFilename,"ra");
@@ -125,8 +117,8 @@ void ReadXSIHeader(LPCSTR psFilename, int &iStartFrame, int &iFrameCount, int &i
 		{
 			fseek(fp,0,SEEK_END);
 			int iLen = ftell(fp);
-			if (iLen>1024)//2048)
-				iLen=1024;//2048;	// findmeste
+			if (iLen>1024)
+				iLen=1024;	// findmeste
 			char *psFileBin = new char[iLen+1];
 			assert(psFileBin);
 			psFileBin[iLen]='\0';
@@ -134,19 +126,8 @@ void ReadXSIHeader(LPCSTR psFilename, int &iStartFrame, int &iFrameCount, int &i
 			if (fread(psFileBin,1,iLen,fp) == (size_t)iLen)
 			{
 				// I'm not sure how to tie this in with Gil's rather-complex XSI reader, so do this seperately...
-				//
+
 				{
-					/* Field I want to read looks like this:
-
-					SI_Scene testdeath { 
-						"FRAMES", 
-						1.000000, 
-						62.000000, 
-						30.000000, 
-					}
-
-					*/				
-					
 					char *psSearch = strstr(psFileBin,"SI_Scene");
 
 					if (psSearch)
@@ -177,7 +158,7 @@ void ReadXSIHeader(LPCSTR psFilename, int &iStartFrame, int &iFrameCount, int &i
 							if (iFieldsRead==4 && !strcmp(sTemp,"FRAMES"))
 							{
 								// success...
-								//
+
 								iStartFrame = 0;
 								iFrameCount = ((int) fFrames - (int) fOneBased)+1;
 								iFrameSpeed = (int) fFPS;
@@ -196,13 +177,11 @@ void ReadXSIHeader(LPCSTR psFilename, int &iStartFrame, int &iFrameCount, int &i
 	}
 
 	// if we get here, then this is probably an old 1.3 format file, so read the frames count etc the tedious way...
-	//
+
 	// (Note that the XSI reader here is the original Assimilate one, not Gil's super-spiffy read-anything version, since it
 	//	only has to deal with the old format files which this one copes with ok)...
-	//
-	int iNumFrames = XSI_LoadFile(psFilename);
 
-//	assert(iNumFrames == iFrameCount);
+	int iNumFrames = XSI_LoadFile(psFilename);
 
 	iStartFrame = 0;
 	iFrameCount = iNumFrames;
@@ -217,16 +196,14 @@ bool gbSkipXSIRead = false;
 typedef pair< int, int> FrameCountAndSpeed_t;
 typedef map <CString, FrameCountAndSpeed_t> ASECachedInfo_t;
 ASECachedInfo_t ASECachedInfo;
-//
+
 // this actually reads XSI or GLA headers...  historical mutation strikes again...
-//
+
 static void ReadASEHeader_Actual(LPCSTR psFilename, int &iStartFrame, int &iFrameCount, int &iFrameSpeed, bool bReadingGLA, bool bCanSkipXSIRead /* = false */)
 {
 	// since the XSI loader is so damn slow and flakey I'm going to have to cache the info to avoid re-reading...
-	//
-
 	// do we have it in the cache?...
-	//
+
 	if (strstr(psFilename,".xsi") || strstr(psFilename,".XSI"))
 	{
 		ASECachedInfo_t::iterator iter = ASECachedInfo.find(psFilename);
@@ -240,7 +217,7 @@ static void ReadASEHeader_Actual(LPCSTR psFilename, int &iStartFrame, int &iFram
 	}
 
 	// is it a GLA file?...
-	//
+
 	if (bReadingGLA)
 	{
 		char sTemp[1024];
@@ -258,7 +235,7 @@ static void ReadASEHeader_Actual(LPCSTR psFilename, int &iStartFrame, int &iFram
 
 
 	// it's not in the cache, but we may be able to avoid having to read it under some circumstances...
-	//
+
 	bool bXSIShouldBeRead = true;
 
 	if (gbCarWash_DoingScan)
@@ -289,7 +266,7 @@ static void ReadASEHeader_Actual(LPCSTR psFilename, int &iStartFrame, int &iFram
 			if (iFrameCount!=0)
 			{
 				// cache it for future...
-				//
+
 				ASECachedInfo[psFilename] = FrameCountAndSpeed_t(iFrameCount,iFrameSpeed);
 			}
 		}
@@ -297,7 +274,7 @@ static void ReadASEHeader_Actual(LPCSTR psFilename, int &iStartFrame, int &iFram
 	}
 
 	// it must be an ASE file then instead....
-	//
+
 	CTokenizer* tokenizer = CTokenizer::Create();
 	tokenizer->AddParseFile(psFilename, ((CAssimilateApp*)AfxGetApp())->GetBufferSize());
 	tokenizer->SetSymbols(CSequence_s_Symbols);
@@ -378,7 +355,7 @@ void ReadASEHeader(LPCSTR psFilename, int &iStartFrame, int &iFrameCount, int &i
 
 // this does NOT update any member vars, so can be called from outside this class, it just reads member vars to
 //	find out what tables to pass to tokenizer...
-//
+
 void CSequence::ReadASEHeader(LPCSTR psFilename, int &iStartFrame, int &iFrameCount, int &iFrameSpeed, bool bCanSkipXSIRead /* = false */)
 {
 	::ReadASEHeader(psFilename, iStartFrame, iFrameCount, iFrameSpeed, m_bIsGLA, bCanSkipXSIRead);
@@ -549,7 +526,7 @@ void CSequence::SetFill(int value)
 }
 
 // this is now recursive, so watch what you're doing...
-//
+
 void CSequence::_Init(bool bGenLoopFrame, bool bIsGLA, LPCTSTR path, int startFrame, int targetFrame, int frameCount, int frameSpeed, int frameSpeedFromHeader, CComment* comments)
 {
 	static bool bHere = false;	
@@ -560,7 +537,7 @@ void CSequence::_Init(bool bGenLoopFrame, bool bIsGLA, LPCTSTR path, int startFr
 	m_fill = -1;	
 	// another Jake thing, not sure if this'll stay in when valid StarWars enums are available
 #if 0
-	m_enum = "";//NULL;
+	m_enum = "";
 #else
 	m_enum = path;
 	if (!m_enum.IsEmpty())
@@ -657,7 +634,7 @@ ENUMTYPE GetEnumTypeFromString(LPCSTR lpString)
 }
 
 // some enums are actually only seperators, the way to check is if the char straight after the 1st '_' is valid...
-//
+
 bool IsEnumSeperator(LPCSTR lpString)
 {
 	while (*lpString && *lpString!='_') lpString++;
@@ -675,7 +652,7 @@ bool IsEnumSeperator(LPCSTR lpString)
 }
 
 // converts (eg) "BOTH_   THE DEATH ANIMS"  to "THE DEATH ANIMS"...
-//
+
 LPCSTR StripSeperatorStart(LPCSTR lpString)
 {
 	if (!IsEnumSeperator(lpString))
@@ -694,7 +671,7 @@ LPCSTR StripSeperatorStart(LPCSTR lpString)
 
 
 // this is so that part of it can be called for a dialog box string that's not actually in the m_enum var...
-//
+
 ENUMTYPE CSequence::GetEnumTypeFromString(LPCSTR lpString)
 {
 	if (!lpString)
@@ -710,7 +687,7 @@ ENUMTYPE CSequence::GetEnumTypeFromString(LPCSTR lpString)
 	ENUMTYPE et = ::GetEnumTypeFromString(lpString);
 
 	// it has to be valid here, so check we haven't forgotten some code...
-	//
+
 	ASSERT(et!=ET_INVALID);
 
 	return et;
@@ -722,7 +699,7 @@ ENUMTYPE CSequence::GetEnumType()
 	//	to match this (which a strcmp won't detect). This shouldn't really be necessary since the menu system only
 	//	allows you to pick valid ones from anims.h, but it copes with people editing ascii files by hand (or alerts
 	//	people to entries being subsequently deleted from anims.h after use)
-	//
+
 	if (ValidEnum())
 	{	
 		return GetEnumTypeFromString(GetEnum());
@@ -768,12 +745,11 @@ int CSequence::GetDisplayIconForTree(CModel *pModel)
 
 
 // not the fastest of routines, but I only call it occasionally...
-//
+
 LPCSTR CSequence::GetDisplayNameForTree(CModel* pModel, bool bIncludeAnimEnum, bool bIncludeFrameDetails, bool bViewFrameDetails_Additional, CDC* pDC)
 {
 	if (pModel->IsGhoul2())
 	{
-//		bIncludeAnimEnum = false;	// :-)
 	}
 
 
@@ -806,7 +782,7 @@ LPCSTR CSequence::GetDisplayNameForTree(CModel* pModel, bool bIncludeAnimEnum, b
 	string += GetName();
 	ACCOUNTFORWIDTH(300);	
 	
-	if (bIncludeAnimEnum && strlen(GetEnum()))	//ValidEnum())
+	if (bIncludeAnimEnum && strlen(GetEnum()))
 	{
 		CString _enum;
 
@@ -843,7 +819,7 @@ LPCSTR CSequence::GetDisplayNameForTree(CModel* pModel, bool bIncludeAnimEnum, b
 			else
 			{
 				// either empty string, or a bad enum... (because of anims.h being edited)
-				//
+
 				if (strlen(AdditionalSeqs[i]->GetEnum()))
 				{
 					string += ",   ";
@@ -942,21 +918,6 @@ LPCTSTR CSequence::GetAction()
 
 void CSequence::SetEnum(LPCTSTR name)
 {
-	/*
-	if (m_enum != NULL)
-	{
-		free(m_enum);
-	}
-	if ((name == NULL) || (strlen(name) < 1))
-	{
-		m_enum = NULL;
-	}
-	else
-	{
-		m_enum = (char*)malloc(strlen(name) + 1);
-		strcpy(m_enum, name);
-	}
-	*/
 	m_enum = name;
 
 	SetValidEnum(((CAssimilateApp*)AfxGetApp())->ValidEnum(m_enum));
@@ -985,14 +946,14 @@ void CSequence::AddComment(CComment* comment)
 }
 
 // this should only be called on sequence that you know are Additional ones...
-//
+
 bool CSequence::AdditionalSequenceIsValid()
 {
 	return (GetEnumType()!=ET_INVALID);
 }
 
 // should only really be called on master sequences, though harmless otherwise...
-//
+
 int CSequence::GetValidAdditionalSequences()
 {
 	int iCount = 0;
@@ -1041,23 +1002,6 @@ void CSequence::Write(CTxtFile* file, bool bPreQuat)
 
 	Filename_AccountForLOD(path, giLODLevelOverride);
 	file->Write(path);	
-/*
-	if (m_frameCount > -1)
-	{
-		file->Space();
-		file->Write("-", CAssimilateDoc::GetKeyword(TK_AS_FRAMES, TABLE_GRAB), " ");
-		file->Write(m_startFrame);
-		file->Space();
-		file->Write(m_targetFrame);
-		file->Space();
-		file->Write(m_frameCount);
-	}
-*/
-
-//	if (strstr(path,"death16"))
-//	{
-//		int z=1;
-//	}
 
 	if (!IsGLA())
 	{
@@ -1065,36 +1009,30 @@ void CSequence::Write(CTxtFile* file, bool bPreQuat)
 		{
 			file->Space();
 			file->Write("-", CAssimilateDoc::GetKeyword(TK_AS_FILL, TABLE_GRAB), " ");
-	//		file->Space();
 			file->Write(m_fill);
 		}
 		if (m_loopFrame != 0)
 		{
 			file->Space();
 			file->Write("-", CAssimilateDoc::GetKeyword(TK_AS_LOOP, TABLE_GRAB), " ");
-	//		file->Space();
 			file->Write(m_loopFrame);
 		}
-	//	if (m_enum && (strcmp(m_name, m_enum) != 0))
 		if (m_enum.GetLength() && (strcmp(m_name, m_enum) != 0))
 		{
 			file->Space();
 			file->Write("-", CAssimilateDoc::GetKeyword(TK_AS_ENUM, TABLE_GRAB), " ");
-	//		file->Space();
 			file->Write(m_enum);
 		}
 		if (m_sound != NULL)
 		{
 			file->Space();
 			file->Write("-", CAssimilateDoc::GetKeyword(TK_AS_SOUND, TABLE_GRAB), " ");
-	//		file->Space();
 			file->Write(m_sound);
 		}
 		if (m_action != NULL)
 		{
 			file->Space();
 			file->Write("-", CAssimilateDoc::GetKeyword(TK_AS_ACTION, TABLE_GRAB), " ");
-	//		file->Space();
 			file->Write(m_action);
 		}	
 
@@ -1110,7 +1048,7 @@ void CSequence::Write(CTxtFile* file, bool bPreQuat)
 			)
 		{
 			// write out start marker (and stop-marker at bottom) so qdata can skip this more easily...
-			//
+
 			file->Space();
 			file->Write("-", CAssimilateDoc::GetKeyword(TK_AS_QDSKIPSTART, TABLE_GRAB));
 			
@@ -1142,7 +1080,7 @@ void CSequence::Write(CTxtFile* file, bool bPreQuat)
 			}
 
 			// this is an unpleasant abuse, but needed to retro-hack into old versions of carcass...
-			//
+
 			if (bPreQuat)
 			{
 				file->Space();
@@ -1150,11 +1088,10 @@ void CSequence::Write(CTxtFile* file, bool bPreQuat)
 			}
 
 			// any other stuff in future (sound events etc)...
-			//
 			// ...
 
 			// write end marker (so QData knows to start reading again)...
-			//
+
 			file->Space();
 			file->Write("-", CAssimilateDoc::GetKeyword(TK_AS_QDSKIPSTOP, TABLE_GRAB));
 		}
@@ -1164,11 +1101,11 @@ void CSequence::Write(CTxtFile* file, bool bPreQuat)
 }
 
 // this writes the CFG file... (it's also now recursive, albeit with changing 'this' ptrs, so be aware of that)
-//
+
 void CSequence::WriteExternal(CModel *pModel, CTxtFile* file, bool bMultiPlayerFormat)
 {
 	// this now keeps the spacing nicer for cutting and pasting into source...
-	//
+
 	CString sOutputEnum = m_enum;
 	if (sOutputEnum.IsEmpty())
 	{
@@ -1209,12 +1146,9 @@ void CSequence::WriteExternal(CModel *pModel, CTxtFile* file, bool bMultiPlayerF
 
 		file->Write(sOutputEnum, "\t");	
 
-	//	file->Write(m_startFrame);
-	//	file->Write("\t");
-
 		// special code, if this is a LEGS type enum then we need to adjust the target frame to 'lose' the chunk
 		//	of frames occupied by the TORSO types...
-		//
+
 		int iTargetFrame = m_targetFrame;
 		file->Write(iTargetFrame);
 		file->Write("\t");
@@ -1244,7 +1178,7 @@ void CSequence::WriteExternal(CModel *pModel, CTxtFile* file, bool bMultiPlayerF
 	}
 
 	// now for a bit of recursion, write out any additional sequences that this sequence owns...
-	//
+
 	for (int i=0; i<MAX_ADDITIONAL_SEQUENCES; i++)
 	{
 		CSequence *seq = AdditionalSeqs[i];
@@ -1412,7 +1346,7 @@ void CSequencePropPage::OnButtonChooseanimationenum()
 }
 
 // deliberately does not do enum...
-//
+
 #define DEFAULT_FROM_MASTER(number) \
 			if (m_AnimationEnum ## number.IsEmpty())	\
 			{											\
@@ -1736,7 +1670,7 @@ void CSequencePropPage::OnKillfocusEditAnimationenum()
 }
 
 // this is called by the OK and/or Apply buttons...
-//
+
 void CSequencePropPage::OkOrApply()
 {
 	m_sequence->SetFrameCount(m_frameCount);
@@ -1760,7 +1694,7 @@ void CSequencePropPage::OkOrApply()
 	OK_ADDITIONAL(6);
 
 	// ensure I don't forget any future expansions by putting the next index in the sequence in an err-check...
-	//
+
 	#if !(7 == (MAX_ADDITIONAL_SEQUENCES+2))
 	#error Need more OK_ code...
 	#endif
@@ -1774,7 +1708,7 @@ void CSequencePropPage::OnOK()
 	OkOrApply();
 
 	// damn stupid C++...
-	//
+
 	if (ghAssimilateView)
 	{
 		CAssimilateDoc* pDoc = ghAssimilateView->GetDocument();
@@ -1813,7 +1747,7 @@ BOOL CSequencePropPage::OnInitDialog()
 	INIT_ADDITIONAL(6);
 
 	// ensure I don't forget any future expansions by putting the next index in the sequence in an err-check...
-	//
+
 	#if !(7 == (MAX_ADDITIONAL_SEQUENCES+2))
 	#error Need more INIT_ code...
 	#endif
@@ -1840,7 +1774,7 @@ void CSequencePropPage::HandleAdditionalEditBoxesGraying()
 	bool bOnOff;
 
 	// note check runs off the dialog box strings, NOT the standard m_sequence member (because the data isn't set till OK)
-	//
+
 #define GRAY_ADDITIONAL(number)	\
 	bOnOff = !(m_sequence->GetEnumTypeFromString(m_AnimationEnum ## number) == ET_INVALID);\
 	GetDlgItem(IDC_STARTFRAME ## number)->EnableWindow(bOnOff);	\
@@ -1855,7 +1789,7 @@ void CSequencePropPage::HandleAdditionalEditBoxesGraying()
 	GRAY_ADDITIONAL(6);
 
 	// ensure I don't forget any future expansions by putting the next index in the sequence in an err-check...
-	//
+
 	#if !(7 == (MAX_ADDITIONAL_SEQUENCES+2))
 	#error Need more gray-handler code...
 	#endif
@@ -1868,4 +1802,3 @@ void CSequencePropPage::HandleAllItemsGraying()
 		HandleAdditionalEditBoxesGraying();
 	}
 }
-

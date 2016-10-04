@@ -15,14 +15,6 @@
 #include "Includes.h"
 
 
-/*
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <math.h>
-#include <windows.h>
-#include <direct.h>
-*/
 #include "matrix4.h"
 #include "xsiimp.h"
 
@@ -227,23 +219,19 @@ TxtNode *ReadANode(char *at,char *end,char **atout)
 	int len;
 	char *retat;
 	char *start;
-//OutputDebugString("***");
 	start=ReadToken(at,end,len,&retat);
 	at=retat;
 	*atout=at;
 	if (!start)
 	{
-//OutputDebugString("Eof\n");
 		return 0;
 	}
 	if (*start=='}')
 	{
-//OutputDebugString("End}\n");
 		return 0;
 	}
 	if (*start=='{')
 	{
-//OutputDebugString("Start{\n");
 		ret=new TxtNode;
 		TxtNode **last=&ret->child;
 		while (1)
@@ -301,8 +289,6 @@ int FindNodes(SceneNodes *parent,TxtNode *t)
 					mystrncpy(tmpNode.name,sib->text+4,sib->length-4);
 				else
 					mystrncpy(tmpNode.name,sib->text,sib->length);
-//OutputDebugString(tmpNode.name);
-//OutputDebugString("\n");
 
 				sib=sib->sibling;
 				if (!sib)
@@ -582,7 +568,6 @@ int FindPKeys(TxtNode *t)
 			}
 			sib=sib->sibling;
 		}
-//		if (foundkeys)
 		{
 			if (maxmatframe>maxframe)
 				maxframe=maxmatframe;
@@ -752,7 +737,7 @@ int FindAnims(TxtNode *t)
 }
 
 /*
-** returns the number of frames loaded
+Returns the number of frames loaded
 */
 int XSI_LoadFile(const char *filename)
 {
@@ -898,4 +883,3 @@ void XSI_Cleanup()
 	endframe=-10000;
 	CacheName[0]=0;
 }
-

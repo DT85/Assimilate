@@ -1,5 +1,3 @@
-// TxtFile.cpp
-
 #include <afxwin.h> 
 #include "TxtFile.h"
 
@@ -148,7 +146,7 @@ void CTxtFile::WriteString(LPCTSTR string)
 //	member "GetStringValue()" but that's shadowed in a frightening number of programs, and I don't want to break
 //	something miles away, so I'll just check for them here. Basically, you should never get 2 0x0D bytes next 
 //	to each other, so each time I find one a pair I'll remove the first one.
-//
+
 void CTxtFile::WriteComment(LPCTSTR string, int indent)
 {	
 	const char sFind   [3]={0x0D,0x0D,0};	// a bit horrible really, but needs to be exact bytes
@@ -162,7 +160,7 @@ void CTxtFile::WriteComment(LPCTSTR string, int indent)
 	{
 		// now we know there's no 0x0D/0x0A pairs then any remaining 0x0D bytes are orphans and should be disposed
 		//	of (don't you just love it when text files are read in as binary?)
-		//
+
 		while (temp.Replace(sReplace,NULL));
 		Space(indent);
 		Write("//", temp);

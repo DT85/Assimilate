@@ -1,6 +1,3 @@
-// AssimilateView.cpp : implementation of the CAssimilateView class
-//
-
 #include "stdafx.h"
 #include "Includes.h"
 
@@ -53,7 +50,7 @@ BOOL CAssimilateView::PreCreateWindow(CREATESTRUCT& cs)
 	{
 		return FALSE;
 	}
-	cs.style |= TVS_HASLINES | TVS_LINESATROOT | TVS_HASBUTTONS | TVS_SHOWSELALWAYS/* | TVS_EDITLABELS*/;
+	cs.style |= TVS_HASLINES | TVS_LINESATROOT | TVS_HASBUTTONS | TVS_SHOWSELALWAYS;
 	return TRUE;
 }
 
@@ -76,12 +73,12 @@ BOOL CAssimilateView::OnPreparePrinting(CPrintInfo* pInfo)
 	return DoPreparePrinting(pInfo);
 }
 
-void CAssimilateView::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
+void CAssimilateView::OnBeginPrinting(CDC*, CPrintInfo*)
 {
 	// TODO: add extra initialization before printing
 }
 
-void CAssimilateView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
+void CAssimilateView::OnEndPrinting(CDC*, CPrintInfo*)
 {
 	// TODO: add cleanup after printing
 }
@@ -139,17 +136,16 @@ void CAssimilateView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 
 
 // in practise, the Assimilate app will only ever use one sort type, but wtf...
-//
+
 typedef enum
 {
 	TS_BY_ENUMTYPE = 0,
 } TREESORTTYPE;
 
-//
 // tree item compare callback,
-//
+
 // returns (to windows):- (so do NOT change these defines)
-//
+
 #define ITEM1_BEFORE_ITEM2 -1
 #define ITEM1_MATCHES_ITEM2 0
 #define ITEM1_AFTER_ITEM2   1
@@ -164,7 +160,7 @@ int CALLBACK TreeCompareFunc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 		case TS_BY_ENUMTYPE:
 		{
 			// enumtypes are enum'd lower-numbers-more-important...
-			//
+
 			if (seq1->GetEnumType() < seq2->GetEnumType())
 			{
 				return ITEM1_BEFORE_ITEM2;
@@ -177,7 +173,7 @@ int CALLBACK TreeCompareFunc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 
 			// must be same type, so sort alphabetically...
 			// (strcmp almost returns correct values, except the results are signed anynums, not explicitly -1/0/1)
-			//
+
 			return ITEM1_MATCHES_ITEM2;
 		}
 		break;
@@ -208,13 +204,11 @@ bool TreeSort(CTreeCtrl& tree, TREESORTTYPE ts)
 }
 
 // returns true if any delete has taken place (sequence or model)...
-//
+
 bool CAssimilateView::DeleteCurrentItem(bool bNoQueryForSequenceDelete)
 {
-//	OutputDebugString(va("DeleteCurrentItem %s\n",bNoQueryForSequenceDelete?"CTRL":""));
-
 	// ok, what *is* the current item?
-	//	
+
 	CTreeCtrl& tree = GetTreeCtrl();
 	HTREEITEM theItem = tree.GetSelectedItem();
 	if (theItem == NULL)
@@ -223,7 +217,7 @@ bool CAssimilateView::DeleteCurrentItem(bool bNoQueryForSequenceDelete)
 	}
 
 	// ok, so it's either a model or a sequence...
-	//
+
 	CModel* curModel = NULL;
 	if (tree.GetParentItem(theItem) == NULL)
 	{
@@ -246,7 +240,7 @@ bool CAssimilateView::DeleteCurrentItem(bool bNoQueryForSequenceDelete)
 		if (curSequence != NULL)
 		{
 			// ask them if they're sure, unless the ctrl key is also pressed...
-			//
+
 			if (bNoQueryForSequenceDelete || GetYesNo(va("Delete sequence \"%s\"?",curSequence->GetName())))
 			{
 				tree.DeleteItem(theItem);
@@ -261,19 +255,18 @@ bool CAssimilateView::DeleteCurrentItem(bool bNoQueryForSequenceDelete)
 }
 
 // also re-orders model(s) sequences to match tree order...
-//
+
 void CAssimilateView::SortTree()
 {
 	TreeSort(GetTreeCtrl(),TS_BY_ENUMTYPE);
 
 	// now update models to reflect their positions within the tree struct...
-	//
-	HTREEITEM hTreeItem_Model = GetTreeCtrl().GetRootItem();	// "klingon"
+
+	HTREEITEM hTreeItem_Model = GetTreeCtrl().GetRootItem();
 
 	while (hTreeItem_Model)
 	{
 		CModel* curModel = (CModel*) GetTreeCtrl().GetItemData(hTreeItem_Model);
-//		OutputDebugString(va("item = '%s'\n",(LPCSTR) GetTreeCtrl().GetItemText(hTreeItem_Model)));
 
 		int iSequenceNum = 0;
 
@@ -294,36 +287,29 @@ void CAssimilateView::SortTree()
 	}
 
 	// sod it, too much work to check if re-ordering actually took place. Let's assume it did... :-)
-	//
+
 	GetDocument()->SetModifiedFlag();
 }
 
 // sorts tree according to enum names, sorts model according to new tree, re-draws tree
 //	(re-draw = changes icons & text according to enum-validity and prefs)
-//
+
 void CAssimilateView::UpdateTree()
 {
-	//SortTree();		// sorts tree alphabetically, ignoring the ordering in the .CAR
-
 	HTREEITEM hTreeItem_Model = GetTreeCtrl().GetRootItem();	// "klingon"
 
 	while (hTreeItem_Model)
 	{
 		CModel* curModel = (CModel*) GetTreeCtrl().GetItemData(hTreeItem_Model);
-//		OutputDebugString(va("item = '%s'\n",(LPCSTR) GetTreeCtrl().GetItemText(hTreeItem_Model)));
 
 		HTREEITEM hTreeItem_Sequence = GetTreeCtrl().GetChildItem(hTreeItem_Model);
 
 		while (hTreeItem_Sequence)
 		{			
-			CSequence* curSequence = (CSequence*) GetTreeCtrl().GetItemData(hTreeItem_Sequence);
-
-//			OutputDebugString(va("item = '%s'\n",(LPCSTR) GetTreeCtrl().GetItemText(hTreeItem_Sequence)));
-
-//			gQuakeHelperTreeViewhandle->GetTreeCtrl().SetItemState(hTreeItem, bMatch?TVIS_SELECTED:0, TVIS_SELECTED);					
+			CSequence* curSequence = (CSequence*) GetTreeCtrl().GetItemData(hTreeItem_Sequence);		
 
 			// update this tree item accordingly...
-			//
+
 			CDC *pDC = GetDC();
 			GetTreeCtrl().SetItemText(hTreeItem_Sequence, curSequence->GetDisplayNameForTree(curModel,gbViewAnimEnums,gbViewFrameDetails,gbViewFrameDetails_Additional,pDC));
 			ReleaseDC(pDC);
@@ -361,7 +347,6 @@ void CAssimilateView::SetFirstModelTitleAndMode()
 	if (curModel)
 	{
 		HTREEITEM hTreeItem = tree.GetRootItem();
-		//tree.SetItemText(hTreeItem, va("%s: ( %s )", curModel->GetName(), ePlayerMode == eMODE_SINGLE ? "Preferences set to Single-Player Mode" : ePlayerMode == eMODE_MULTI ? "Preferences set to Multi-Player Mode":"Preferences are user-defined."));
 		tree.SetItemText(hTreeItem, va("%s:", curModel->GetName()));
 	}
 }
@@ -383,14 +368,7 @@ void CAssimilateView::BuildTree()
 			HTREEITEM seqItem = tree.InsertItem(curSequence->GetDisplayNameForTree(curModel,gbViewAnimEnums,gbViewFrameDetails,gbViewFrameDetails_Additional,pDC), item);
 			ReleaseDC(pDC);
 			tree.SetItemData(seqItem, DWORD(curSequence));
-/*			if (curSequence->ValidEnum())
-			{
-				tree.SetItemImage(seqItem, ObjID_Sequence, ObjID_Sequence);
-			}
-			else
-			{
-				tree.SetItemImage(seqItem, ObjID_MissingEnum, ObjID_MissingEnum);
-			}*/
+
 			int iIcon = curSequence->GetDisplayIconForTree(curModel);
 			tree.SetItemImage(seqItem, iIcon, iIcon);
 
@@ -404,8 +382,6 @@ void CAssimilateView::BuildTree()
 
 void CAssimilateView::OnDblclk(NMHDR* pNMHDR, LRESULT* pResult) 
 {	
-//	OutputDebugString("double\n");
-
 	*pResult = 0;
 
 	CTreeCtrl& tree = GetTreeCtrl();
@@ -517,20 +493,8 @@ void CAssimilateView::OnRButtonDblClk(UINT nFlags, CPoint point)
 	}
 	else
 	{
-		/*	// fixme: update this stuff some other time
-		CSequence* theSequence = (CSequence*)tree.GetItemData(theItem);
-		if (theSequence != NULL)
-		{
-			if (theSequence->Parse())
-			{
-				GetDocument()->SetModifiedFlag();
-			}
-		}
-		*/
 	}
 }
-
-
 
 
 void CAssimilateView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
@@ -551,12 +515,10 @@ void CAssimilateView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 }
 
 
-
 // currently tells the document which model is the one the user considers current (ie which one is blue in tree)
-//
+
 void CAssimilateView::OnSelchanged(NMHDR* pNMHDR, LRESULT* pResult) 
 {
-//	OutputDebugString("OnSelchanged TOP\n");
 	GetDocument()->ClearModelUserSelectionBools();
 
 	NM_TREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;	
@@ -588,16 +550,4 @@ void CAssimilateView::OnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 			theModel->SetUserSelectionBool();
 		}
 	}
-
-//	OutputDebugString("OnSelchanged\n");
-//	if (theModel)
-//	{
-//		OutputDebugString(va("Model = %s\n",theModel->GetName()));
-//	}
 }
-
-
-
-
-
-

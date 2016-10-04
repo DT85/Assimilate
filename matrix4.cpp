@@ -207,11 +207,7 @@ int GetTextureSystem(
   Vect3 &M, // returned gradient wrt u
   Vect3 &N, // returned gradient wrt v
   Vect3 &P) // returned location in world space where u=v=0
-/*
-	for and point q in world space, the uv coords are
-	u=(q-P).M
-	v=(q-P).N
-*/
+
 {
         static float a[6][MAX_MATRIX],ans[6];
         static int indx[6];
@@ -717,19 +713,7 @@ void Matrix4::Concat(const Matrix4 &m1,const Matrix4 &m2)
 	{
 
 		assert(this!=&m1&&this!=&m2);
-	/*
-		int i,j,k;
-		float acc=0;
-		for (i=0;i<4;i++)
-		{
-			for (j=0;j<4;j++)
-			{
-				for(k=0,acc=0.;k<4;k++)
-					acc+=m1.m[i][k]*m2.m[k][j];
-				m[i][j]=acc;
-			}
-		}
-	*/
+
 		m2.HXFormPointND(m[0],m1.m[0]);
 		m2.HXFormPointND(m[1],m1.m[1]);
 		m2.HXFormPointND(m[2],m1.m[2]);
@@ -746,20 +730,7 @@ void Matrix4::XFormPoint(Vect3 &dest,const Vect3 &src) const
 		dest=src;
 		return;
 	}
-/*
-	dest[0]=m[0][0]*src[0]+m[1][0]*src[1]+m[2][0]*src[2]+m[3][0];
-	dest[1]=m[0][0]*src[0]+m[1][0]*src[1]+m[2][0]*src[2]+m[3][1];
-	dest[2]=m[3][2];
-*/
-/*
-	int i,j;
-	dest[0]=m[3][0];
-	dest[1]=m[3][1];
-	dest[2]=m[3][2];
-	for (i=0;i<3;i++)
-		for (j=0;j<3;j++)
-			dest[i]+=m[j][i]*src[j];
-*/
+
 	const float *s=&src.x();
 	float *d=&dest.x();
 	const float *mat=&m[0][0];
@@ -844,13 +815,7 @@ void Matrix4::XFormVectTranspose(Vect3 &dest,const Vect3 &src) const
 		dest=src;
 		return;
 	}
-/*
-	int i,j;
-	dest=0.;
-	for (i=0;i<3;i++)
-		for (j=0;j<3;j++)
-			dest[i]+=m[i][j]*src[j];
-*/
+
 	const float *s=&src.x();
 	float *d=&dest.x();
 	const float *mat=&m[0][0];
@@ -908,23 +873,6 @@ void Matrix4::XFormVectTranspose(Vect3 &dest,const Vect3 &src) const
 
 float Matrix4::HXFormPoint(Vect3 &dest,const Vect3 &src) const
 {
-/*
-	int i,j;
-	float h;
-	h=m[3][3];
-	h+=m[0][3]*src[0];
-	h+=m[1][3]*src[1];
-	h+=m[2][3]*src[2];
-	h=1.0f/h;
-	for (i=0;i<3;i++)
-	{
-		dest[i]=m[3][i];
-		for (j=0;j<3;j++)
-			dest[i]+=m[j][i]*src[j];
-		dest[i]*=h;
-	}
-//	return h;
-*/
 	static const float one=1.0f;
 	const float *s=&src.x();
 	float *d=&dest.x();
@@ -1020,23 +968,6 @@ float Matrix4::HXFormPoint(Vect3 &dest,const Vect3 &src) const
 
 void Matrix4::HXFormPointND(float *d,const float *s) const
 {
-/*
-	int i,j;
-	float h;
-	h=m[3][3];
-	h+=m[0][3]*src[0];
-	h+=m[1][3]*src[1];
-	h+=m[2][3]*src[2];
-	h=1.0f/h;
-	for (i=0;i<3;i++)
-	{
-		dest[i]=m[3][i];
-		for (j=0;j<3;j++)
-			dest[i]+=m[j][i]*src[j];
-		dest[i]*=h;
-	}
-//	return h;
-*/
 	const float *mat=&m[0][0];
 	__asm
 	{
@@ -1099,7 +1030,6 @@ void Matrix4::HXFormPointND(float *d,const float *s) const
 		faddp st(2),st //  m00x+m10y+m20z m22z+m12y+m02x m21z+m01x+m11y  1/m33+m23z+m13y+xm03
 
 
-//		fadd [DWORD PTR eax+48] //  m00x+m10y+m20z+m30 m22z+m12y+m02x m21z+m01x+m11y 1/m33+m23z+m13y+xm03
 		fld [DWORD PTR eax+48]
 		fmul [DWORD PTR ebx+12] 
 		faddp st(1),st
@@ -1223,4 +1153,3 @@ void Matrix4::Transpose()
 		}
 	}
 }
-

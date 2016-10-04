@@ -528,26 +528,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="sourcesafe.cpp">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-						BasicRuntimeChecks="3"
-						BrowseInformation="1"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-						BrowseInformation="1"/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="StdAfx.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -766,9 +746,6 @@
 			</File>
 			<File
 				RelativePath="Sequences.h">
-			</File>
-			<File
-				RelativePath="sourcesafe.h">
 			</File>
 			<File
 				RelativePath="ssauterr.h">

@@ -1,10 +1,6 @@
-// AssimilateDoc.cpp : implementation of the CAssimilateDoc class
-//
-
 #include "stdafx.h"
 #include "Includes.h"
 #include "BuildAll.h"
-#include "sourcesafe.h"
 #include "gla.h"	// just for string stuff
 
 #include <set>
@@ -371,7 +367,7 @@ void CAssimilateDoc::ParseGrab(CTokenizer* tokenizer, int iGrabType)
 	int framespeed = iDEFAULTSEQFRAMESPEED;
 	bool bFrameSpeedFound = false;
 	int iFrameSpeedFromHeader;
-	//
+
 	int iStartFrames[MAX_ADDITIONAL_SEQUENCES]={0};
 	int iFrameCounts[MAX_ADDITIONAL_SEQUENCES]={0};
 	int iLoopFrames [MAX_ADDITIONAL_SEQUENCES]={0};
@@ -497,7 +493,6 @@ void CAssimilateDoc::ParseGrab(CTokenizer* tokenizer, int iGrabType)
 
 				case TK_AS_QDSKIPSTART:
 				case TK_AS_QDSKIPSTOP:
-					//curToken->Delete();	// don't do this, the whole thing relies on case statements leaving one current token for the outside loop to delete
 					break;
 
 				case TK_AS_GENLOOPFRAME:
@@ -614,15 +609,14 @@ void CAssimilateDoc::ParseGrab(CTokenizer* tokenizer, int iGrabType)
 		case TK_AS_GRAB_GLA:
 		{
 			// no additional params permitted for this type currently...
-			//
 		}
 		break;
 	}
 
 	path.MakeLower();
-	//
+
 	// if no extension, assume ".xsi"... (or ".gla" now)
-	//
+
 	if (!(path.GetAt(path.GetLength()-4) == '.'))
 	{
 		path += (iGrabType == TK_AS_GRAB)?".xsi":".gla";
@@ -638,25 +632,16 @@ void CAssimilateDoc::ParseGrab(CTokenizer* tokenizer, int iGrabType)
 
 	// ignore any user params about speed and frame counts, and just re-grab them from the XSI file...
 	//
-//	if (bSomeParamsFound)
-//	{
-//	}
-//	else
 	{
 		// at this point, it must be one of the paramless entries in a .CAR file, so we need to
 		//	provide the values for: startFrame, targetFrame, framecount
 		//
 		// read in values from the actual file, in case we need to use them...
-		//
+
 		CString nameASE = ((CAssimilateApp*)AfxGetApp())->GetQuakeDir();
 				nameASE+= path;
 		int iStartFrame, iFrameCount;
 		ReadASEHeader( nameASE, iStartFrame, iFrameCount, iFrameSpeedFromHeader, (iGrabType == TK_AS_GRAB_GLA) );
-
-//		if (strstr(nameASE,"death16"))
-//		{
-//			int z=1;
-//		}
 
 		startFrame = 0;	// always
 		targetFrame= 0;	// any old shite value
@@ -704,7 +689,7 @@ void CAssimilateDoc::ParseGrab(CTokenizer* tokenizer, int iGrabType)
 
 
 // return = success.  if false ret, return from caller because of error
-//
+
 bool Tokenizer_ReadPath(CString& path, CTokenizer* &tokenizer, CToken* &curToken )
 {
 	curToken = tokenizer->GetToken(NULL, TKF_NUMERICIDENTIFIERSTART | TKF_USES_EOL, 0);
@@ -730,7 +715,7 @@ bool Tokenizer_ReadPath(CString& path, CTokenizer* &tokenizer, CToken* &curToken
 			curToken = tokenizer->GetToken(NULL, TKF_NUMERICIDENTIFIERSTART | TKF_USES_EOL | TKF_SPACETOKENS, 0);
 
 			// hack for "8472" as in models/players/8472/blah.car. Arrggh!!!!!!!!!!!!!!!!!!
-			//
+
 			if (curToken->GetType() == TK_INT)
 			{
 				path += curToken->GetStringValue();
@@ -806,79 +791,7 @@ void CAssimilateDoc::ParseConvert(CTokenizer* tokenizer, int iTokenType)
 
 	if (!Tokenizer_ReadPath(path, tokenizer, curToken ))
 		return;
-/*
-	while(curToken != NULL)
-	{
-		curToken = tokenizer->GetToken(NULL, TKF_NUMERICIDENTIFIERSTART | TKF_USES_EOL | TKF_SPACETOKENS, 0);
-		switch(curToken->GetType())
-		{
-		case TK_SLASH:
-		case TK_BACKSLASH:
-			path += "/";
-			curToken->Delete();
-			curToken = tokenizer->GetToken(NULL, TKF_NUMERICIDENTIFIERSTART | TKF_USES_EOL | TKF_SPACETOKENS, 0);
 
-			// hack for "8472" as in models/players/8472/blah.car. Arrggh!!!!!!!!!!!!!!!!!!
-			//
-			if (curToken->GetType() == TK_INT)
-			{
-				path += curToken->GetStringValue();
-				curToken->Delete();
-				break;
-			}
-
-			if (curToken->GetType() != TK_IDENTIFIER)
-			{
-				tokenizer->Error(TKERR_EXPECTED_IDENTIFIER, curToken->GetStringValue());
-				curToken->Delete();
-				tokenizer->GetToEndOfLine()->Delete();
-				return;
-			}
-			path += curToken->GetStringValue();
-			curToken->Delete();
-			break;
-		case TK_UNDERSCORE:
-		case TK_DASH:
-			path += curToken->GetStringValue();
-			curToken->Delete();
-			curToken = tokenizer->GetToken(NULL, TKF_NUMERICIDENTIFIERSTART | TKF_USES_EOL | TKF_SPACETOKENS, 0);
-			if (curToken->GetType() != TK_IDENTIFIER)
-			{
-				tokenizer->Error(TKERR_EXPECTED_IDENTIFIER, curToken->GetStringValue());
-				curToken->Delete();
-				tokenizer->GetToEndOfLine()->Delete();
-				return;
-			}
-			path += curToken->GetStringValue();
-			curToken->Delete();
-			break;
-		case TK_DOT:
-			path += curToken->GetStringValue();
-			curToken->Delete();
-			curToken = tokenizer->GetToken(NULL, TKF_NUMERICIDENTIFIERSTART | TKF_USES_EOL | TKF_SPACETOKENS, 0);
-			if (curToken->GetType() != TK_IDENTIFIER)
-			{
-				tokenizer->Error(TKERR_EXPECTED_IDENTIFIER, curToken->GetStringValue());
-				curToken->Delete();
-				tokenizer->GetToEndOfLine()->Delete();
-				return;
-			}
-			path += curToken->GetStringValue();
-			curToken->Delete();
-			curToken = NULL;
-			break;
-		case TK_SPACE:
-		case TK_EOL:
-			curToken->Delete();
-			curToken = NULL;
-			break;
-		default:
-			tokenizer->PutBackToken(curToken);
-			curToken = NULL;
-			break;
-		}
-	}
-*/
 	int originx = 0;	// important to default to 0!
 	int originy = 0;	//
 	int originz = 0;	//
@@ -940,18 +853,6 @@ void CAssimilateDoc::ParseConvert(CTokenizer* tokenizer, int iTokenType)
 			}
 			parm1 = curToken->GetIntValue();
 			curToken->Delete();
-/* this param no longer exists...
-			curToken = tokenizer->GetToken();
-			if (curToken->GetType() != TK_INTEGER)
-			{
-				tokenizer->Error(TKERR_EXPECTED_INTEGER, curToken->GetStringValue());
-				curToken->Delete();
-				tokenizer->GetToEndOfLine()->Delete();
-				return;
-			}
-			parm2 = curToken->GetIntValue();
-			curToken->Delete();
-*/			
 			curToken = tokenizer->GetToken();
 			if (curToken->GetType() != TK_INTEGER)
 			{
@@ -963,18 +864,7 @@ void CAssimilateDoc::ParseConvert(CTokenizer* tokenizer, int iTokenType)
 			parm3 = curToken->GetIntValue();
 			curToken->Delete();
 
-/*	this param no longer exists...
-			curToken = tokenizer->GetToken();
-			if (curToken->GetType() != TK_INTEGER)
-			{
-				tokenizer->Error(TKERR_EXPECTED_INTEGER, curToken->GetStringValue());
-				curToken->Delete();
-				tokenizer->GetToEndOfLine()->Delete();
-				return;
-			}
-			parm4 = curToken->GetIntValue();
-			curToken->Delete();
-*/			parm4 = 1;
+		parm4 = 1;
 
 			curToken = tokenizer->GetToken();
 			break;
@@ -1008,22 +898,7 @@ void CAssimilateDoc::ParseConvert(CTokenizer* tokenizer, int iTokenType)
 			m_lastModel->SetNoSkew90(true);
 			curToken = tokenizer->GetToken();
 			break;
-/*
-		case TK_AS_SKEL:
-			{
-				CString strSkelPath;
-				curToken->Delete();
 
-				if (!Tokenizer_ReadPath(strSkelPath, tokenizer, curToken ))
-				{
-					return;	
-				}
-				m_lastModel->SetSkelPath(strSkelPath);
-				m_lastModel->SetMakeSkelPath("");
-				curToken = tokenizer->GetToken();
-			}
-			break;
-*/
 		case TK_AS_MAKESKEL:
 			{
 				CString strMakeSkelPath;
@@ -1034,7 +909,6 @@ void CAssimilateDoc::ParseConvert(CTokenizer* tokenizer, int iTokenType)
 					return;
 				}
 				m_lastModel->SetMakeSkelPath(strMakeSkelPath);
-//				m_lastModel->SetSkelPath("");
 				curToken = tokenizer->GetToken();
 			}
 			break;
@@ -1056,7 +930,7 @@ void CAssimilateDoc::ParseConvert(CTokenizer* tokenizer, int iTokenType)
 void CAssimilateDoc::AddComment(LPCTSTR comment)
 {
 	// some code to stop those damn timestamps accumulating...
-	//
+
 	if (!strnicmp(comment,sSAVEINFOSTRINGCHECK,strlen(sSAVEINFOSTRINGCHECK)))
 	{
 		return;
@@ -1082,7 +956,6 @@ void CAssimilateDoc::AddComment(LPCTSTR comment)
 	}
 }
 
-///////////////////////////////////////////////
 
 #define	MAX_FOUND_FILES	0x1000
 #define MAX_OSPATH MAX_PATH
@@ -1165,7 +1038,6 @@ void	Sys_FreeFileList( char **_list ) {
 	free( _list );
 }
 
-//////////////////////////////////////////
 
 CString strSkippedFiles;
 CString strSkippedDirs;
@@ -1189,7 +1061,7 @@ void AlphaSortCARs(void)
 	}
 
 	// clear files-found string out, and re-enter from sorted set...
-	//
+
 	strCARsFound = "";
 
 	for (SortedStrings_t::iterator it = SortedStrings.begin(); it != SortedStrings.end(); ++it)
@@ -1204,10 +1076,8 @@ void R_CheckCARs( LPCSTR psDir, int iScanDepth, LPCSTR psGLAReferenceItShouldInc
 	((CMainFrame*)AfxGetMainWnd())->StatusMessage(va("(%d .CAR files found so far) Scanning Dir: %s",iCARsFound,psDir));
 
 	// ignore any dir with "test" in it...
-	//
-	if (//strstr(psDir,"\\test")
-		//||
-		strstr(psDir,"\\backup")
+
+	if (strstr(psDir,"\\backup")
 		||
 		strstr(psDir,"\\ignore_")
 		)
@@ -1217,29 +1087,23 @@ void R_CheckCARs( LPCSTR psDir, int iScanDepth, LPCSTR psGLAReferenceItShouldInc
 		return;
 	}
 
-	char	**sysFiles, **dirFiles;//, *args[5];
-	int		numSysFiles, i, /*len,*/ numdirs;
+	char	**sysFiles, **dirFiles;
+	int		numSysFiles, i, numdirs;
 	char	altname[MAX_OSPATH];
-//	char	command1[MAX_OSPATH];
-//	char	command2[MAX_OSPATH];
 
 	dirFiles = Sys_ListFiles(psDir, "/", &numdirs);
 	if (numdirs > 2)
 	{
-//		if (!iScanDepth)	// recursion limiter, to avoid scanning backup subdirs within model subdirs
 		{
 			for (i=2;i<numdirs;i++)
 			{
 				sprintf(altname, "%s\\%s", psDir, dirFiles[i]);
-				//if (stricmp(altname,"q:\\send\\quake\\baseq3\\models\\players"))	// dont recurse this dir
 				{
 					R_CheckCARs(altname, iScanDepth+1, psGLAReferenceItShouldInclude );
 				}
 			}
 		}
 	}
-//	sprintf(command1, "-targa");
-//	sprintf(command2, "-outfile");
 	sysFiles = Sys_ListFiles( psDir, ".car", &numSysFiles );
 	for ( i=0; i<numSysFiles; i++ )
 	{
@@ -1264,48 +1128,6 @@ void R_CheckCARs( LPCSTR psDir, int iScanDepth, LPCSTR psGLAReferenceItShouldInc
 
 		strCARsFound += strThisFile + "\n";
 		iCARsFound++;
-	/*		char	tgain[MAX_OSPATH];
-			sprintf(tgain,"%s\\%s", psDir, sysFiles[i]);
-			strcpy( altname, tgain );
-			len = strlen( altname );
-			altname[len-3] = 'j';
-			altname[len-2] = 'p';
-			altname[len-1] = 'g';
-			args[0] = "cjpeg";
-			args[1] = command2;
-			args[2] = altname;
-			args[3] = command1;
-			args[4] = tgain;
-			//printf("%s", tgain);
-	*/		
-			/*		len = qmain(5, args);
-			if (!len) 
-			{
-			iNumberOf_FilesConverted++;
-			iSizeOf_JPGsWritten += scGetFileLen(altname);
-			iSizeOf_TGAsDeleted += scGetFileLen(tgain);
-			
-			  printf(" nuked!(NOT)");
-			  //			remove(tgain);
-			  }
-			  printf("\n");
-			*/
-	/*		
-			byte * pPixels = NULL;
-			int iWidth;
-			int iHeight;
-			bool bRedundant = ScanTGA(tgain, &pPixels, &iWidth, &iHeight);
-			if (pPixels)
-			{
-				free(pPixels);
-			}
-			
-			if (bRedundant)
-			{
-				strTGAsWithRedundantAlpha += va("%s\n",tgain);
-				iRedundantFilesFound++;
-			}
-	*/
 	}
 
 	Sys_FreeFileList( sysFiles );
@@ -1451,13 +1273,6 @@ void CAssimilateDoc::Write(CFile* file)
 {
 	CTxtFile* outfile = CTxtFile::Create(file);
 
-/*	// write out time/date stamp...
-	//
-	CString commentLine;
-	CTime time = CTime::GetCurrentTime();
-	commentLine.Format("// %s %s updated %s", sSAVEINFOSTRINGCHECK, file->GetFileName(), time.Format("%H:%M %A, %B %d, %Y"));
-	outfile->Writeln(commentLine);
-*/	
 	CModel* curModel = m_modelList;
 	while(curModel != NULL)
 	{
@@ -1556,9 +1371,11 @@ void CAssimilateDoc::OnAddfiles()
 	CFileDialog theDialog(true, ".xsi", NULL, OFN_EXPLORER | OFN_ALLOWMULTISELECT | OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST, 
 					_T("Anim Files (*.ase)(*.xsi)(*.gla)|*.ase;*.xsi;*.gla|All Files|*.*||"), NULL);
 					
-////////////
-//	Model files (*.MDR)(*.MD3)|*.md?|
-////////////
+/*
+==================================
+Model files (*.MDR)(*.MD3)|*.md?|
+==================================
+*/
 	char filenamebuffer[16384];
 	filenamebuffer[0] = '\0';
 	theDialog.m_ofn.lpstrFile = filenamebuffer;
@@ -1583,12 +1400,7 @@ void CAssimilateDoc::OnAddfiles()
 	while(pos != NULL)
 	{
 		CString thisfile = theDialog.GetNextPathName(pos);
-/*		int loc = thisfile.Find(':');
-		if (loc > 0)
-		{
-			thisfile = thisfile.Right(thisfile.GetLength() - loc - 1);
-		}
-*/
+
 		Filename_RemoveBASEQ(thisfile);
 		AddFile(thisfile);		
 	}
@@ -1604,16 +1416,10 @@ void CAssimilateDoc::AddFile(LPCTSTR name)
 	if (!strstr(strTemp,"root.xsi") || GetYesNo("You're trying to add \"root.xsi\", which is inherent, you should only do this if you're making a model that has no seperate anim files\n\nProceed?"))
 	{	
 		// update, ignore any files with a "_1" (2,3, etc) just before the suffix (this skips LOD files)...
-		//
-//		int iNameLen = strlen(name);
 
-		// (also, only check files of at least namelen "_?.ase")
-		//
-//		if ( iNameLen>6 && name[iNameLen-6]=='_' && isdigit(name[iNameLen-5]) )
 		{
 			// this is a LOD filename, so ignore it...
 		}
-//		else
 		{
 			CModel *curModel = GetCurrentUserSelectedModel();
 
@@ -1636,7 +1442,7 @@ void CAssimilateDoc::AddFile(LPCTSTR name)
 			}
 
 			// check that we don't already have this file...
-			//
+
 			if (!curModel->ContainsFile(name))
 			{
 				curModel->AddSequence(CSequence::CreateFromFile(name, curModel->ExtractComments()));
@@ -1674,7 +1480,7 @@ void CAssimilateDoc::OnExternal()
 }
 
 // called both from the menu, and now from the Build() member...
-//
+
 bool CAssimilateDoc::WriteCFGFiles(bool bPromptForNames, bool &bCFGWritten)
 {
 	bCFGWritten = false;	
@@ -1742,7 +1548,7 @@ void CAssimilateDoc::OnUpdateViewFrameDetails(CCmdUI* pCmdUI)
 
 
 // 1) save qdt, 2) run qdata on it, 3) if success, save .cfg file...
-//
+
 bool CAssimilateDoc::Build(bool bAllowedToShowSuccessBox, int iLODLevel, bool bSkipSave)	// damn this stupid Serialize() crap
 {
 	bool bSuccess = false;
@@ -1750,7 +1556,7 @@ bool CAssimilateDoc::Build(bool bAllowedToShowSuccessBox, int iLODLevel, bool bS
 	if (Validate())	// notepad will have been launched with a textfile of errors at this point if faulty
 	{
 		// seems valid, so save the QDT...
-		//
+
 		giLODLevelOverride = iLODLevel;
 
 		if (!bSkipSave)
@@ -1761,7 +1567,7 @@ bool CAssimilateDoc::Build(bool bAllowedToShowSuccessBox, int iLODLevel, bool bS
 		CString csQDataLocation = ((CAssimilateApp*)AfxGetApp())->GetQDataFilename();
 
 		// hack-city!!!!!!!!!!
-		//
+
 		CModel* curModel = ghAssimilateView->GetDocument()->GetCurrentUserSelectedModel();
 		if (curModel->GetPreQuat())
 		{
@@ -1795,12 +1601,12 @@ bool CAssimilateDoc::Build(bool bAllowedToShowSuccessBox, int iLODLevel, bool bS
 
 		LPTSTR paramsPass = params.GetBuffer(params.GetLength() + 1);
 
-		StartWait();	// ++++++++++++++++++++++++
+		StartWait();
 
 		if (CreateProcess(csQDataLocation, paramsPass, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &startupinfo, &pi))
 		{
 			WaitForSingleObject(pi.hProcess, INFINITE);
-			EndWait();	// ------------------------
+			EndWait();
 			DWORD result;
 			GetExitCodeProcess(pi.hProcess,&result);
 			if (result)
@@ -1857,7 +1663,7 @@ bool CAssimilateDoc::Build(bool bAllowedToShowSuccessBox, int iLODLevel, bool bS
 		}
 		else
 		{
-			EndWait();	// ------------------------
+			EndWait();
 			MessageBox(NULL,"Could not spawn process.","Build Failed",MB_OK|MB_ICONERROR);
 		}
 		params.ReleaseBuffer();
@@ -1874,7 +1680,7 @@ void CAssimilateDoc::OnBuildMultiLOD()
 
 	// to save time, I'll run all the validates first, and only if they're all ok will I go on to the build
 	//	(which incidentally does a harmless re-validate again)
-	//
+
 	for (int i=0; i< 1+EXTRA_LOD_LEVELS; i++)
 	{
 		iErrors += Validate(false, i)?0:1;
@@ -1884,7 +1690,7 @@ void CAssimilateDoc::OnBuildMultiLOD()
 	//
 	// (I'll write them in reverse-LOD order so the last one written is the standard one. This should hopefully avoid
 	//	any problems with the current document potentially becoming "(name)_3.qdt" from then on to MFC)
-	//
+
 	if (!iErrors)
 	{
 		for (int i=EXTRA_LOD_LEVELS; i>=0; i--)
@@ -1900,7 +1706,7 @@ void CAssimilateDoc::OnBuildMultiLOD()
 
 
 // 1) save qdt, 2) run qdata on it, 3) if success, save .cfg file...
-//
+
 void CAssimilateDoc::OnBuild()
 {	
 	Build(	true,	// bool bAllowedToShowSuccessBox, 
@@ -1922,7 +1728,7 @@ void CAssimilateDoc::ClearModelUserSelectionBools()
 }
 
 // if there's only one model loaded, return that, if none, return NULL, else if >1, return selected one, else NULL
-//
+
 CModel* CAssimilateDoc::GetCurrentUserSelectedModel()
 {
 	CModel *curModel = m_modelList;
@@ -1933,7 +1739,7 @@ CModel* CAssimilateDoc::GetCurrentUserSelectedModel()
 	}
 
 	// more than one loaded, so find the selected one and return that...
-	//
+
 	while (curModel)
 	{
 		if (curModel->GetUserSelectionBool())
@@ -2006,19 +1812,13 @@ void CAssimilateDoc::OnCarWashActual()
 		ErrorBox("Quake path not known at this point. Check preferences are set correctly.");
 		gbCarwashErrorsOccured = true;
 		return;
-//		if (!GetYesNo("Quake path not known at this point because you've not loaded anything yet\n\nShould I assume " "\"" sASSUMEPATH "\"" "?"))
-//			return;
-//
-//		strStartDir = sASSUMEPATH;
 	}
 
 	// (this app was written so that GetQuakeDir() returns a path with a trailing slash, not nice normally, but here...)
-	//
-//	if (strStartDir.GetAt(strStartDir.GetLength()-1)=='\\')
-//		strStartDir = strStartDir.Left(strStartDir.GetLength()-1);
+
 	if (gpsCARWashDirOverride == NULL)
 	{
-		strStartDir += "models";//\\players";
+		strStartDir += "models";
 	}
 
 	if (gbQueryGoAhead)
@@ -2041,7 +1841,7 @@ void CAssimilateDoc::OnCarWashActual()
 	((CMainFrame*)AfxGetMainWnd())->StatusMessage("Ready");
 
 	// ok, now ready to begin pass 2...
-	//
+
 	CString strReport;
 	if (!iCARsFound)
 	{			
@@ -2085,7 +1885,7 @@ void CAssimilateDoc::OnCarWashActual()
 
 				((CMainFrame*)AfxGetMainWnd())->StatusMessage(va("Scanning File %d/%d: %s",i+1,iCARsFound,(LPCSTR)strThisFile));
 
-				if (1)//strMustContainThisGLA.IsEmpty() || FileUsesGLAReference(strThisFile, strMustContainThisGLA))
+				if (1)
 				{
 					OnNewDocument();
 					Parse(strThisFile);
@@ -2099,8 +1899,8 @@ void CAssimilateDoc::OnCarWashActual()
 
 						if (!strCarWashErrors.IsEmpty())
 						{
-							// "something is wrong..."	:-)
-							//
+							// "something is wrong..."
+
 							strTotalErrors += va("\nError in file \"%s\":\n\n%s\n",(LPCSTR)strThisFile,(LPCSTR)strCarWashErrors);
 						}						
 						strCarWashErrors.Empty();
@@ -2122,8 +1922,6 @@ void CAssimilateDoc::OnCarWashActual()
 
 		OnNewDocument();	// trash whatever was loaded last
 
-//		strReport = "Processed files:\n\n";
-//		strReport+= strCARsFound;
 		strReport+= "\n\nSkipped Dirs:\n\n";
 		strReport+= strSkippedDirs;
 		strReport+= "\n\nSkipped Files:\n\n";
@@ -2151,10 +1949,6 @@ void CAssimilateDoc::OnCarWashActual()
 		}
 	}
 
-//#define sASSUMEPATH "q:\\quake\\baseq3"
-//		strTGAsWithRedundantAlpha.Insert(0,"The following files are defined as 32-bit (ie with alpha), but the alpha channel is blank (ie all 255)...\n\n");
-//		SendToNotePad(strTGAsWithRedundantAlpha, "TGAs_With_Redundant_Alpha.txt");
-
 	((CMainFrame*)AfxGetMainWnd())->StatusMessage("Ready");
 }
 
@@ -2166,7 +1960,7 @@ void CAssimilateDoc::OnCarWash()
 
 
 // creates as temp file, then spawns notepad with it...
-//
+
 bool SendToNotePad(LPCSTR psWhatever, LPCSTR psLocalFileName)
 {
 	bool bReturn = false;
@@ -2190,7 +1984,7 @@ bool SendToNotePad(LPCSTR psWhatever, LPCSTR psLocalFileName)
 			)
 		{
 			// ok...
-			//
+
 			bReturn = true;
 		}
 		else
@@ -2208,7 +2002,7 @@ bool SendToNotePad(LPCSTR psWhatever, LPCSTR psLocalFileName)
 
 
 // AFX OnXxxx calls need to be void return, but the validate needs to ret a bool for elsewhere, so...
-//
+
 void CAssimilateDoc::OnValidate()
 {
 	Validate(!gbCarWash_DoingScan);	
@@ -2231,7 +2025,7 @@ void CAssimilateDoc::OnValidateMultiLOD()
 
 // checks for things that would stop the build process, such as missing ASE files, invalid loopframes, bad anim enums, etc,
 //	and writes all the faults to a text file that it displays via launching notepad
-//
+
 bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 {
 	OnResequence();
@@ -2262,7 +2056,7 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 				else
 				{
 					// >1 models, 1 selected, ask if we should do all...
-					//				
+			
 					bValidateAll = GetYesNo(va("Validate ALL models?\n\n( NO = model \"%s\" only )",curModel->GetName()));
 				}
 			}
@@ -2284,8 +2078,6 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 				int iThisModelFaults = iFaults;
 
 				if (	( curModel->GetMakeSkelPath()	&& strlen(curModel->GetMakeSkelPath()) )
-//						||
-//						( curModel->GetSkelPath()		&& strlen(curModel->GetSkelPath()) )
 					)
 				{
 					// ... then all is fine
@@ -2293,25 +2085,23 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 				else
 				{
 					// this is an error, UNLESS you have a GLA sequence...
-					//
+
 					if (!curModel->HasGLA())
 					{					
-						//fprintf(hFile, "Model must have either a 'skel' or 'makeskel' path\n    ( Double-click on the model name in the treeview to edit )\n");
 						fprintf(hFile, "Model must have a 'makeskel' path\n    ( Double-click on the top tree item's name (should be a folder), then click \"Makes it's own skeleton\" in the dialog )\n");
 						iFaults++;
 					}
 				}
 
-				//
 				// validate all sequences within this model...
-				//				
+			
 				int iGLACount = 0;
 				int iXSICount = 0;
 				CSequence* curSequence = curModel->GetFirstSequence();
 				while (curSequence)
 				{
 					// we'll need to check these counts after checking all sequences...
-					//
+
 					if (curSequence->IsGLA())
 					{
 						iGLACount++;
@@ -2324,7 +2114,7 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 					#define SEQREPORT CString temp;temp.Format("Sequence \"%s\":",curSequence->GetName());while (temp.GetLength()<35)temp+=" ";
 
 					// check 1, does the ASE file exist? (actually this is talking about XSIs/GLAs, but WTF...
-					//
+
 					CString nameASE = ((CAssimilateApp*)AfxGetApp())->GetQuakeDir();
 							nameASE+= curSequence->GetPath();
 
@@ -2344,16 +2134,16 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 					}
 
 					// new check, if this is an LOD ASE it must have the same framecount as the base (non-LOD) version...
-					//
+
 					if (iLODLevel)
 					{
 						// read this file's framecount...
-						//
+
 						int iStartFrame, iFrameCount, iFrameSpeed;
 						curSequence->ReadASEHeader( nameASE, iStartFrame, iFrameCount, iFrameSpeed);
 
 						// read basefile's framecount...
-						//
+
 						CString baseASEname = ((CAssimilateApp*)AfxGetApp())->GetQuakeDir();
 								baseASEname+= curSequence->GetPath();
 
@@ -2361,7 +2151,7 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 						curSequence->ReadASEHeader( baseASEname, iStartFrameBASE, iFrameCountBASE, iFrameSpeedBASE);
 
 						// same?...
-						//
+
 						if (iFrameCount != iFrameCountBASE)
 						{
 							SEQREPORT;
@@ -2372,7 +2162,7 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 					}
 
 					// check 2, is the loopframe higher than the framecount of that sequence?...
-					//
+
 					if (curSequence->GetLoopFrame() >= curSequence->GetFrameCount())
 					{
 						SEQREPORT;
@@ -2384,7 +2174,7 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 					if (!curModel->IsGhoul2())
 					{
 						// check 3, is the enum valid?...
-						//
+
 						if (curSequence->GetEnumType() == ET_INVALID)
 						{
 							SEQREPORT;
@@ -2404,7 +2194,7 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 					}					
 
 					// a whole bunch of checks for the additional sequences...
-					//
+
 					if (!curSequence->IsGLA())
 					{
 						for (int i=0; i<MAX_ADDITIONAL_SEQUENCES; i++)
@@ -2416,7 +2206,7 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 							if (additionalSeq->AdditionalSequenceIsValid())
 							{
 								// check for duplicate enum names...
-								//
+
 								int iEnumUsageCount = curModel->AnimEnumInUse(additionalSeq->GetEnum());
 								if (iEnumUsageCount>1)
 								{
@@ -2427,7 +2217,7 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 								}
 
 								// additional sequences must actually have some frames...
-								//
+
 								if (additionalSeq->GetFrameCount()<=0)
 								{
 									ADDITIONALSEQREPORT;
@@ -2438,7 +2228,7 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 								else
 								{
 									// the start/count range of this additional seq can't exceed it's master...
-									//
+
 									if (additionalSeq->GetStartFrame() + additionalSeq->GetFrameCount() > curSequence->GetFrameCount())
 									{
 										ADDITIONALSEQREPORT;
@@ -2454,7 +2244,7 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 									else
 									{
 										// loopframe of an additional seq must be within its own seq framecount...
-										//
+
 										if (additionalSeq->GetLoopFrame() >= additionalSeq->GetFrameCount())
 										{
 											ADDITIONALSEQREPORT;
@@ -2468,11 +2258,11 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 							else
 							{
 								// is this additional sequence invalid because of being just empty or being bad?...
-								//
+
 								if (strlen(additionalSeq->GetEnum()))
 								{
 									// it's a bad sequence (probably because of its enum being deleted from anims.h since it was saved)
-									//
+
 									ADDITIONALSEQREPORT;								
 									temp += va(" this animation enum no longer exists in \"%s\"\n",sDEFAULT_ENUM_FILENAME);
 									fprintf(hFile,temp);
@@ -2485,7 +2275,7 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 				}
 
 				// special GLA/XSI checks...
-				//
+
 				{
 					if (iGLACount>1)
 					{
@@ -2504,14 +2294,6 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 						fprintf(hFile, "Model has both a GLA sequence and a '-makeskel' path, this is meaningless\n");
 						iFaults++;
 					}
-
-					/*					
-					if (iGLACount && (curModel->GetSkelPath() && strlen(curModel->GetSkelPath())) )
-					{
-						fprintf(hFile, "Model has both a GLA sequence and a '-skel' path, you should probably blank out the 'skel' path\n");
-						iFaults++;
-					}
-					*/
 				}
 
 				if (iThisModelFaults == iFaults)
@@ -2527,14 +2309,14 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 				if (!bValidateAll)
 					break;			
 
-			}// while (curModel)
+			}
 
 			fclose(hFile);
 
 			if (iFaults)
 			{
 				// now run notepad.exe on the file we've just created...
-				//
+
 				CString sExecString;
 
 				sExecString.Format("notepad %s",sOutputTextFile);
@@ -2559,13 +2341,13 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 					InfoBox("Everything ok\n\n( All files exist, enums exist, and frames seem to be valid ranges )");
 				}
 			}
-		}// if (hFile)
+		}
 		else
 		{
 			ErrorBox(va("Arrgh! Unable to create file '%s'!\n\n(let me know about this -Ste)",sOutputTextFile));
 		}
 
-	}// if (iNumModels)
+	}
 
 	EndWait();
 
@@ -2619,58 +2401,6 @@ BOOL CAssimilateDoc::DoFileSave()
 		//
 		///////////////////////////////////////////
 		//
-		// check it out first, if necessary...
-		//
-		if ( SS_FunctionsAvailable() )
-		{
-			if ( SS_IsUnderSourceControl( filename ) )
-			{
-				if ( SS_IsCheckedOut( filename ))
-				{
-					if ( !SS_IsCheckedOutByMe( filename ))
-					{
-						CString strCheckOuts;
-						int iCount;
-						
-						if (SS_ListCheckOuts( filename, strCheckOuts, iCount ))
-						{
-							ErrorBox( va("File \"%s\" is checked out by:\n\n%s\n... so you can't save over it...\n\n... so you can't compile...\n\nTough luck matey!....(bwahahahaha!!!!!)",filename,(LPCSTR) strCheckOuts));
-							return false;
-						}
-					}
-					else
-					{
-						Sys_Printf ("(You own this file under SourceSafe)\n");				
-					}
-				}
-				else
-				{
-					if ( GetYesNo( va("The file \"%s\"\n\n...needs to be checked out so I can save over it\n\nProceed? ('No' will abort the save)",filename) ))
-					{
-						if (SS_CheckOut( filename ))
-						{
-							Sys_Printf ("(File checked out ok)\n");				
-						}
-						else
-						{
-							ASSERT(0);	// I want to know if this ever happens
-							Sys_Printf ("(Error during file checkout, aborting save\n");				
-							return false;
-						}
-					}
-					else
-					{
-						Sys_Printf ("(Checkout cancelled, aborting save\n");				
-						return false;
-					}
-				}
-			}
-			else
-			{
-				Sys_Printf ("(This file is not under SourceSafe control)\n");				
-			}
-		}
-
 		// now do seperate check for files that are still write-protected...
 		//
 		DWORD dw = GetFileAttributes( filename );
@@ -2679,23 +2409,6 @@ BOOL CAssimilateDoc::DoFileSave()
 		{
 			// hmmm, still write protected...
 			//
-			if (SS_SetupOk())
-			{
-				if (GetYesNo( va("The file \"%s\" is write-protected, but probably not because of SourceSafe, just as a safety thing.\n\n(Tell me if you believe this is wrong -Ste)\n\nDo you want me to un-writeprotect it so you can save over it? ('No' will abort the save)",filename )))
-				{
-					if ( !SetFileAttributes( filename, dw&~FILE_ATTRIBUTE_READONLY) )
-					{
-						ErrorBox("Failed to remove write protect, aborting...");
-						return false;
-					}
-				}
-				else
-				{
-					Sys_Printf ("(File was not write-enabled, aborting save)");
-					return false;
-				}
-			}
-			else
 			{
 				ErrorBox( va("The file \"%s\" is write-protected, but you don't appear to have SourceSafe set up properly on this machine, so I can't tell if the file is protected or just not checked out to you.\n\nIf you really want to edit this you'll have to write-enable it yourself (which I'm deliberately not offering to do for you here <g>)",filename));
 			}
@@ -2709,55 +2422,6 @@ BOOL CAssimilateDoc::DoFileSave()
 		// sourcesafe
 		LPCSTR filename = (LPCSTR) m_strPathName;
 		#define Sys_Printf(blah) StatusText(blah)
-		if ( SS_FunctionsAvailable() )
-		{
-			if ( SS_IsUnderSourceControl( filename ))
-			{
-				if ( SS_IsCheckedOutByMe( filename ))
-				{
-//					if ( SS_CheckIn( filename ))
-//					{
-//						Sys_Printf("(Checked in ok)\n");
-//					}
-//					else
-//					{
-//						Sys_Printf("Error during CheckIn\n");
-//					}
-				}
-				else
-				{
-					ErrorBox( va("You do not have file \"%s\" checked out",filename));
-				}
-			}
-			else
-			{
-				// new bit, if it wasn't under SourceSafe, then ask if they want to add it...
-				//
-				if (GetYesNo(va("File \"%s\" is not under SourceSafe control, add to database?",filename)))
-				{
-					if ( SS_Add( filename ))
-					{
-						Sys_Printf("(File was added to SourceSafe Ok)\n");
-
-						// check it out as well...
-						//
-						if (SS_CheckOut( filename ))
-						{
-							Sys_Printf ("(File checked out ok)\n");				
-						}
-						else
-						{
-							ASSERT(0);	// I want to know if this ever happens
-							Sys_Printf ("( Error during file checkout! )\n");							
-						}
-					}
-					else
-					{
-						ErrorBox( va("Error adding file \"%s\" to SourceSafe",filename));
-					}
-				}
-			}
-		}
 	}
 
 	StatusText(NULL);
@@ -2776,7 +2440,7 @@ BOOL CAssimilateDoc::OnSaveDocument(LPCTSTR lpszPathName)
 
 
 // remember these two from session to session, maybe write to registry sometime?...
-//
+
 bool	gbPreValidate = true;
 CString strInitialBuildPath = "models/players";
 void CAssimilateDoc::OnEditBuildDependant()
@@ -2789,7 +2453,7 @@ void CAssimilateDoc::OnEditBuildDependant()
 		if (!strStartDir.GetLength())
 		{
 			// should never happen...
-			//
+
 			ErrorBox("Base path not known at this point. Check preferences are set correctly.");
 			return;
 		}
@@ -2829,8 +2493,6 @@ void CAssimilateDoc::OnEditBuildDependant()
 
 				((CMainFrame*)AfxGetMainWnd())->StatusMessage("Validated Ok, building...");
 
-				//////////////////////// largely block-pasted from CarWash.... :-)
-
 				CWaitCursor wait;
 
 				strCARsFound.Empty();
@@ -2839,13 +2501,13 @@ void CAssimilateDoc::OnEditBuildDependant()
 				strSkippedFiles.Empty();
 
 				// build up a list...
-				//	
+
 				R_CheckCARs( strStartDir, 0, strMustContainThisGLA);	//bool bBuildListOnly
 				AlphaSortCARs();	// important to do them in alpha-order during build, because of "_humanoid" - type dirs.
 				((CMainFrame*)AfxGetMainWnd())->StatusMessage("Ready");
 
 				// ok, now ready to begin pass 2...
-				//
+
 				CString strReport;
 				if (!iCARsFound)
 				{			
@@ -2867,10 +2529,8 @@ void CAssimilateDoc::OnEditBuildDependant()
 				}
 				else
 				{
-					//----------------
 					gbCarWash_DoingScan = true;
 					strCarWashErrors.Empty();
-					//----------------
 
 					CString strTotalErrors;
 
@@ -2888,7 +2548,7 @@ void CAssimilateDoc::OnEditBuildDependant()
 
 							((CMainFrame*)AfxGetMainWnd())->StatusMessage(va("Scanning File %d/%d: %s",i+1,iCARsFound,(LPCSTR)strThisFile));
 
-							if (1)//FileUsesGLAReference(strThisFile, sCurrentGLAName))
+							if (1)
 							{
 								OnNewDocument();				
 								if (OnOpenDocument_Actual(strThisFile, false))
@@ -2908,8 +2568,8 @@ void CAssimilateDoc::OnEditBuildDependant()
 
 										if (!strCarWashErrors.IsEmpty())
 										{
-											// "something is wrong..."	:-)
-											//
+											// "something is wrong..."
+
 											strTotalErrors += va("\nError in file \"%s\":\n\n%s\n",strThisFile,strCarWashErrors);
 										}
 										strCarWashErrors.Empty();
@@ -2944,8 +2604,6 @@ void CAssimilateDoc::OnEditBuildDependant()
 
 					OnNewDocument();	// trash whatever was loaded last
 
-			//		strReport = "Processed files:\n\n";
-			//		strReport+= strCARsFound;
 					strReport+= "\n\nSkipped Dirs:\n\n";
 					strReport+= strSkippedDirs;
 					strReport+= "\n\nSkipped Files:\n\n";
@@ -2984,11 +2642,8 @@ void CAssimilateDoc::OnEditBuildDependant()
 
 void CAssimilateDoc::OnEditBuildall() 
 {
-//	if (!GetYesNo("Safety Feature:  Do you really want to rebuild every CAR file in the whole game?"))
-//		return;
-
 	// validity-check...
-	//
+
 	CString strStartDir = ((CAssimilateApp*)AfxGetApp())->GetQuakeDir();	
 
 	if (!strStartDir.GetLength())
@@ -3024,8 +2679,6 @@ void CAssimilateDoc::OnEditBuildall()
 
 		((CMainFrame*)AfxGetMainWnd())->StatusMessage("Validated Ok, building...");
 
-		//////////////////////// largely block-pasted from CarWash.... :-)
-
 		CWaitCursor wait;
 
 		strCARsFound.Empty();
@@ -3034,13 +2687,13 @@ void CAssimilateDoc::OnEditBuildall()
 		strSkippedFiles.Empty();
 
 		// build up a list...
-		//	
+
 		R_CheckCARs( strStartDir, 0, "" );	//bool bBuildListOnly
 		AlphaSortCARs();	// important to do them in alpha-order during build, because of "_humanoid" - type dirs.
 		((CMainFrame*)AfxGetMainWnd())->StatusMessage("Ready");
 
 		// ok, now ready to begin pass 2...
-		//
+
 		CString strReport;
 		if (!iCARsFound)
 		{			
@@ -3062,10 +2715,8 @@ void CAssimilateDoc::OnEditBuildall()
 		}
 		else
 		{
-			//----------------
 			gbCarWash_DoingScan = true;
 			strCarWashErrors.Empty();
-			//----------------
 
 			CString strTotalErrors;
 
@@ -3102,7 +2753,7 @@ void CAssimilateDoc::OnEditBuildall()
 							if (!strCarWashErrors.IsEmpty())
 							{
 								// "something is wrong..."	:-)
-								//
+
 								strTotalErrors += va("\nError in file \"%s\":\n\n%s\n",strThisFile,strCarWashErrors);
 							}
 							strCarWashErrors.Empty();
@@ -3125,15 +2776,11 @@ void CAssimilateDoc::OnEditBuildall()
 				}
 			}
 
-			//----------------
 			gbCarWash_DoingScan = false;
-			//----------------
 
 
 			OnNewDocument();	// trash whatever was loaded last
 
-	//		strReport = "Processed files:\n\n";
-	//		strReport+= strCARsFound;
 			strReport+= "\n\nSkipped Dirs:\n\n";
 			strReport+= strSkippedDirs;
 			strReport+= "\n\nSkipped Files:\n\n";
@@ -3169,47 +2816,6 @@ void SS_DisposingOfCurrent(LPCSTR psFileName, bool bDirty)
 		LPCSTR filename = psFileName;	// compile laziness
 		#undef Sys_Printf
 		#define Sys_Printf(blah)
-		if ( SS_FunctionsAvailable() )
-		{
-			if ( SS_IsUnderSourceControl( filename ) )
-			{
-				if ( SS_IsCheckedOutByMe( filename ))
-				{
-					if (bDirty)
-					{
-						// if 'need_save' then the user has clicked ok-to-lose-changes, so...
-						//
-						if ( GetYesNo( va("Since you've decided to lose changes on the file:\n\n\"%s\"\n\n...do you want to Undo Checkout as well?",filename)))
-						{
-							if (SS_UndoCheckOut( filename ))
-							{
-								Sys_Printf ("(Undo Checkout performed on map)\n");
-							}
-							else
-							{
-								ErrorBox("Undo Checkout failed!\n");
-							}
-						}
-					}
-					else
-					{
-						// if !'need_save' here then the user has saved this out already, so prompt for check in...
-						//
-						if ( GetYesNo( va("Since you've finished with the file:\n\n\"%s\"\n\n...do you want to do a Check In?",filename)))
-						{
-							if ( SS_CheckIn( filename ))
-							{
-								//Sys_Printf ("(CheckIn performed on map)\n");
-							}
-							else
-							{
-								ErrorBox("CheckIn failed!\n");
-							}
-						}
-					}
-				}
-			}
-		}
 	}
 }
 
@@ -3223,50 +2829,6 @@ BOOL CAssimilateDoc::OnOpenDocument_Actual(LPCTSTR lpszPathName, bool bCheckOut)
 	{
 		// checkout the new file?
 		LPCSTR filename = lpszPathName;	// compile-laziness :-)
-		if ( SS_FunctionsAvailable() )
-		{
-			if ( SS_IsUnderSourceControl( filename ) )
-			{
-				if ( SS_IsCheckedOut( filename ))
-				{
-					if ( !SS_IsCheckedOutByMe( filename ))
-					{
-						CString strCheckOuts;
-						int iCount;
-						
-						if (SS_ListCheckOuts( filename, strCheckOuts, iCount ))
-						{
-							if (!GetYesNo( va("Warning: File \"%s\" is checked out by:\n\n%s\n... Continue loading? ",filename,(LPCSTR) strCheckOuts)))
-							{
-								return FALSE;
-							}
-						}
-					}
-					else
-					{
-						//InfoBox ("(You own this file under SourceSafe)\n");				
-					}
-				}
-				else
-				{
-					if ( GetYesNo( va("The file \"%s\"\n\n...is under SourceSafe control, check it out now?",filename) ))
-					{
-						if (SS_CheckOut( filename ))
-						{
-							//InfoBox ("(File checked out ok)\n");				
-						}
-						else
-						{
-							WarningBox( va("( Problem encountered during check out of file \"%s\" )",filename) );
-						}
-					}
-				}
-			}
-			else
-			{
-				//InfoBox ("(This file is not under SourceSafe control)\n");				
-			}
-		}
 	}
 
 	if (!CDocument::OnOpenDocument(lpszPathName))
@@ -3327,18 +2889,16 @@ bool RunApp(LPCSTR psAppCommand)
 	GetStartupInfo (&startupinfo);
 
 	BOOL ret = CreateProcess(sBatchFilename,
-						//batpath,		// pointer to name of executable module 
-						NULL,			// pointer to command line string
-						NULL,			// pointer to process security attributes 
-						NULL,			// pointer to thread security attributes 
-						FALSE,			// handle inheritance flag 
-						0 /*DETACHED_PROCESS*/,		// creation flags 
-						NULL,			// pointer to new environment block 
-						NULL,			// pointer to current directory name 
-						&startupinfo,	// pointer to STARTUPINFO 
+						NULL,					// pointer to command line string
+						NULL,					// pointer to process security attributes 
+						NULL,					// pointer to thread security attributes 
+						FALSE,					// handle inheritance flag 
+						0,						// creation flags 
+						NULL,					// pointer to new environment block 
+						NULL,					// pointer to current directory name 
+						&startupinfo,			// pointer to STARTUPINFO 
 						&ProcessInformation 	// pointer to PROCESS_INFORMATION  
 						);
-//	remove(sBatchFilename);	// if you do this, the CreateProcess fails, presumably it needs it for a few seconds
 
 	return !!ret;
 }
@@ -3353,7 +2913,7 @@ void CAssimilateDoc::OnEditLaunchmodviewoncurrent()
 	if (RunApp (sExecString))
 	{
 		// ok...
-		//
+
 	}
 	else
 	{

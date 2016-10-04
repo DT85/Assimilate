@@ -104,5 +104,3 @@ int Vect3::MaxElementIndex() const
 		return 1;
 	return 2;	
 }
-
-

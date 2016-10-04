@@ -495,18 +495,6 @@ static void ASE_KeyMESH_FACE_LIST( const char *token )
 
 		ASE_GetToken( qtrue );
 
-/*
-		if ( ( p = strstr( s_token, "*MESH_MTLID" ) ) != 0 )
-		{
-			p += strlen( "*MESH_MTLID" ) + 1;
-			mtlID = atoi( p );
-		}
-		else
-		{
-			Error( "No *MESH_MTLID found for face!" );
-		}
-*/
-
 		pMesh->currentFace++;
 	}
 	else
@@ -873,7 +861,7 @@ static void ASE_Process( int type )
 				VERBOSE( ( "(discarding BIP/ignore object)\n" ) );
 				ASE_FreeGeomObject( ase.currentObject );
 			}
-			else if ( (type /*== TYPE_PLAYER*/) && ( strstr( ase.objects[ase.currentObject].name, "h_" ) != ase.objects[ase.currentObject].name ) &&
+			else if ( (type) && ( strstr( ase.objects[ase.currentObject].name, "h_" ) != ase.objects[ase.currentObject].name ) &&
 				      ( strstr( ase.objects[ase.currentObject].name, "l_" ) != ase.objects[ase.currentObject].name ) &&
 					  ( strstr( ase.objects[ase.currentObject].name, "u_" ) != ase.objects[ase.currentObject].name ) &&
 					  ( strstr( ase.objects[ase.currentObject].name, "tag" ) != ase.objects[ase.currentObject].name ) &&
@@ -899,5 +887,4 @@ static void ASE_Process( int type )
 	if ( !ase.currentObject )
 		Error( "No animation data!" );
 
-//	CollapseObjects();
 }

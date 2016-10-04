@@ -1,7 +1,3 @@
-// AssimilateDoc.h : interface of the CAssimilateDoc class
-//
-/////////////////////////////////////////////////////////////////////////////
-
 #if !defined(AFX_ASSIMILATEDOC_H__2CCA554A_2AD3_11D3_82E0_0000C0366FF2__INCLUDED_)
 #define AFX_ASSIMILATEDOC_H__2CCA554A_2AD3_11D3_82E0_0000C0366FF2__INCLUDED_
 
@@ -170,7 +166,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 };
 
-/////////////////////////////////////////////////////////////////////////////
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.

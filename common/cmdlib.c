@@ -1,5 +1,3 @@
-// cmdlib.c
-
 #include "cmdlib.h"
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -7,7 +5,6 @@
 #include "conio.h"
 extern  qboolean	gbKeyPress;
 #endif
-
 
 #ifdef WIN32
 #include <direct.h>
@@ -37,12 +34,13 @@ void setQDir( const char* newName)
 	strncpy(baseDirName,newName, sizeof(baseDirName));
 }
 
+
 /*
-===================
+==================================
 ExpandWildcards
 
 Mimic unix command line expansion
-===================
+==================================
 */
 #define	MAX_EX_ARGC	1024
 int		ex_argc;
@@ -95,12 +93,14 @@ void ExpandWildcards (int *argc, char ***argv)
 
 #ifdef WIN_ERROR
 #include <windows.h>
+
+
 /*
-=================
+===================================================
 Error
 
 For abnormal program terminations in windowed apps
-=================
+===================================================
 */
 void Error( const char *error, ... )
 {
@@ -116,18 +116,20 @@ void Error( const char *error, ... )
 	va_end (argptr);
 
 	sprintf (text2, "%s\nGetLastError() = %i", text, err);
-    MessageBox(NULL, text2, "Error", 0 /* MB_OK */ );
+    MessageBox(NULL, text2, "Error", 0 );
 
 	exit (1);
 }
 
 #else
+
+
 /*
-=================
+==================================================
 Error
 
 For abnormal program terminations in console apps
-=================
+==================================================
 */
 void Error( const char *error, ...)
 {
@@ -165,17 +167,14 @@ void qprintf( const char *format, ... ) {
 	va_end (argptr);
 }
 
-
 /*
-
 qdir will hold the path up to the quake directory, including the slash
 
   f:\quake\
   /raid/quake/
 
 gamedir will hold qdir + the game directory (id1, id2, etc)
-
-  */
+*/
 
 char		qdir[1024];
 char		gamedir[1024];
@@ -229,7 +228,6 @@ static qboolean SetQdirFromPath2( const char *path, const char *psBaseDir )
 				if ( gamedir[i] == '\\' ) 
 					gamedir[i] = '/';
 			}
-//			qprintf ("gamedir: %s\n", gamedir);
 
 			strncpy (qdir, path, c-path);
 			qdir[c-path] = 0;
@@ -238,7 +236,6 @@ static qboolean SetQdirFromPath2( const char *path, const char *psBaseDir )
 				if ( qdir[i] == '\\' ) 
 					qdir[i] = '/';
 			}
-//			qprintf ("qdir: %s\n", qdir);
 
 			if ( !writedir[0] )
 				strcpy( writedir, gamedir );
@@ -252,90 +249,9 @@ static qboolean SetQdirFromPath2( const char *path, const char *psBaseDir )
 			return qtrue;
 		}
 	}
-//	Error ("SetQdirFromPath: no '%s' in %s", BASEDIRNAME, path);
 	return qfalse;
 }
 
-
-/*
-static qboolean SetQdirFromPath2( const char *path, const char *psBaseDirName )
-{
-	char	temp[1024];
-	const char	*c;
-  const char *sep;
-	int		len, count;
-
-	if (!(path[0] == '/' || path[0] == '\\' || path[1] == ':'))
-	{	// path is partial
-		Q_getwd (temp);
-		strcat (temp, path);
-		path = temp;
-	}
-
-	__strlwr((char*)path);
-	// search for "quake2" in path
-
-	len = strlen(psBaseDirName);
-	for (c=path+strlen(path)-1 ; c != path ; c--)
-	{
-		int i;
-
-		if (!Q_strncasecmp (c, psBaseDirName, len))
-		{
-	  // strncpy (qdir, path, c+len+2-path);
-      // the +2 assumes a 2 or 3 following quake which is not the
-      // case with a retail install
-      // so we need to add up how much to the next separator
-      sep = c + len;
-      count = 1;
-      while (*sep && *sep != '/' && *sep != '\\')
-      {
-        sep++;
-        count++;
-      }
-			strncpy (qdir, path, c+len+count-path);
-			qprintf ("qdir: %s\n", qdir);
-			for ( i = 0; i < strlen( qdir ); i++ )
-			{
-				if ( qdir[i] == '\\' ) 
-					qdir[i] = '/';
-			}
-
-			c += len+count;
-			while (*c)
-			{
-				if (*c == '/' || *c == '\\')
-				{
-					strncpy (gamedir, path, c+1-path);
-
-					for ( i = 0; i < strlen( gamedir ); i++ )
-					{
-						if ( gamedir[i] == '\\' ) 
-							gamedir[i] = '/';
-					}
-
-					qprintf ("gamedir: %s\n", gamedir);
-
-					if ( !writedir[0] )
-						strcpy( writedir, gamedir );
-					else if ( writedir[strlen( writedir )-1] != '/' )
-					{
-						writedir[strlen( writedir )] = '/';
-						writedir[strlen( writedir )+1] = 0;
-					}
-
-					return qtrue;
-				}
-				c++;
-			}
-			Error ("No gamedir in %s", path);
-			return qfalse;
-		}
-	}
-//	Error ("SetQdirFromPath: no '%s' in %s\n(use -qdir X to change)", psBaseDirName, path);
-	return qfalse;
-}
-*/
 void SetQdirFromPath( const char *path )
 {
 	if (SetQdirFromPath2( path, baseDirName )	// try software version, in case it was overridden
@@ -349,7 +265,6 @@ void SetQdirFromPath( const char *path )
 	}
 
 	// ... else give up...
-	//
 	Error("Unable to work out basedir from \"%s\"!\n",path);
 }
 
@@ -418,11 +333,10 @@ char *copystring(const char *s)
 }
 
 
-
 /*
-================
+============
 I_FloatTime
-================
+============
 */
 double I_FloatTime (void)
 {
@@ -432,7 +346,7 @@ double I_FloatTime (void)
 	
 	return t;
 #if 0
-// more precise, less portable
+	// more precise, less portable
 	struct timeval tp;
 	struct timezone tzp;
 	static int		secbase;
@@ -483,12 +397,13 @@ void Q_mkdir (const char *path)
 		Error ("mkdir %s: %s",path, strerror(errno));
 }
 
+
 /*
-============
+==========================
 FileTime
 
 returns -1 if not present
-============
+==========================
 */
 int	FileTime (const char *path)
 {
@@ -501,14 +416,14 @@ int	FileTime (const char *path)
 }
 
 
-
 /*
-==============
+==============================
 COM_Parse
 
 Parse a token out of a string
-==============
+==============================
 */
+
 char *COM_Parse (char *data)
 {
 	int		c;
@@ -532,7 +447,7 @@ skipwhite:
 		data++;
 	}
 	
-// skip // comments
+	// skip // comments
 	if (c=='/' && data[1] == '/')
 	{
 		while (*data && *data != '\n')
@@ -541,7 +456,7 @@ skipwhite:
 	}
 	
 
-// handle quoted strings specially
+	// handle quoted strings specially
 	if (c == '\"')
 	{
 		data++;
@@ -558,7 +473,7 @@ skipwhite:
 		} while (1);
 	}
 
-// parse single characters
+	// parse single characters
 	if (c=='{' || c=='}'|| c==')'|| c=='(' || c=='\'' || c==':')
 	{
 		com_token[len] = c;
@@ -567,7 +482,7 @@ skipwhite:
 		return data+1;
 	}
 
-// parse a regular word
+	// parse a regular word
 	do
 	{
 		com_token[len] = c;
@@ -648,14 +563,13 @@ char *strlower (char *start)
 =============================================================================
 */
 
-
 /*
-=================
+=======================================================================
 CheckParm
 
 Checks for the given parameter in the program's command line arguments
 Returns the argument number (1 to argc-1) or 0 if not present
-=================
+=======================================================================
 */
 int CheckParm (const char *check)
 {
@@ -671,11 +585,10 @@ int CheckParm (const char *check)
 }
 
 
-
 /*
-================
+=============
 Q_filelength
-================
+=============
 */
 int Q_filelength (FILE *f)
 {
@@ -731,9 +644,9 @@ void SafeWrite (FILE *f, const void *buffer, int count)
 
 
 /*
-==============
+===========
 FileExists
-==============
+===========
 */
 qboolean	FileExists (const char *filename)
 {
@@ -745,6 +658,7 @@ qboolean	FileExists (const char *filename)
 	fclose (f);
 	return qtrue;
 }
+
 
 /*
 ==============
@@ -770,12 +684,12 @@ int    LoadFile( const char *filename, void **bufferptr )
 
 
 /*
-==============
+==========================================
 LoadFileBlock
 -
 rounds up memory allocation to 4K boundry
 -
-==============
+==========================================
 */
 int    LoadFileBlock( const char *filename, void **bufferptr )
 {
@@ -801,11 +715,11 @@ int    LoadFileBlock( const char *filename, void **bufferptr )
 
 
 /*
-==============
+===============
 TryLoadFile
 
 Allows failure
-==============
+===============
 */
 int    TryLoadFile (const char *filename, void **bufferptr)
 {
@@ -830,9 +744,9 @@ int    TryLoadFile (const char *filename, void **bufferptr)
 
 
 /*
-==============
+=========
 SaveFile
-==============
+=========
 */
 void    SaveFile (const char *filename, const void *buffer, int count)
 {
@@ -848,10 +762,10 @@ void    SaveFile (const char *filename, const void *buffer, int count)
 void DefaultExtension (char *path, const char *extension)
 {
 	char    *src;
-//
+
 // if path doesnt have a .EXT, append extension
 // (extension should include the .)
-//
+
 	src = path + strlen(path) - 1;
 
 	while (*src != '/' && *src != '\\' && src != path)
@@ -904,9 +818,9 @@ void    StripExtension (char *path)
 
 
 /*
-====================
+===================
 Extract file parts
-====================
+===================
 */
 // FIXME: should include the slash, otherwise
 // backing to an empty path will be wrong when appending a slash
@@ -916,9 +830,9 @@ void ExtractFilePath (const char *path, char *dest)
 
 	src = path + strlen(path) - 1;
 
-//
-// back up until a \ or the start
-//
+
+	// back up until a \ or the start
+
 	while (src != path && *(src-1) != '\\' && *(src-1) != '/')
 		src--;
 
@@ -932,10 +846,8 @@ void ExtractFileBase (const char *path, char *dest)
 
 	src = path + strlen(path) - 1;
 
-//
-// back up until a \ or the start
-//
-//	while (src != path && *(src-1) != PATHSEPERATOR)
+	// back up until a \ or the start
+
 	while (src != path && *(src-1) != '\\' && *(src-1) != '/')
 		src--;
 
@@ -952,9 +864,8 @@ void ExtractFileExtension (const char *path, char *dest)
 
 	src = path + strlen(path) - 1;
 
-//
-// back up until a . or the start
-//
+	// back up until a . or the start
+
 	while (src != path && *(src-1) != '.')
 		src--;
 	if (src == path)
@@ -968,9 +879,9 @@ void ExtractFileExtension (const char *path, char *dest)
 
 
 /*
-==============
+====================
 ParseNum / ParseHex
-==============
+====================
 */
 int ParseHex (const char *hex)
 {
@@ -1006,7 +917,6 @@ int ParseNum (const char *str)
 		return ParseHex (str+2);
 	return atol (str);
 }
-
 
 
 /*
@@ -1134,11 +1044,9 @@ float	LittleFloat (float l)
 #endif
 
 
-//=======================================================
-
 
 // FIXME: byte swap?
-
+//
 // this is a 16 bit, non-reflected CRC using the polynomial 0x1021
 // and the initial and final xor values shown below...  in other words, the
 // CCITT standard CRC used by XMODEM
@@ -1196,12 +1104,12 @@ unsigned short CRC_Value(unsigned short crcvalue)
 {
 	return crcvalue ^ CRC_XOR_VALUE;
 }
-//=============================================================================
+
 
 /*
-============
+===========
 CreatePath
-============
+===========
 */
 void	CreatePath (const char *path)
 {
@@ -1243,11 +1151,11 @@ void	CreatePath (const char *path)
 
 
 /*
-============
+===============================
 QCopyFile
 
   Used to archive source files
-============
+===============================
 */
 void QCopyFile (const char *from, const char *to)
 {

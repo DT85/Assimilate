@@ -1,6 +1,3 @@
-// MainFrm.cpp : implementation of the CMainFrame class
-//
-
 #include "stdafx.h"
 #include "Includes.h"
 
@@ -34,8 +31,7 @@ static UINT indicators[] =
 
 CMainFrame::CMainFrame()
 {
-	// TODO: add member initialization code here
-	
+	// TODO: add member initialization code here	
 }
 
 CMainFrame::~CMainFrame()
@@ -114,6 +110,3 @@ void StatusText(LPCSTR psText)
 {
 	((CMainFrame*)AfxGetMainWnd())->StatusMessage( (psText && psText[0]) ? psText : "Ready");
 }
-
-
-

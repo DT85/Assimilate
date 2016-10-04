@@ -1,4 +1,3 @@
-// Tokenizer.cpp
 #ifndef NOT_USING_MODULES
 // !!! if you are not using modules, read BELOW !!!
 #include "Module.h" // if you are not using modules, 
@@ -57,9 +56,8 @@ keywordArray_t CTokenizer::errorMessages[] =
 	"",									TKERR_USERERROR,
 };
 
-//
+
 // CSymbol
-//
 
 CSymbol::CSymbol()
 {
@@ -93,7 +91,6 @@ void CSymbol::Init(LPCTSTR symbolName)
 		return;
 	}
 	m_symbolName = (char*)malloc(strlen(symbolName) + 1);
-//	ASSERT(m_symbolName);
 	strcpy(m_symbolName, symbolName);
 }
 
@@ -107,9 +104,8 @@ void CSymbol::Delete()
 	delete this;
 }
 
-//
+
 // CDirectiveSymbol
-//
 
 CDirectiveSymbol::CDirectiveSymbol()
 {
@@ -162,9 +158,8 @@ LPCTSTR CDirectiveSymbol::GetValue()
 	return m_value;
 }
 
-//
+
 // CIntSymbol
-//
 
 CIntSymbol::CIntSymbol()
 {
@@ -193,9 +188,8 @@ int CIntSymbol::GetValue()
 	return m_value;
 }
 
-//
+
 // CSymbolTable
-//
 
 CSymbolTable::CSymbolTable()
 {
@@ -302,9 +296,8 @@ void CSymbolTable::RemoveSymbol(LPCTSTR symbolName)
 	m_symbols.erase(symbolName);
 }
 
-//
+
 // CParseStream
-//
 
 CParseStream::CParseStream()
 {
@@ -371,9 +364,8 @@ bool CParseStream::IsThisDefinition(void* theDefinition)
 	return false;
 }
 
-//
+
 // CParsePutBack
-//
 
 CParsePutBack::CParsePutBack()
 {
@@ -446,9 +438,8 @@ void CParsePutBack::GetCurFilename(char** theBuff)
 	m_parent->GetCurFilename(theBuff);
 }
 
-//
+
 // CParseFile
-//
 
 CParseFile::CParseFile()
 {
@@ -557,10 +548,10 @@ bool CParseFile::Init(LPCTSTR filename, CTokenizer* tokenizer, DWORD buffsize)
 	if (m_fileHandle == (HANDLE)-1)
 	{		
 		tokenizer->Error(TKERR_INCLUDE_FILE_NOTFOUND, filename);
-		//
+
 		// if you don't do this, you get a memory leak when the Init() code below orphans this handle 
 		//	(malloc'd at function top), I know it'll always be NZ, but I just prefer handling memptrs legally...-slc
-		//
+
 		if (m_fileName)
 		{
 			free(m_fileName);	
@@ -651,9 +642,8 @@ void CParseFile::GetCurFilename(char** theBuff)
 	}
 }
 
-//
+
 // CParseMemory
-//
 
 CParseMemory::CParseMemory()
 {
@@ -727,9 +717,8 @@ void CParseMemory::GetCurFilename(char** theBuff)
 	*theBuff = NULL;
 }
 
-//
+
 // CParseBlock
-//
 
 CParseBlock::CParseBlock()
 {
@@ -772,9 +761,8 @@ void CParseBlock::Init(byte* data, long datasize)
 	m_original = false;
 }
 
-//
+
 // CParseToken
-//
 
 CParseToken::CParseToken()
 {
@@ -858,9 +846,8 @@ void CParseToken::GetCurFilename(char** theBuff)
 	*theBuff = NULL;
 }
 
-//
+
 // CParseDefine
-//
 
 CParseDefine::CParseDefine()
 {
@@ -898,9 +885,8 @@ bool CParseDefine::IsThisDefinition(void* theDefinition)
 	return (CDirectiveSymbol*)theDefinition == m_defineSymbol;
 }
 
-//
+
 // CToken
-//
 
 CToken::CToken()
 {
@@ -976,9 +962,8 @@ float CToken::GetFloatValue()
 	return 0.0;
 }
 
-//
+
 // CCharToken
-//
 
 CCharToken::CCharToken()
 {
@@ -1062,9 +1047,8 @@ int CCharToken::GetType()
 	return TK_CHAR;
 }
 
-//
+
 // CStringToken
-//
 
 CStringToken::CStringToken()
 {
@@ -1099,7 +1083,6 @@ void CStringToken::Init(LPCTSTR theString)
 {
 	CToken::Init();
 	m_string = (char*)malloc(strlen(theString) + 1);
-//	ASSERT(m_string);
 	strcpy(m_string, theString);
 }
 
@@ -1108,9 +1091,8 @@ int CStringToken::GetType()
 	return TK_STRING;
 }
 
-//
+
 // CIntToken
-//
 
 CIntToken::CIntToken()
 {
@@ -1176,9 +1158,8 @@ LPCTSTR CIntToken::GetStringValue()
 	return m_string;
 }
 
-//
+
 // CFloatToken
-//
 
 CFloatToken::CFloatToken()
 {
@@ -1239,9 +1220,8 @@ LPCTSTR CFloatToken::GetStringValue()
 	return m_string;
 }
 
-//
+
 // CIdentifierToken
-//
 
 CIdentifierToken::CIdentifierToken()
 {
@@ -1276,7 +1256,6 @@ void CIdentifierToken::Init(LPCTSTR name)
 {
 	CToken::Init();
 	m_string = (char*)malloc(strlen(name) + 1);
-//	ASSERT(m_string);
 	strcpy(m_string, name);
 }
 
@@ -1285,9 +1264,8 @@ int CIdentifierToken::GetType()
 	return TK_IDENTIFIER;
 }
 
-//
+
 // CCommentToken
-//
 
 CCommentToken::CCommentToken()
 {
@@ -1322,7 +1300,6 @@ void CCommentToken::Init(LPCTSTR name)
 {
 	CToken::Init();
 	m_string = (char*)malloc(strlen(name) + 1);
-//	ASSERT(m_string);
 	strcpy(m_string, name);
 }
 
@@ -1331,9 +1308,8 @@ int CCommentToken::GetType()
 	return TK_COMMENT;
 }
 
-//
+
 // CSpaceToken
-//
 
 CSpaceToken::CSpaceToken()
 {
@@ -1368,7 +1344,6 @@ void CSpaceToken::Init(LPCTSTR name)
 {
 	CToken::Init();
 	m_string = (char*)malloc(strlen(name) + 1);
-//	ASSERT(m_string);
 	strcpy(m_string, name);
 }
 
@@ -1377,9 +1352,8 @@ int CSpaceToken::GetType()
 	return TK_SPACE;
 }
 
-//
+
 // CUserToken
-//
 
 CUserToken::CUserToken()
 {
@@ -1423,9 +1397,8 @@ int CUserToken::GetType()
 	return m_value;
 }
 
-//
+
 // CUndefinedToken
-//
 
 CUndefinedToken::CUndefinedToken()
 {
@@ -1468,9 +1441,8 @@ int CUndefinedToken::GetType()
 	return TK_UNDEFINED;
 }
 
-//
+
 // CTokenizerState
-//
 
 CTokenizerState::CTokenizerState()
 {
@@ -1524,9 +1496,8 @@ bool CTokenizerState::Skipping()
 	return m_skip;
 }
 
-//
+
 // CTokenizerHolderState
-//
 
 CTokenizerHolderState::CTokenizerHolderState()
 {
@@ -1562,9 +1533,8 @@ bool CTokenizerHolderState::ProcessElse()
 	return m_elseHit;
 }
 
-//
+
 // CKeywordTable
-//
 
 CKeywordTable::CKeywordTable(CTokenizer* tokenizer, keywordArray_t* keywords)
 {
@@ -1577,9 +1547,8 @@ CKeywordTable::~CKeywordTable()
 	m_tokenizer->SetKeywords(m_holdKeywords);
 }
 
-//
+
 // CTokenizer
-//
 
 CTokenizer::CTokenizer()
 {
@@ -1623,11 +1592,6 @@ void CTokenizer::Delete()
 		curState->Delete();
 	}
 
-/*	if (m_lastErrMsg != NULL)
-	{
-		free(m_lastErrMsg);
-		m_lastErrMsg = NULL;
-	}*/
 	CToken::DeleteAll();
 	CCharToken::DeleteAll();
 	CIntToken::DeleteAll();
@@ -1665,7 +1629,7 @@ void CTokenizer::Error(int theError)
 	}
 	
 	// If anyone objects to me altering this, say so... -Ste
-//	sprintf(errString, "Error -- %d, %s", theError, lookupstring);	
+	// sprintf(errString, "Error -- %d, %s", theError, lookupstring);	
 	sprintf(errString, "Error -- %d, \"%s\" (line %d)", theError, lookupstring, GetCurLine());	
 	Error(errString, theError);
 }
@@ -1694,7 +1658,7 @@ void CTokenizer::Error(int theError, LPCTSTR errString)
 	}
 
 	// If anyone objects to me altering this, say so... -Ste
-//	sprintf(errstring, "Error -- %d, %s - %s", theError, lookupstring, errString);
+	// sprintf(errstring, "Error -- %d, %s - %s", theError, lookupstring, errString);
 	_snprintf(errstring, sizeof(errstring), "Error -- %d, %s - \"%s\" (line %d)", theError, lookupstring, errString, GetCurLine());
 	Error(errstring, theError);
 }
@@ -1917,9 +1881,9 @@ CToken* CTokenizer::GetToEndOfLine(int tokenType)
 		switch(tokenType)
 		{
 		case TK_COMMENT:
-			//
+
 			// strip trailing whitespace...
-			//
+
 			while (strlen(theString) && isspace(theString[strlen(theString)-1]))
 			{
 				theString[strlen(theString)-1] = 0;
@@ -2460,9 +2424,9 @@ CToken* CTokenizer::HandleSlash()
 						{
 							i--;
 							theString[i] = '\0';
-							//
+
 							// strip trailing whitespace...
-							//
+
 							while (strlen(theString) && isspace(theString[strlen(theString)-1]))
 							{
 								theString[strlen(theString)-1] = 0;
@@ -2474,14 +2438,14 @@ CToken* CTokenizer::HandleSlash()
 				}
 			}
 			Error(TKERR_IDENTIFIERLENGTHEXCEEDED);
-			//
+
 			// we should actually keep reading until we've finished scanning the /**/ comment completely, even though
 			//	we're not returning it, or we end up returning stuff inside this comment as individual tokens later on
-			//
+
 			while (NextChar(theByte))
 			{
 				// note slightly awkward check to see if the leading star was the last char read above (unlikely but possible)
-				//
+
 				if (theByte != '*' && theString[MAX_IDENTIFIER_LENGTH-1]!= '*')
 				{
 					theString[MAX_IDENTIFIER_LENGTH-1]=0;
@@ -2825,7 +2789,6 @@ CToken* CTokenizer::HandleSymbol(byte theByte)
 	{
 		curStrLen--;
 		symbolString[curStrLen] = '\0';
-	//	symbolString = symbolString.Left(symbolString.GetLength() - 1);
 		if (lastLookup->GetParent() == NULL)
 		{
 			if ((m_flags & TKF_WANTUNDEFINED) == 0)
@@ -3079,9 +3042,8 @@ COLORREF CTokenizer::ParseRGB()
 	return RGB(red, green, blue);
 }
 
-//
+
 // CSymbolLookup
-//
 
 CSymbolLookup::CSymbolLookup()
 {

@@ -1,5 +1,3 @@
-// Model.cpp
-
 #include "StdAfx.h"
 #include "Includes.h"
 #include <assert.h>
@@ -74,11 +72,6 @@ bool CModel::DoProperties()
 {
 	bool dirty = false;
 
-//	if (IsGhoul2())
-//	{
-//		InfoBox("This properties page is for params not relevant for Ghoul2 models");
-//	}
-//	else
 	{		
 		CPropertySheet* propSheet = new CPropertySheet(m_name);
 
@@ -151,7 +144,7 @@ void CModel::AddSequence(CSequence* sequence)
 void CModel::DeleteSequence(CSequence* deleteSequence)
 {
 	// linklist is only 1-way, so we need to find the stage previous to this (if any)...
-	//
+
 	CSequence* prevSequence = NULL;
 	CSequence* scanSequence = GetFirstSequence();
 
@@ -163,7 +156,7 @@ void CModel::DeleteSequence(CSequence* deleteSequence)
 	if (scanSequence == deleteSequence)
 	{
 		// we found it, so was this the first sequence in the list?
-		//
+
 		if (prevSequence)
 		{
 			prevSequence->SetNext(scanSequence->GetNext());	// ...no
@@ -177,38 +170,28 @@ void CModel::DeleteSequence(CSequence* deleteSequence)
 }
 
 
-
 // func for qsort to callback, returns:
 //
 // <0 elem1 less than elem2 
 //  0 elem1 equivalent to elem2 
 // >0 elem1 greater than elem2 
-//
+
 int ModelSequenceCompareFunc( const void *arg1, const void *arg2 )
 {
 	CSequence *seq1 = (CSequence *) *(CSequence **)arg1;
 	CSequence *seq2 = (CSequence *) *(CSequence **)arg2;
 
 	return (seq1->m_iSequenceNumber - seq2->m_iSequenceNumber);	
-
-/*	if (seq1->m_iSequenceNumber < seq2->m_iSequenceNumber)
-		return -1;
-
-	if (seq1->m_iSequenceNumber > seq2->m_iSequenceNumber)
-		return  1;
-
-	return 0;
-	*/
 }
 
 // change the sequences around in the model till each one is in the position specified by it's member: m_iSequenceNumber
-//
+
 void CModel::ReOrderSequences()
 {
 	typedef vector<CSequence*> sequences_t; sequences_t sequences;
 
 	// add sequences to list...
-	//
+
 	CSequence *curSequence = m_sequences;
 	while (curSequence)
 	{
@@ -217,11 +200,11 @@ void CModel::ReOrderSequences()
 	}
 
 	// re-order sequences...
-	//
+
 	qsort( (void *)&sequences[0], (size_t)(sequences.size()), sizeof(CSequence *), ModelSequenceCompareFunc );
 
 	// now rebuild links...
-	//
+
 	int iTotMasterSequences = GetTotMasterSequences();	// this needs to be eval'd here, you can't do it in the for-next below
 	m_sequences = NULL;
 	for (int i=0; i<iTotMasterSequences; i++)
@@ -236,9 +219,8 @@ void CModel::ReOrderSequences()
 }
 
 // a niceness feature so the popup anim enum dialog picker can ask which enums are already in use...
-//
 // (now updated to return a int instead of a bool, therefore can be used to check for duplicates)
-//
+
 int CModel::AnimEnumInUse(LPCSTR psAnimEnum)
 {
 	int iCount = 0;
@@ -309,8 +291,6 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 {
 	CWaitCursor wait;
 	CRect Rect;
-//	((CAssimilateApp*)AfxGetApp())->m_pMainWnd->GetWindowRect(&Rect);
-//	CPoint Point = Rect.CenterPoint();
 
 	CProgressCtrl *pProgress = NULL;
 
@@ -343,26 +323,24 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 		if (pProgress)
 		{
 			pProgress->SetPos(iSequenceNumber++);
-//			pProgress->SetWindowText(va("Sequence %d/%d  (%s)",iSequenceNumber,iTotMasterSequences,curSequence->GetPath()));
 			wait.Restore();
 		}
 		
 		// mark current enums as valid or not...
-		//
+
 		curSequence->SetValidEnum(((CAssimilateApp*)AfxGetApp())->ValidEnum(curSequence->GetEnum()));
-//--------		
+	
 		for (int _i=0; _i<MAX_ADDITIONAL_SEQUENCES; _i++)
 		{
 			CSequence *additionalSeq = curSequence->AdditionalSeqs[_i];
 
 			additionalSeq->SetValidEnum(((CAssimilateApp*)AfxGetApp())->ValidEnum(additionalSeq->GetEnum()));
 		}
-//---------
 
 		if ( bReScanASEFiles )
 		{
 			// new code, first of all check for changed framecounts (ie updated ASE file), and update sequence if nec...
-			//
+
 			CString nameASE = ((CAssimilateApp*)AfxGetApp())->GetQuakeDir();
 					nameASE+= curSequence->GetPath();
 
@@ -398,7 +376,7 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 					else
 					{
 						// don't mention it if the current count is zero, it's probably a new anim we've just added...
-						//
+
 						if ( curSequence->GetFrameCount() )
 						{
 							if (giFixUpdatedASEFrameCounts == YES || giFixUpdatedASEFrameCounts == NO)
@@ -411,12 +389,11 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 															"Do you want me to fix this?"
 															);
 								giFixUpdatedASEFrameCounts = query.DoModal();
-								//gbReportUpdatedASEFrameCounts = GetYesNo(va("Model file: \"%s\"\n\n... has a framecount of %d instead of %d as the QDT/CAR file says (so I'll update it).\n\nContinue recieving this message?",nameASE, iFrameCount, curSequence->GetFrameCount()));
 							}
 						}
 
 						// update the sequence?...
-						//
+
 						if (giFixUpdatedASEFrameCounts == YES || giFixUpdatedASEFrameCounts == YES_ALL 
 							|| !curSequence->GetFrameCount()	// update: I think this should be here?
 							)
@@ -431,7 +408,7 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 #if 0
 			// now try to do any auto-associate between the ASE filename base and the existing enums, 
 			//	so if we find (eg) /...../...../CROUCH.ASE and we have BOTH_CROUCH then auto-set the enum to BOTH_CROUCH
-			//
+
 			CString stringASEName = nameASE;
 			Filename_BaseOnly(stringASEName);	// now = (eg) "falldeath" or "injured" etc 			
 
@@ -451,14 +428,13 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 				if (psEnumPosAfterUnderScore++)	// check it, and skip to next char 
 				{
 					// does this enum match the ASE name?
-					//
+
 					if ( !stricmp( psEnumPosAfterUnderScore, stringASEName ) )
 					{
 						// ok, we've found a good candidate, so set it...  (no need for query-prev code, but I wanted to)
-						//
+
 						if ( strcmp( curSequence->GetEnum(), stringEnum))
 						{
-//							InfoBox( va("(temp notify box)\n\nEnum auto-assign of \"%s\" to ASE \"%s\"  (prev enum was \"%s\")",stringEnum,nameASE,curSequence->GetEnum()));
 							curSequence->SetEnum(stringEnum);
 						}
 					}
@@ -466,7 +442,7 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 				else
 				{						
 					// this should never happen...
-					//
+
 					if (gbCarWash_DoingScan)
 					{
 						strCarWashErrors += va("found an anim enum with no underscore: \"%s\"\n",stringEnum);
@@ -483,18 +459,18 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 
 		// More bollox for Gummelt... :-)
 		// now do the other freaky trick (you'd better be grateful for all this Mike!!! <g>), which is:
-		//
+
 		// If you find the substring DEATH in this (master) sequence's enum, then ensure that the first *additional*
 		//	sequence of it is set to be the corresponding DEAD enum, but using the last frame only (and non-looping)
 		//
 		// (... or something...)
-		//
+
 		{	// keep scope local for neatness
 
 			if ( strstr (curSequence->GetEnum(), "DEATH") )
 			{
 				// scan this sequence's additional sequences for a DEAD of the same basic type...
-				//
+
 				CString stringEnumDEAD = curSequence->GetEnum();
 
 				ASSERT(!IsEnumSeperator(stringEnumDEAD));
@@ -502,7 +478,7 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 				stringEnumDEAD.Replace("DEATH","DEAD");
 
 				// 1st, is there even a corresponding DEAD enum in the global enum table that we can look for...
-				//
+
 				CString stringEnum;
 				bool bEnumFound = false;
 				for (int iEnumEntry=0; !bEnumFound; iEnumEntry++)
@@ -518,7 +494,7 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 					//	have one of those enums assigned to a sequence anyway.
 
 					// does this enum match the one we've built?
-					//
+
 					if ( !stricmp( stringEnum, stringEnumDEAD ) )
 					{
 						bEnumFound = true;
@@ -529,7 +505,7 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 				{
 					// ok, there *is* one of these, so let's scan this sequence's additional sequences to see if we've
 					//	got it...
-					//
+
 					CSequence *additionalSeq;	// outside FOR scope
 					for (int i=0; i<MAX_ADDITIONAL_SEQUENCES; i++)
 					{
@@ -545,14 +521,14 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 					}
 
 					// if we didn't find one, NULL the ptr
-					//
+
 					if ( i == MAX_ADDITIONAL_SEQUENCES)
 					{
 						additionalSeq = NULL;
 					}
 
 					// did we find one? (or did it have the wrong info in?)
-					//
+
 					if ( additionalSeq == NULL // didn't find one
 						|| additionalSeq->GetFrameCount()!=1
 						|| additionalSeq->GetLoopFrame() !=-1
@@ -561,7 +537,7 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 						)
 					{
 						// find a slot to add this new sequence to, or use the faulty one...
-						//
+
 						if (additionalSeq == NULL)
 						{
 							for (int i=0; i<MAX_ADDITIONAL_SEQUENCES; i++)
@@ -576,7 +552,7 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 						}
 
 						// so have we got a slot to work with?
-						//
+
 						if ( additionalSeq == NULL )
 						{
 							if (gbCarWash_DoingScan)
@@ -604,7 +580,7 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 		curSequence->SetTargetFrame(curFrame + curSequence->GetStartFrame());	// slightly more legal than just (curFrame)
 
 		// update: now set any additional sequences within it...
-		//
+
 		for (int i=0; i<MAX_ADDITIONAL_SEQUENCES; i++)
 		{
 			curSequence->AdditionalSeqs[i]->SetTargetFrame(curFrame + curSequence->AdditionalSeqs[i]->GetStartFrame());
@@ -617,7 +593,6 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 	m_totFrames = curFrame;
 
 	ghAssimilateView->GetDocument()->SetModifiedFlag();
-//	(ghAssimilateView->GetDocument()->IsModified())?OutputDebugString("modified\n"):OutputDebugString("same\n");
 
 	if (pProgress)
 	{
@@ -899,30 +874,7 @@ bool CModel::GetNoSkew90(void)
 	return m_bNoSkew90;
 }
 
-/*
-void CModel::SetSkelPath(LPCSTR psPath)
-{
-	if (m_psSkelPath != NULL)
-	{
-		free(m_psSkelPath);
-	}
 
-	if (psPath == NULL)
-	{
-		m_psSkelPath = NULL;
-	}
-	else
-	{
-		m_psSkelPath = (char*) malloc (strlen(psPath)+1);
-		strcpy(m_psSkelPath, psPath);
-	}
-}
-
-LPCSTR CModel::GetSkelPath(void)
-{
-	return m_psSkelPath;	// warning, may be NULL or blank
-}
-*/
 void CModel::SetMakeSkelPath(LPCSTR psPath)
 {
 	if (m_psMakeSkelPath != NULL)
@@ -1017,9 +969,6 @@ bool CModel::WriteExternal(bool bPromptForNames, bool& bCFGWritten)
 	CString filename;
 	if (bPromptForNames)
 	{
-		//XXXXXXXXXXXXXX
-//		CFileDialog dialog(FALSE, ".cfg", /*m_name*/"D:\\Source\\StarTrek\\Code-DM\\baseef\\models\\players2\\imperial\\animation_new.cfg", OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, "Config Data Files (*.cfg)|*.cfg|All Files (*.*)|*.*||", NULL);
-
 		CString strInitialPrompt(ghAssimilateView->GetDocument()->GetPathName());
 		Filename_RemoveFilename(strInitialPrompt);
 		strInitialPrompt.Replace("/","\\");
@@ -1045,9 +994,6 @@ bool CModel::WriteExternal(bool bPromptForNames, bool& bCFGWritten)
 			filename = filename.Left(loc+strlen(m_name));
 		}
 		// dup the dirname to use as the model name... (eg "/.../.../klingon" becomes "/.../.../klingon/klingon"
-		//loc = filename.ReverseFind('/');		
-		//filename += filename.Mid(loc);
-		//filename += ".cfg";
 		filename += "/"; filename += sANIMATION_CFG_NAME;	
 	}
 	CTxtFile* file = CTxtFile::Create(filename);
@@ -1058,7 +1004,7 @@ bool CModel::WriteExternal(bool bPromptForNames, bool& bCFGWritten)
 	}
 
 	// new bit, check for the existance of an animation.pre file, which means export this in Q3 format (rather than trek)
-	//
+
 	CString strQ3FormatCheckName(filename);
 	Filename_RemoveFilename(strQ3FormatCheckName);
 	strQ3FormatCheckName += "\\";
@@ -1072,14 +1018,13 @@ bool CModel::WriteExternal(bool bPromptForNames, bool& bCFGWritten)
 	if (bExportFormatIsQuake3Multiplayer)
 	{
 		// multi-player format, check for optional animation.pre file...
-		//
+
 		FILE *fhPRE = fopen(strQ3FormatCheckName, "rt");
 		
 		if (fhPRE)
 		{
-			//
 			// read all the lines in this file and just write them straight to the output file...
-			//
+
 			char sLine[16384];
 			char *psLine;
 			CString strTrimmed;
@@ -1110,15 +1055,15 @@ bool CModel::WriteExternal(bool bPromptForNames, bool& bCFGWritten)
 	else
 	{
 		// single-player format...
-		//
+
 		CString commentLine;
 		CTime time = CTime::GetCurrentTime();
 		commentLine.Format("// %s %d frames; %d sequences; updated %s", filename, m_totFrames, GetTotSequences(), time.Format("%H:%M %A, %B %d, %Y"));
 		file->Writeln(commentLine);
-		//
+
 		// the Writeln functions I have to call don't handle "\n" chars properly because of being opened in binary mode
 		//	(sigh), so I have to explicitly call the Writeln() functions to output CRs... :-(
-		//
+
 		file->Writeln("//");
 		file->Writeln("// Format:  enum, targetFrame, frameCount, loopFrame, frameSpeed");	
 		file->Writeln("//");
@@ -1160,7 +1105,7 @@ bool CModel::HasGLA()
 }
 
 // returns NULL else name string
-//
+
 LPCSTR CModel::GLAName(void)
 {
 	CSequence* curSequence = GetFirstSequence();
@@ -1178,9 +1123,8 @@ LPCSTR CModel::GLAName(void)
 
 
 // should only be called once model is known to be in a sorted state or results are meaningless.
-//
 // either param can be NULL if not interested in them...
-//
+
 void CModel::GetMasterEnumBoundaryFrameNumbers(int *piFirstFrameAfterBOTH, int *piFirstFrameAfterTORSO)
 {
 	ENUMTYPE prevET = ET_INVALID;
@@ -1193,7 +1137,7 @@ void CModel::GetMasterEnumBoundaryFrameNumbers(int *piFirstFrameAfterBOTH, int *
 		ENUMTYPE thisET = curSequence->GetEnumType();
 
 		// update any frame markers first...
-		//
+
 		if (prevET == ET_BOTH && thisET != ET_BOTH)
 		{
 			iFirstFrameAfterBOTH = curSequence->GetTargetFrame();
@@ -1210,7 +1154,7 @@ void CModel::GetMasterEnumBoundaryFrameNumbers(int *piFirstFrameAfterBOTH, int *
 		curSequence = curSequence->GetNext();
 	}
 	// bug fix, if there are no leg frames at all, then we need to check if the ...AfterTORSO marker needs moving...
-	//
+
 	if (prevET == ET_BOTH)
 	{
 		iFirstFrameAfterBOTH = GetTotFrames();
@@ -1299,7 +1243,7 @@ void CModel::Write(CTxtFile* file)
 		file->Write(" ", path, " ");
 
 		// params stuff...
-		//
+
 		if (IsGhoul2())
 		{
 			if	(GetMakeSkin())
@@ -1326,13 +1270,6 @@ void CModel::Write(CTxtFile* file)
 			{
 				file->Write("-", CAssimilateDoc::GetKeyword(TK_AS_NOSKEW90, TABLE_CONVERT), " ");
 			}
-			/*
-			if	(GetSkelPath() && strlen(GetSkelPath()))
-			{
-				file->Write("-", CAssimilateDoc::GetKeyword(TK_AS_SKEL,		TABLE_CONVERT), " ");
-				file->Write(GetSkelPath(), " ");
-			}
-			*/
 			if	(GetMakeSkelPath() && strlen(GetMakeSkelPath()))
 			{
 				file->Write("-", CAssimilateDoc::GetKeyword(TK_AS_MAKESKEL,	TABLE_CONVERT), " ");
@@ -1347,21 +1284,13 @@ void CModel::Write(CTxtFile* file)
 			{
 				file->Write(va("-lod %d ",giLODLevelOverride));
 			}
-			//xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 			file->Write("-", CAssimilateDoc::GetKeyword(TK_AS_PLAYERPARMS, TABLE_CONVERT), " ");
 			file->Write(0);//m_skipStart+1);	// ignore these, but don't want to update parser and have invalid prev files
 			file->Space();
-	//		file->Write(m_skipEnd);	// this param no longer used
-	//		file->Space();
 			file->Write(0);//m_skipEnd);//max upper frames);
-			file->Space();
-	//		file->Write(m_headFrames);	// this param no longer used
-	//		file->Space();
-			
+			file->Space();		
 		}
-
-		//xxxxxxxxxxxxxxxxxxxxxx
 
 		if (m_originx || m_originy || m_originz)
 		{
@@ -1450,13 +1379,7 @@ void CModelPropPage::OnOK()
 		if (!GetYesNo("Warning, you have a make-skeleton path entered, but 'makeskel' is OFF, this will lose that path info when this dialog closes.\n\nProceed? ('NO' is the same as clicking 'CANCEL')"))
 			return;
 	}
-/*	
-// these are all irrelevant now...
-//
-	m_model->SetHeadFrames(m_headFrames);
-	m_model->SetSkipEnd(m_skipEnd);
-	m_model->SetSkipStart(m_skipStart);
-*/
+
 	m_model->SetOriginX(m_iOriginX);
 	m_model->SetOriginY(m_iOriginY);
 	m_model->SetOriginZ(m_iOriginZ);
@@ -1465,7 +1388,6 @@ void CModelPropPage::OnOK()
 	m_model->SetSmooth(!!m_bSmooth);
 	m_model->SetLoseDupVerts(!!m_bLoseDupVerts);
 	m_model->SetMakeSkin(!!m_bMakeSkin);
-//	m_model->SetSkelPath(m_bMakeSkel?(LPCSTR)m_strSkelPath:"");
 	m_model->SetMakeSkelPath(m_bMakeSkel?(LPCSTR)m_strSkelPath:"");
 
 	m_model->SetScale(m_fScale);
@@ -1501,15 +1423,7 @@ void CModelPropPage::PopulatePCJList(void)
 BOOL CModelPropPage::OnInitDialog() 
 {
 	CPropertyPage::OnInitDialog();
-/*
-// these are all irrelevant now...
-//		
-	m_headFrames = m_model->GetHeadFrames();
-	m_skipEnd = m_model->GetSkipEnd();
-	m_skipStart = m_model->GetSkipStart();
-	m_totFrames.Format("%d", m_model->GetTotFrames());
-	m_totSequences.Format("%d", m_model->GetTotSequences());
-*/
+
 	m_iOriginX = m_model->GetOriginX();
 	m_iOriginY = m_model->GetOriginY();
 	m_iOriginZ = m_model->GetOriginZ();
@@ -1521,7 +1435,6 @@ BOOL CModelPropPage::OnInitDialog()
 	m_strSkelPath = m_model->GetMakeSkelPath();
 	if (m_strSkelPath.IsEmpty())
 	{
-//		m_strSkelPath = m_model->GetSkelPath();
 	}
 	m_bMakeSkel = (m_model->GetMakeSkelPath() && strlen(m_model->GetMakeSkelPath()))?TRUE:FALSE;
 
@@ -1595,11 +1508,11 @@ void CModelPropPage::OnCheckMakeskel()
 	UpdateData(DIALOG_TO_DATA);
 
 	// first time we turn it on, we should make up a reasonable default name...
-	//
+
 	if (m_bMakeSkel && m_strSkelPath.IsEmpty())
 	{
 		// basically I'm just going to use the dir name as the GLA name base as well...
-		//
+
 		CString strSuggestedPath(m_model->GetPath());			// eg. "models/players/blah/root"
 		int iLoc = strSuggestedPath.ReverseFind('/');
 		if (iLoc>=0)

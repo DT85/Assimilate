@@ -1,6 +1,3 @@
-// Assimilate.h : main header file for the ASSIMILATE application
-//
-
 #if !defined(AFX_ASSIMILATE_H__2CCA5544_2AD3_11D3_82E0_0000C0366FF2__INCLUDED_)
 #define AFX_ASSIMILATE_H__2CCA5544_2AD3_11D3_82E0_0000C0366FF2__INCLUDED_
 
@@ -13,7 +10,7 @@
 #endif
 
 // not incredibly important, just used for guessing string lengths for display/output neatness...
-//
+
 #define APPROX_LONGEST_ASE_NAME 20
 extern bool gbViewAnimEnums;
 extern bool gbViewFrameDetails;
@@ -22,7 +19,7 @@ extern bool gbViewFrameDetails_Additional;
 /////////////////////////////////////////////////////////////////////////////
 // CAssimilateApp:
 // See Assimilate.cpp for the implementation of this class
-//
+
 enum
 {
 	TK_ENUM = TK_USERDEF,
@@ -33,7 +30,7 @@ enum
 };
 
 // 1st CString is enum key, (eg) "BOTH_PAIN1", 2nd is comment (body text only, no comment chars)
-//
+
 typedef list< pair<CString,CString> > EnumTable_t;
 
 class CAssimilateApp : public CWinApp

@@ -1,9 +1,5 @@
-// Assimilate.cpp : Defines the class behaviors for the application.
-//
-
 #include "stdafx.h"
 #include "Includes.h"
-#include "sourcesafe.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -143,7 +139,7 @@ BOOL CAssimilateApp::InitInstance()
 
 	CString strCommandLineFile = cmdInfo.m_strFileName;
 	cmdInfo.m_strFileName = "";
-	cmdInfo.m_nShellCommand = CCommandLineInfo::FileNew;	// :-)
+	cmdInfo.m_nShellCommand = CCommandLineInfo::FileNew;
 
 	// Dispatch commands specified on the command line
 	if (!ProcessShellCommand(cmdInfo))
@@ -155,15 +151,6 @@ BOOL CAssimilateApp::InitInstance()
 
 	// Enable drag/drop open
 	m_pMainWnd->DragAcceptFiles();
-
-
-//===============
-	//
-	// a bit hacky but wtf for utils, right?...
-	//	
-	SS_SetString_Ini	("\\\\RAVEND\\VSS_PROJECTS\\StarWars\\SRCSAFE.INI");
-	SS_SetString_Project("$/base/");
-//===============
 
 	if (strCommandLineFile.GetLength())
 	{

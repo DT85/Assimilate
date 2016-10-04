@@ -1,5 +1,3 @@
-// mathlib.c -- math primitives
-
 #include "cmdlib.h"
 #include "mathlib.h"
 
@@ -17,7 +15,6 @@ vec3_t vec3_origin = {0,0,0};
 ** We use two byte encoded normals in some space critical applications.
 ** Lat = 0 at (1,0,0) to 360 (-1,0,0), encoded in 8-bit sine table format
 ** Lng = 0 at (0,0,1) to 180 (0,0,-1), encoded in 8-bit sine table format
-**
 */
 void NormalToLatLong( const vec3_t normal, byte bytes[2] ) {
 	// check for singularities
@@ -44,12 +41,12 @@ void NormalToLatLong( const vec3_t normal, byte bytes[2] ) {
 }
 
 /*
-=====================
+====================================================================
 PlaneFromPoints
 
 Returns false if the triangle is degenrate.
 The normal will point out of the clock for clockwise ordered points
-=====================
+====================================================================
 */
 qboolean PlaneFromPoints( vec4_t plane, const vec3_t a, const vec3_t b, const vec3_t c ) {
 	vec3_t	d1, d2;
@@ -66,12 +63,12 @@ qboolean PlaneFromPoints( vec4_t plane, const vec3_t a, const vec3_t b, const ve
 }
 
 /*
-================
+==============================================
 MakeNormalVectors
 
 Given a normalized forward vector, create two
 other perpendicular vectors
-================
+==============================================
 */
 void MakeNormalVectors (vec3_t forward, vec3_t right, vec3_t up)
 {
@@ -276,9 +273,9 @@ void AddPointToBounds( const vec3_t v, vec3_t mins, vec3_t maxs ) {
 
 
 /*
-=================
+===================
 PlaneTypeForNormal
-=================
+===================
 */
 int	PlaneTypeForNormal (vec3_t normal) {
 	if (normal[0] == 1.0 || normal[0] == -1.0)
@@ -292,9 +289,9 @@ int	PlaneTypeForNormal (vec3_t normal) {
 }
 
 /*
-================
+===============
 MatrixMultiply
-================
+===============
 */
 void MatrixMultiply(float in1[3][3], float in2[3][3], float out[3][3]) {
 	out[0][0] = in1[0][0] * in2[0][0] + in1[0][1] * in2[1][0] +
@@ -372,11 +369,11 @@ void PerpendicularVector( vec3_t dst, const vec3_t src )
 }
 
 /*
-===============
+=====================================
 RotatePointAroundVector
 
 This is not implemented very well...
-===============
+=====================================
 */
 void RotatePointAroundVector( vec3_t dst, const vec3_t dir, const vec3_t point,
 							 float degrees ) {

@@ -1,5 +1,3 @@
-// Comment.cpp
-
 #include "StdAfx.h"
 #include "Includes.h"
 

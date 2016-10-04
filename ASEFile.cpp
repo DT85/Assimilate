@@ -1,5 +1,3 @@
-// ASEFile.cpp
-
 #include "Module.h"
 #include "Tokenizer.h"
 #include "AlertErrHandler.h"
@@ -327,5 +325,3 @@ void CASEFile::ParseScene(CTokenizer* tokenizer)
 void CASEFile::ParseGeomObject(CTokenizer* tokenizer)
 {
 }
-
-

@@ -1,5 +1,3 @@
-// ASEFile.h
-
 enum 
 {
 	TK_ASE_COLON = TK_USERDEF,

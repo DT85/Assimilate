@@ -1,5 +1,3 @@
-// AlertErrHandler.cpp
-
 #include <afxwin.h> 
 #include "Module.h"
 #include "AlertErrHandler.h"
@@ -11,4 +9,3 @@ void CAlertErrHandler::Error(int theError, LPCTSTR errString)
 	gbParseError = true;
 	AfxMessageBox(errString);
 }
-

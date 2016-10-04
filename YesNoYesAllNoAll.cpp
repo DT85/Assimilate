@@ -1,12 +1,8 @@
-// YesNoYesAllNoAll.cpp : implementation file
-//
-
 // Ok, ok, I kjnow this is a stupid name for a file, I didn't notice that a class name I was 
 //	filling in in a classwizard dialog was also adding to a filename field, and I couldn't be 
 //	bothered trying to undo it all afterwards, ok?   :-/
 
 #include "stdafx.h"
-//#include "assimilate.h"
 #include "includes.h"
 
 #ifdef _DEBUG
@@ -18,10 +14,9 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CYesNoYesAllNoAll dialog
 
-
 // this is really really awful, but if I make on large static text box the damn thing won't wrap text, no matter what
 //	flagfs are set in the RC, so I'll do it this way for now (another MS classic...)
-//
+
 CYesNoYesAllNoAll::CYesNoYesAllNoAll(	LPCSTR psLine1, 
 										LPCSTR psLine2, 
 										LPCSTR psLine3, 

@@ -1,5 +1,3 @@
-// AlertErrHandler.h
-
 class CAlertErrHandler :  public CErrHandler
 {
 public:

@@ -1,6 +1,3 @@
-// Filename:-	oddbits.cpp
-//
-
 #include "stdafx.h"
 #include "includes.h"
 
@@ -23,7 +20,7 @@ char	*va(char *format, ...)
 
 
 // these MUST all be MB_TASKMODAL boxes now!!
-//
+
 void ErrorBox(const char *sString)
 {
 	MessageBox( NULL, sString, "Error",		MB_OK|MB_ICONERROR|MB_TASKMODAL );		
@@ -51,9 +48,8 @@ bool FileExists (LPCSTR psFilename)
 
 
 // returns a path to somewhere writeable, without trailing backslash...
-//
 // (for extra speed now, only evaluates it on the first call, change this if you like)
-//
+
 char *scGetTempPath(void)
 {	
 	static char sBuffer[MAX_PATH];
@@ -67,19 +63,19 @@ char *scGetTempPath(void)
 		if (dwReturnedSize>sizeof(sBuffer))
 			{
 			// temp path too long to return, so forget it...
-			//
-			strcpy(sBuffer,"c:");	// "c:\\");	// should be writeable
+
+			strcpy(sBuffer,"c:");	// should be writeable
 			}
 
 		// strip any trailing backslash...
-		//
+
 		if (sBuffer[strlen(sBuffer)-1]=='\\')
 			sBuffer[strlen(sBuffer)-1]='\0';
-		}// if (!i++)
+		}
 
 	return sBuffer;
 
-}// char *scGetTempPath(void)
+}
 
 
 // "psInitialLoadName" param can be "" if not bothered
@@ -99,7 +95,7 @@ char *InputLoadFileName(char *psInitialLoadName, char *psCaption, const char *ps
 
 	return NULL;	
 
-}// char *InputLoadFileName(char *psInitialLoadName, char *psCaption, char *psInitialDir, char *psFilter)
+}
 
 
 long filesize(FILE *handle)
@@ -145,9 +141,8 @@ int scLoadFile (LPCSTR psPathedFilename, void **bufferptr, bool bBinaryMode /* =
 
 
 // takes (eg) "q:\quake\baseq3\textures\borg\name.tga"
-//
 //	and produces "textures/borg/name.tga"
-//
+
 void Filename_RemoveBASEQ(CString &string)
 {
 	string.Replace("\\","/");	
@@ -165,7 +160,7 @@ void Filename_RemoveBASEQ(CString &string)
 			if (loc >= 0)
 			{
 				// now pointing at local filename...
-				//
+
 				string = string.Mid(loc+1);
 			}
 		}
@@ -174,9 +169,8 @@ void Filename_RemoveBASEQ(CString &string)
 
 
 // takes (eg) "textures/borg/name.tga"
-//
 // and produces "textures/borg"
-//
+
 void Filename_RemoveFilename(CString &string)
 {
 	string.Replace("\\","/");		
@@ -190,9 +184,8 @@ void Filename_RemoveFilename(CString &string)
 
 
 // takes (eg) "( longpath )/textures/borg/name.xxx"			// N.B.  I assume there's an extension on the input string
-//
 // and produces "name"
-//
+
 void Filename_BaseOnly(CString &string)
 {
 	string.Replace("\\","/");
@@ -220,6 +213,3 @@ void Filename_AccountForLOD(CString &string, int iLODLevel)
 		}		
 	}	
 }
-
-///////////////////// eof ///////////////////
-

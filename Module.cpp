@@ -1,5 +1,3 @@
-// CModule.cpp
-
 #include "Module.h"
 
 // CMoudle

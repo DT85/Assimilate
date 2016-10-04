@@ -1,8 +1,4 @@
-// AnimPicker.cpp : implementation file
-//
-
 #include "stdafx.h"
-//#include "assimilate.h"
 #include "includes.h"
 
 #ifdef _DEBUG
@@ -16,7 +12,7 @@ static char THIS_FILE[] = __FILE__;
 static bool gbFilterOutUsed = false;
 
 CAnimPicker::CAnimPicker(char *psReturnString,
-						 CWnd* pParent /*=NULL*/)
+						 CWnd* pParent )
 	: CDialog(CAnimPicker::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CAnimPicker)
@@ -138,11 +134,6 @@ BOOL CAnimPicker::OnInitDialog()
 
 void CAnimPicker::OnDblclkListBoth() 
 {
-// not needed now...
-//
-//	CListBox*	boxBoth = (CListBox*)GetDlgItem(IDC_LIST_BOTH);
-//				boxBoth->GetText(boxBoth->GetCurSel(),m_psReturnString);
-
 	if (ReturnStringIsValid())
 	{
 		EndDialog( IDOK );
@@ -151,11 +142,6 @@ void CAnimPicker::OnDblclkListBoth()
 
 void CAnimPicker::OnDblclkListLegs() 
 {
-// not needed now...
-//
-//	CListBox*	boxLegs = (CListBox*)GetDlgItem(IDC_LIST_LEGS);
-//				boxLegs->GetText(boxLegs->GetCurSel(),m_psReturnString);	
-
 	if (ReturnStringIsValid())
 	{
 		EndDialog( IDOK );
@@ -164,11 +150,6 @@ void CAnimPicker::OnDblclkListLegs()
 
 void CAnimPicker::OnDblclkListTorso() 
 {
-// not needed now...
-//
-//	CListBox*	boxTorso = (CListBox*)GetDlgItem(IDC_LIST_TORSO);	
-//				boxTorso->GetText(boxTorso->GetCurSel(),m_psReturnString);	
-
 	if (ReturnStringIsValid())
 	{
 		EndDialog( IDOK );
@@ -177,11 +158,6 @@ void CAnimPicker::OnDblclkListTorso()
 
 void CAnimPicker::OnDblclkListFace() 
 {
-// not needed now...
-//
-//	CListBox*	boxFace = (CListBox*)GetDlgItem(IDC_LIST_FACE);	
-//				boxFace->GetText(boxFace->GetCurSel(),m_psReturnString);	
-
 	if (ReturnStringIsValid())
 	{
 		EndDialog( IDOK );
@@ -190,11 +166,6 @@ void CAnimPicker::OnDblclkListFace()
 
 void CAnimPicker::OnDblclkListVM() 
 {
-// not needed now...
-//
-//	CListBox*	boxVM = (CListBox*)GetDlgItem(IDC_LIST_VM);	
-//				boxVM->GetText(boxVM->GetCurSel(),m_psReturnString);	
-
 	if (ReturnStringIsValid())
 	{
 		EndDialog( IDOK );
@@ -304,4 +275,3 @@ void CAnimPicker::OnDestroy()
 
 	gbFilterOutUsed = !!m_bFilterOutUsed;	
 }
-

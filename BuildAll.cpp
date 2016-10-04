@@ -1,9 +1,5 @@
-// BuildAll.cpp : implementation file
-//
-
 #include "stdafx.h"
 #include "Includes.h"
-//#include "assimilate.h"
 #include "BuildAll.h"
 
 #ifdef _DEBUG
@@ -17,7 +13,7 @@ static char THIS_FILE[] = __FILE__;
 
 
 CBuildAll::CBuildAll(CString strPath, bool bPreValidate,
-					CWnd* pParent /*=NULL*/)
+					CWnd* pParent)
 	: CDialog(CBuildAll::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CBuildAll)
@@ -64,4 +60,3 @@ void CBuildAll::GetData(CString& strPath, bool& bPreValidate)
 	strPath		= m_strBuildPath;
 	bPreValidate= !!m_bPreValidateCARs;
 }
-
