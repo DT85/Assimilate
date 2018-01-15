@@ -1,6 +1,7 @@
 *.suo
 *.db
 *.opendb
+*.ipch
 debug/*.*
 release/*.*
 build/*.*

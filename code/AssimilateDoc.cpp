@@ -931,7 +931,7 @@ void CAssimilateDoc::AddComment(LPCTSTR comment)
 {
 	// some code to stop those damn timestamps accumulating...
 
-	if (!strnicmp(comment,sSAVEINFOSTRINGCHECK,strlen(sSAVEINFOSTRINGCHECK)))
+	if (!_strnicmp(comment,sSAVEINFOSTRINGCHECK,strlen(sSAVEINFOSTRINGCHECK)))
 	{
 		return;
 	}
@@ -999,7 +999,7 @@ char **Sys_ListFiles( const char *directory, const char *extension, int *numfile
 			if ( nfiles == MAX_FOUND_FILES - 1 ) {
 				break;
 			}
-			list[ nfiles ] = strdup( strlwr(findinfo.name) );
+			list[ nfiles ] = _strdup( _strlwr(findinfo.name) );
 			nfiles++;
 		}
 	} while ( _findnext (findhandle, &findinfo) != -1 );
@@ -1770,7 +1770,7 @@ static bool FileUsesGLAReference(LPCSTR psFilename, LPCSTR psGLAReference)
 				fread(psText,1,iLen,fHandle);
 				psText[iLen]='\0';
 
-				strlwr(psText);
+				_strlwr(psText);
 
 				// this is a simple test that could be made more precise, but for now...
 				//
@@ -2420,7 +2420,6 @@ BOOL CAssimilateDoc::DoFileSave()
 	if (b == TRUE)
 	{
 		// sourcesafe
-		LPCSTR filename = (LPCSTR) m_strPathName;
 		#define Sys_Printf(blah) StatusText(blah)
 	}
 
@@ -2813,7 +2812,6 @@ void SS_DisposingOfCurrent(LPCSTR psFileName, bool bDirty)
 {
 	if (psFileName[0])
 	{
-		LPCSTR filename = psFileName;	// compile laziness
 		#undef Sys_Printf
 		#define Sys_Printf(blah)
 	}
@@ -2828,7 +2826,6 @@ BOOL CAssimilateDoc::OnOpenDocument_Actual(LPCTSTR lpszPathName, bool bCheckOut)
 	if (bCheckOut)
 	{
 		// checkout the new file?
-		LPCSTR filename = lpszPathName;	// compile-laziness :-)
 	}
 
 	if (!CDocument::OnOpenDocument(lpszPathName))

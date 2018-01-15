@@ -663,7 +663,7 @@ static void ASE_KeyMESH_BONE_LIST( const char *token )
 			*strchr( buffer, '"' ) = 0;
 		for (i=0;i<ase.numBones;i++)
 		{
-			if (!strcmpi(buffer,ase.bones[i].name))
+			if (!_strcmpi(buffer,ase.bones[i].name))
 				break;
 		}
 		if (i>=ase.numBones)

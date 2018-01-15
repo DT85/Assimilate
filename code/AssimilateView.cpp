@@ -329,10 +329,10 @@ PlayerMode_e CAssimilateView::GetSingleOrMultiPlayerMode()
 
 	LPCSTR psEnumFilename = ((CAssimilateApp*)AfxGetApp())->GetEnumFilename();
 
-	if (psEnumFilename && !stricmp(psEnumFilename,sDEFAULT_ENUM_FILENAME))
+	if (psEnumFilename && !_stricmp(psEnumFilename,sDEFAULT_ENUM_FILENAME))
 		ePlayerMode = eMODE_SINGLE;
 
-	else if (psEnumFilename && !stricmp(psEnumFilename,sDEFAULT_ENUM_FILENAME_MULTI))
+	else if (psEnumFilename && !_stricmp(psEnumFilename,sDEFAULT_ENUM_FILENAME_MULTI))
 		ePlayerMode = eMODE_MULTI;
 
 	return ePlayerMode;
