@@ -1,1 +1,4 @@
 *.suo
+debug/*.*
+release/*.*
+build/*.*
