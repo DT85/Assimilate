@@ -1,5 +1,6 @@
 *.suo
 *.db
+*.opendb
 debug/*.*
 release/*.*
 build/*.*
