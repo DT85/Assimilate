@@ -75,6 +75,7 @@ protected:
 	static const TCHAR c_enumFilename[];
 	static const TCHAR c_buffersize[];
 	static const TCHAR c_QDataFilename[];
+	static const TCHAR c_QuakeDir[];
 
 // Overrides
 	// ClassWizard generated virtual function overrides
@@ -135,6 +136,7 @@ protected:
 	//{{AFX_MSG(CAssimilatePropPage)
 	afx_msg void OnEnumBrowse();
 	afx_msg void OnQdataBrowse();
+	afx_msg void OnBaseBrowse();
 	virtual BOOL OnInitDialog();
 	afx_msg void OnButtonDefaults();
 	afx_msg void OnButtonDefaultsMulti();

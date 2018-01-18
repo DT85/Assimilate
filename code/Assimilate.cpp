@@ -59,6 +59,7 @@ const TCHAR CAssimilateApp::c_prefSection[] = "Preferences";
 const TCHAR CAssimilateApp::c_enumFilename[] = "Enum Filename";
 const TCHAR CAssimilateApp::c_buffersize[] = "Buffer size";
 const TCHAR CAssimilateApp::c_QDataFilename[] = "QData filename";
+const TCHAR CAssimilateApp::c_QuakeDir[] = "Quake Dir";
 
 void CAssimilateApp::LoadRegistry()
 {
@@ -66,7 +67,7 @@ void CAssimilateApp::LoadRegistry()
 	m_enumFilename	= GetProfileString(c_prefSection, c_enumFilename, m_enumFilename);
 	m_buffersize	= GetProfileInt	  (c_prefSection, c_buffersize, m_buffersize);
 	m_QDataFilename = GetProfileString(c_prefSection, c_QDataFilename, m_QDataFilename);
-	m_QuakeDir		= GetProfileString(c_prefSection, "m_QuakeDir", m_QuakeDir);
+	m_QuakeDir		= GetProfileString(c_prefSection, c_QuakeDir, m_QuakeDir);
 	gbViewAnimEnums = !!GetProfileInt(c_prefSection, "gbViewAnimEnums", gbViewAnimEnums);
 	gbViewFrameDetails = !!GetProfileInt(c_prefSection, "gbViewFrameDetails", gbViewFrameDetails);
 	gbViewFrameDetails_Additional = !!GetProfileInt(c_prefSection, "gbViewFrameDetails_Additional", gbViewFrameDetails_Additional);
@@ -79,7 +80,7 @@ void CAssimilateApp::SaveRegistry()
 	WriteProfileString(c_prefSection, c_enumFilename, m_enumFilename);
 	WriteProfileInt	  (c_prefSection, c_buffersize, m_buffersize);
 	WriteProfileString(c_prefSection, c_QDataFilename, m_QDataFilename);
-	WriteProfileString(c_prefSection, "m_QuakeDir", m_QuakeDir);
+	WriteProfileString(c_prefSection, c_QuakeDir, m_QuakeDir);
 	WriteProfileInt(c_prefSection, "gbViewAnimEnums", gbViewAnimEnums);
 	WriteProfileInt(c_prefSection, "gbViewFrameDetails", gbViewFrameDetails);	
 	WriteProfileInt(c_prefSection, "gbViewFrameDetails_Additional", gbViewFrameDetails_Additional);	
@@ -577,6 +578,7 @@ BEGIN_MESSAGE_MAP(CAssimilatePropPage, CPropertyPage)
 	//{{AFX_MSG_MAP(CAssimilatePropPage)
 	ON_BN_CLICKED(IDC_ENUM_BROWSE, OnEnumBrowse)
 	ON_BN_CLICKED(IDC_QDATA_BROWSE, OnQdataBrowse)
+	ON_BN_CLICKED(IDC_BASE_BROWSE, OnBaseBrowse)
 	ON_BN_CLICKED(IDC_BUTTON_DEFAULTS, OnButtonDefaults)
 	ON_BN_CLICKED(IDC_BUTTON_DEFAULTS_MULTI, OnButtonDefaultsMulti)
 	//}}AFX_MSG_MAP
@@ -608,6 +610,23 @@ void CAssimilatePropPage::OnQdataBrowse()
 		return;
 	}
 	m_qdata = theDialog.GetPathName();
+	UpdateData(FALSE);
+}
+
+void CAssimilatePropPage::OnBaseBrowse()
+{
+	CFolderPickerDialog theDialog;
+	theDialog.m_ofn.lpstrInitialDir = _T("C:\\");
+
+	int result = theDialog.DoModal();
+	if (result != IDOK)
+	{
+		return;
+	}
+	m_csQuakeDir = theDialog.GetPathName();
+	// May need to add a '\' for usage in GUI and for later file saving, 
+	// as there is no '\' on the returned name
+	m_csQuakeDir += _T("\\");
 	UpdateData(FALSE);
 }
 

@@ -41,6 +41,7 @@
 #define IDC_QUAKEDIR                    1018
 #define IDC_FRAMECOUNT3                 1018
 #define IDC_FRAMESPEED3                 1019
+#define IDC_BASE_BROWSE                 1019
 #define IDC_LOOPFRAME3                  1020
 #define IDC_STARTFRAME4                 1021
 #define IDC_FRAMECOUNT4                 1022
@@ -132,7 +133,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        136
+#define _APS_NEXT_RESOURCE_VALUE        138
 #define _APS_NEXT_COMMAND_VALUE         32789
 #define _APS_NEXT_CONTROL_VALUE         1082
 #define _APS_NEXT_SYMED_VALUE           101

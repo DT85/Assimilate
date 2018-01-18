@@ -13,13 +13,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.S.) resources
+// English (United States) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -67,7 +65,9 @@ END
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDR_MAINFRAME           ICON                    "res\\Assimilate.ico"
+
 IDR_ASSIMITYPE          ICON                    "res\\AssimilateDoc.ico"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -75,14 +75,16 @@ IDR_ASSIMITYPE          ICON                    "res\\AssimilateDoc.ico"
 //
 
 IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
+
 IDB_TREEIMAGES          BITMAP                  "res\\treeimag.bmp"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Toolbar
 //
 
-IDR_MAINFRAME TOOLBAR  23, 21
+IDR_MAINFRAME TOOLBAR 23, 21
 BEGIN
     BUTTON      ID_FILE_NEW
     BUTTON      ID_FILE_OPEN
@@ -110,7 +112,7 @@ END
 // Menu
 //
 
-IDR_MAINFRAME MENU 
+IDR_MAINFRAME MENU
 BEGIN
     POPUP "&File"
     BEGIN
@@ -140,14 +142,11 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Build Model",                 IDM_BUILD
         MENUITEM "Validate",                    IDM_VALIDATE
-        MENUITEM "View current model via ModView", 
-                                                ID_EDIT_LAUNCHMODVIEWONCURRENT
-
+        MENUITEM "View current model via ModView", ID_EDIT_LAUNCHMODVIEWONCURRENT
         MENUITEM SEPARATOR
         MENUITEM "Validate "" *.CAR(s) """,     IDM_CARWASH
         MENUITEM SEPARATOR
-        MENUITEM "Build every CAR file in the project.... ", 
-                                                ID_EDIT_BUILDALL
+        MENUITEM "Build every CAR file in the project.... ", ID_EDIT_BUILDALL
         MENUITEM "Build dependant models",      IDM_EDIT_BUILDDEPENDANT
         MENUITEM SEPARATOR
         MENUITEM "Preferences...",              IDM_PROPERTIES
@@ -158,9 +157,7 @@ BEGIN
         MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
         MENUITEM "Anim Enums",                  ID_VIEW_ANIMENUMS
         MENUITEM "Frame Details",               ID_VIEW_FRAMEDETAILS
-        MENUITEM "Frame Details On Additional Sequences", 
-                                                ID_VIEW_FRAMEDETAILSONADDITIONALSEQUENCES
-
+        MENUITEM "Frame Details On Additional Sequences", ID_VIEW_FRAMEDETAILSONADDITIONALSEQUENCES
     END
     POPUP "&Help"
     BEGIN
@@ -174,7 +171,7 @@ END
 // Accelerator
 //
 
-IDR_MAINFRAME ACCELERATORS 
+IDR_MAINFRAME ACCELERATORS
 BEGIN
     "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
     "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
@@ -204,10 +201,8 @@ CAPTION "About Assimilate"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
-    LTEXT           "Assimilate Version 3.0",IDC_STATIC,40,10,119,8,
-                    SS_NOPREFIX
-    LTEXT           "Copyright (C) 1999 Raven Software, updated 2016",
-                    IDC_STATIC,39,24,165,21
+    LTEXT           "Assimilate Version 3.0",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 1999 Raven Software, updated 2016",IDC_STATIC,39,24,165,21
     DEFPUSHBUTTON   "OK",IDOK,81,60,50,14,WS_GROUP
     LTEXT           "Written by M.Crowns, S.Cork",IDC_STATIC,39,37,121,8
 END
@@ -218,17 +213,13 @@ CAPTION "Model Properties"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     GROUPBOX        "",IDC_STATIC,7,6,295,346
-    CONTROL         "Skew 90 (only use this if you REALLY need to, i.e. leave it alone!)",
-                    IDC_CHECK_SKEW90,"Button",BS_AUTOCHECKBOX | NOT 
-                    WS_VISIBLE | WS_DISABLED | WS_TABSTOP,17,58,222,10
-    CONTROL         "Smooth all surfaces (overrides mesh normals)",
-                    IDC_CHECK_SMOOTH_ALL,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,17,15,157,10
+    CONTROL         "Skew 90 (only use this if you REALLY need to, i.e. leave it alone!)",IDC_CHECK_SKEW90,
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_DISABLED | WS_TABSTOP,17,58,222,10
+    CONTROL         "Smooth all surfaces (overrides mesh normals)",IDC_CHECK_SMOOTH_ALL,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,15,157,10
     GROUPBOX        "Skeleton",IDC_STATIC,17,75,277,74
-    EDITTEXT        IDC_EDIT_SKELPATH,23,127,263,14,ES_AUTOHSCROLL | 
-                    WS_GROUP
-    LTEXT           "Path and filename  (example ""models/players/_humanoid/_humanoid"" no extension)",
-                    IDC_STATIC_SKELPATH,24,115,267,11
+    EDITTEXT        IDC_EDIT_SKELPATH,23,127,263,14,ES_AUTOHSCROLL | WS_GROUP
+    LTEXT           "Path and filename  (example ""models/players/_humanoid/_humanoid"" no extension)",IDC_STATIC_SKELPATH,24,115,267,11
     GROUPBOX        "Origin Adjustment",IDC_STATIC,17,155,277,31
     EDITTEXT        IDC_EDIT_ORIGINX,31,165,52,14,ES_AUTOHSCROLL
     EDITTEXT        IDC_EDIT_ORIGINY,99,165,55,14,ES_AUTOHSCROLL
@@ -238,25 +229,19 @@ BEGIN
     LTEXT           "Z",IDC_STATIC,163,167,8,8
     EDITTEXT        IDC_EDIT_SCALE,245,83,41,14,ES_AUTOHSCROLL
     LTEXT           "Scale:",IDC_STATIC,222,87,21,8
-    CONTROL         "Make .skin file",IDC_CHECK_MAKESKIN,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,17,36,61,10
-    CONTROL         "Remove duplicate vertices from meshes",
-                    IDC_CHECK_LOSEDUPVERTS,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,17,26,141,10
-    CONTROL         "Creates its own skeleton",IDC_CHECK_MAKESKEL,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,25,87,92,10
+    CONTROL         "Make .skin file",IDC_CHECK_MAKESKIN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,36,61,10
+    CONTROL         "Remove duplicate vertices from meshes",IDC_CHECK_LOSEDUPVERTS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,26,141,10
+    CONTROL         "Creates its own skeleton",IDC_CHECK_MAKESKEL,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,25,87,92,10
     GROUPBOX        "PCJ List",IDC_PCJ_STATIC,17,191,277,151
-    LISTBOX         IDC_LIST_PCJ,24,204,263,109,LBS_SORT | 
-                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LISTBOX         IDC_LIST_PCJ,24,204,263,109,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     EDITTEXT        IDC_EDIT_PCJ,23,319,130,14,ES_AUTOHSCROLL
-    PUSHBUTTON      "<---- Add to PCJ list",IDC_BUTTON_PCJ,157,319,68,14
+    PUSHBUTTON      "<---- Add PCJ entry",IDC_BUTTON_PCJ,157,319,68,14
     PUSHBUTTON      "Delete PCJ entry",IDC_BUTTON_DELPCJ,226,319,61,14
-    CONTROL         "Keep ""motion"" bone (only if there is a ""motion"" bone present)",
-                    IDC_CHECK_KEEPMOTIONBONE,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,17,47,246,10
-    CONTROL         "Uses ( older ) pre-quaternian animation-compression",
-                    IDC_CHECK_PREQUAT,"Button",BS_AUTOCHECKBOX | NOT 
-                    WS_VISIBLE | WS_DISABLED | WS_TABSTOP,25,101,194,10
+    CONTROL         "Keep ""motion"" bone (only if there is a ""motion"" bone present)",IDC_CHECK_KEEPMOTIONBONE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,47,246,10
+    CONTROL         "Uses ( older ) pre-quaternian animation-compression",IDC_CHECK_PREQUAT,
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_DISABLED | WS_TABSTOP,25,101,194,10
 END
 
 IDD_PP_SEQUENCE DIALOGEX 0, 0, 542, 201
@@ -264,71 +249,63 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Sequence"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
-    LTEXT           "Start Frame",IDC_STATIC,78,10,37,8
-    LTEXT           "Frame Count",IDC_STATIC,124,10,41,8
-    LTEXT           "Loop Frame",IDC_STATIC,173,10,38,8
-    LTEXT           "Frame Speed",IDC_STATIC,218,10,43,8
-    LTEXT           "Animation Enum",IDC_STATIC,369,10,53,8
-    LTEXT           "( -1 = none )",IDC_STATIC,173,19,39,8
-    LTEXT           "Master",IDC_STATIC,17,33,22,8
-    EDITTEXT        IDC_STARTFRAME,75,30,42,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_FRAMECOUNT,123,30,42,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_LOOPFRAME,171,30,42,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_FRAMESPEED,219,30,42,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT_ANIMATIONENUM,333,30,120,14,ES_AUTOHSCROLL | 
-                    ES_READONLY
-    PUSHBUTTON      "Choose",IDC_BUTTON_CHOOSEANIMATIONENUM,455,31,36,13
-    PUSHBUTTON      "Clear",IDC_BUTTON_CLEARANIMATIONENUM,491,31,36,13
-    LTEXT           "Additional #1",IDC_STATIC,8,59,42,8
-    EDITTEXT        IDC_STARTFRAME2,75,57,42,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_FRAMECOUNT2,123,57,42,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_LOOPFRAME2,171,57,42,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_FRAMESPEED2,219,57,42,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT_ANIMATIONENUM2,333,57,120,14,ES_AUTOHSCROLL | 
-                    ES_READONLY
-    PUSHBUTTON      "Choose",IDC_BUTTON_CHOOSEANIMATIONENUM2,455,57,36,13
-    PUSHBUTTON      "Clear",IDC_BUTTON_CLEARANIMATIONENUM2,491,57,36,13
-    LTEXT           "Additional #2",IDC_STATIC,8,77,42,8
-    EDITTEXT        IDC_STARTFRAME3,75,75,42,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_FRAMECOUNT3,123,75,42,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_LOOPFRAME3,171,75,42,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_FRAMESPEED3,219,75,42,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT_ANIMATIONENUM3,333,75,120,14,ES_AUTOHSCROLL | 
-                    ES_READONLY
-    PUSHBUTTON      "Choose",IDC_BUTTON_CHOOSEANIMATIONENUM3,455,76,36,13
-    PUSHBUTTON      "Clear",IDC_BUTTON_CLEARANIMATIONENUM3,491,76,36,13
-    LTEXT           "Additional #3",IDC_STATIC,8,95,42,8
-    EDITTEXT        IDC_STARTFRAME4,75,93,42,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_FRAMECOUNT4,123,93,42,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_LOOPFRAME4,171,93,42,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_FRAMESPEED4,219,93,42,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT_ANIMATIONENUM4,333,93,120,14,ES_AUTOHSCROLL | 
-                    ES_READONLY
-    PUSHBUTTON      "Choose",IDC_BUTTON_CHOOSEANIMATIONENUM4,455,94,36,13
-    PUSHBUTTON      "Clear",IDC_BUTTON_CLEARANIMATIONENUM4,491,94,36,13
-    LTEXT           "Additional #4",IDC_STATIC,8,112,42,8
-    EDITTEXT        IDC_STARTFRAME5,75,111,42,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_FRAMECOUNT5,123,111,42,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_LOOPFRAME5,171,111,42,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_FRAMESPEED5,219,111,42,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT_ANIMATIONENUM5,333,111,120,14,ES_AUTOHSCROLL | 
-                    ES_READONLY
-    PUSHBUTTON      "Choose",IDC_BUTTON_CHOOSEANIMATIONENUM5,455,111,36,13
-    PUSHBUTTON      "Clear",IDC_BUTTON_CLEARANIMATIONENUM5,491,111,36,13
-    LTEXT           "File Path:",IDC_STATIC,7,172,36,8
-    EDITTEXT        IDC_PATH,75,170,186,14,ES_AUTOHSCROLL
-    CONTROL         "GenLoopFrame",IDC_CHECK_GENLOOPFRAME,"Button",
-                    BS_AUTOCHECKBOX | BS_LEFT | BS_TOP | BS_MULTILINE | 
-                    WS_TABSTOP,266,32,64,10
-    LTEXT           "Additional #5",IDC_STATIC,8,130,42,8
-    EDITTEXT        IDC_STARTFRAME6,75,128,42,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_FRAMECOUNT6,123,128,42,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_LOOPFRAME6,171,128,42,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_FRAMESPEED6,219,128,42,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT_ANIMATIONENUM6,333,128,120,14,ES_AUTOHSCROLL | 
-                    ES_READONLY
-    PUSHBUTTON      "Choose",IDC_BUTTON_CHOOSEANIMATIONENUM6,455,128,36,13
-    PUSHBUTTON      "Clear",IDC_BUTTON_CLEARANIMATIONENUM6,491,128,36,13
+    LTEXT           "Start Frame",IDC_STATIC,87,10,37,8
+    LTEXT           "Frame Count",IDC_STATIC,133,10,41,8
+    LTEXT           "Loop Frame",IDC_STATIC,182,10,38,8
+    LTEXT           "Frame Speed",IDC_STATIC,227,10,43,8
+    LTEXT           "Animation Name",IDC_STATIC,368,10,53,8
+    LTEXT           "( -1 = none )",IDC_STATIC,182,19,39,8
+    LTEXT           "Original Animation:",IDC_STATIC,24,33,59,8
+    EDITTEXT        IDC_STARTFRAME,84,30,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_FRAMECOUNT,132,30,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_LOOPFRAME,180,30,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_FRAMESPEED,228,30,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_ANIMATIONENUM,339,30,111,14,ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "Choose",IDC_BUTTON_CHOOSEANIMATIONENUM,452,31,36,13
+    PUSHBUTTON      "Clear",IDC_BUTTON_CLEARANIMATIONENUM,494,31,36,13
+    LTEXT           "Derived Animation #1:",IDC_STATIC,12,59,71,8
+    EDITTEXT        IDC_STARTFRAME2,84,57,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_FRAMECOUNT2,132,57,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_LOOPFRAME2,180,57,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_FRAMESPEED2,228,57,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_ANIMATIONENUM2,339,57,111,14,ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "Choose",IDC_BUTTON_CHOOSEANIMATIONENUM2,452,57,36,13
+    PUSHBUTTON      "Clear",IDC_BUTTON_CLEARANIMATIONENUM2,494,57,36,13
+    LTEXT           "Derived Animation #2:",IDC_STATIC,12,77,71,8
+    EDITTEXT        IDC_STARTFRAME3,84,75,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_FRAMECOUNT3,132,75,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_LOOPFRAME3,180,75,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_FRAMESPEED3,228,75,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_ANIMATIONENUM3,339,75,111,14,ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "Choose",IDC_BUTTON_CHOOSEANIMATIONENUM3,452,76,36,13
+    PUSHBUTTON      "Clear",IDC_BUTTON_CLEARANIMATIONENUM3,494,76,36,13
+    LTEXT           "Derived Animation #3:",IDC_STATIC,12,95,71,8
+    EDITTEXT        IDC_STARTFRAME4,84,93,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_FRAMECOUNT4,132,93,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_LOOPFRAME4,180,93,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_FRAMESPEED4,228,93,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_ANIMATIONENUM4,339,93,111,14,ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "Choose",IDC_BUTTON_CHOOSEANIMATIONENUM4,452,94,36,13
+    PUSHBUTTON      "Clear",IDC_BUTTON_CLEARANIMATIONENUM4,494,94,36,13
+    LTEXT           "Derived Animation #4:",IDC_STATIC,12,112,71,8
+    EDITTEXT        IDC_STARTFRAME5,84,111,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_FRAMECOUNT5,132,111,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_LOOPFRAME5,180,111,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_FRAMESPEED5,228,111,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_ANIMATIONENUM5,339,111,111,14,ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "Choose",IDC_BUTTON_CHOOSEANIMATIONENUM5,452,111,36,13
+    PUSHBUTTON      "Clear",IDC_BUTTON_CLEARANIMATIONENUM5,494,111,36,13
+    LTEXT           "File Path:",IDC_STATIC,12,172,36,8
+    EDITTEXT        IDC_PATH,43,170,186,14,ES_AUTOHSCROLL
+    CONTROL         "GenLoopFrame",IDC_CHECK_GENLOOPFRAME,"Button",BS_AUTOCHECKBOX | BS_LEFT | BS_TOP | BS_MULTILINE | WS_TABSTOP,275,32,61,10
+    LTEXT           "Derived Animation #5:",IDC_STATIC,12,130,71,8
+    EDITTEXT        IDC_STARTFRAME6,84,128,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_FRAMECOUNT6,132,128,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_LOOPFRAME6,180,128,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_FRAMESPEED6,228,128,42,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_ANIMATIONENUM6,339,128,111,14,ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "Choose",IDC_BUTTON_CHOOSEANIMATIONENUM6,452,128,36,13
+    PUSHBUTTON      "Clear",IDC_BUTTON_CLEARANIMATIONENUM6,494,128,36,13
 END
 
 IDD_PP_PROPERTIES DIALOGEX 0, 0, 235, 159
@@ -342,18 +319,14 @@ BEGIN
     RTEXT           "Carcass:",IDC_STATIC,45,28,32,8
     EDITTEXT        IDC_QDATA,81,24,129,12,ES_AUTOHSCROLL
     PUSHBUTTON      "...",IDC_QDATA_BROWSE,211,25,15,11
-    EDITTEXT        IDC_QUAKEDIR,63,55,159,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_QUAKEDIR,63,55,147,12,ES_AUTOHSCROLL
     LTEXT           "Base Directory:",IDC_STATIC,11,57,49,8
-    PUSHBUTTON      "Default all fields to Jedi Outcast",IDC_BUTTON_DEFAULTS,
-                    12,110,211,14
-    PUSHBUTTON      "Default all fields to Jedi Academy",
-                    IDC_BUTTON_DEFAULTS_MULTI,12,129,211,14
-    CONTROL         "MultiPlayer",IDC_CHECK_MULTIPLAYER,"Button",
-                    BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | 
-                    WS_DISABLED | WS_TABSTOP,23,94,51,10
-    RTEXT           "Buffer size:",IDC_STATIC,3,80,55,8,NOT WS_VISIBLE
-    EDITTEXT        IDC_BUFFSIZE,63,76,32,12,ES_AUTOHSCROLL | NOT WS_VISIBLE | 
-                    WS_DISABLED
+    PUSHBUTTON      "Default all fields to Jedi Outcast",IDC_BUTTON_DEFAULTS,12,110,211,14,NOT WS_VISIBLE | WS_DISABLED
+    PUSHBUTTON      "Default all fields to Jedi Academy",IDC_BUTTON_DEFAULTS_MULTI,12,129,211,14,NOT WS_VISIBLE | WS_DISABLED
+    CONTROL         "MultiPlayer",IDC_CHECK_MULTIPLAYER,"Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | NOT WS_VISIBLE | WS_DISABLED | WS_TABSTOP,23,94,51,10
+    RTEXT           "Buffer size:",IDC_STATIC,3,80,55,8,NOT WS_VISIBLE | WS_DISABLED
+    EDITTEXT        IDC_BUFFSIZE,63,76,32,12,ES_AUTOHSCROLL | NOT WS_VISIBLE | WS_DISABLED
+    PUSHBUTTON      "...",IDC_BASE_BROWSE,211,56,15,11
 END
 
 IDD_ANIMPICKER DIALOGEX 0, 0, 549, 463
@@ -362,29 +335,22 @@ CAPTION "Animation Picker"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,479,434,50,14
-    LISTBOX         IDC_LIST_LEGS,20,23,160,183,LBS_NOINTEGRALHEIGHT | 
-                    WS_VSCROLL | WS_TABSTOP
+    LISTBOX         IDC_LIST_LEGS,20,23,160,183,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     LTEXT           "LEGS_xxxx",IDC_STATIC,82,11,37,8
-    LISTBOX         IDC_LIST_TORSO,193,23,160,184,LBS_NOINTEGRALHEIGHT | 
-                    WS_VSCROLL | WS_TABSTOP
+    LISTBOX         IDC_LIST_TORSO,193,23,160,184,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     LTEXT           "TORSO_xxxx",IDC_STATIC,248,11,44,8
-    LISTBOX         IDC_LIST_BOTH,370,23,160,184,LBS_NOINTEGRALHEIGHT | 
-                    WS_VSCROLL | WS_TABSTOP
+    LISTBOX         IDC_LIST_BOTH,370,23,160,184,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     LTEXT           "BOTH_xxxx",IDC_STATIC,429,11,38,8
-    LTEXT           "Double-click an entry to select. Entries beginning with ( * ) are already in use.",
-                    IDC_STATIC,158,437,258,14
-    CONTROL         "Filter Used Entries",IDC_CHECK_FILTEROUTUSED,"Button",
-                    BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,404,434,70,14
-    LISTBOX         IDC_LIST_FACE,19,234,160,183,LBS_NOINTEGRALHEIGHT | 
-                    WS_VSCROLL | WS_TABSTOP
-    LISTBOX         IDC_LIST_VM,193,234,160,184,LBS_NOINTEGRALHEIGHT | 
-                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Double-click an entry to select. Entries beginning with ( * ) are already in use.",IDC_STATIC,158,437,258,14
+    CONTROL         "Filter Used Entries",IDC_CHECK_FILTEROUTUSED,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,404,434,70,14
+    LISTBOX         IDC_LIST_FACE,19,234,160,183,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LISTBOX         IDC_LIST_VM,193,234,160,184,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     LTEXT           "FACE_xxxx",IDC_STATIC,82,223,36,8
     LTEXT           "VM_xxxx",IDC_STATIC,248,223,29,8
     LTEXT           "",IDC_STATIC_COMMENT,371,237,159,155
 END
 
-IDD_DIALOG_YESNOYESNOALL DIALOG  0, 0, 308, 114
+IDD_DIALOG_YESNOYESNOALL DIALOG 0, 0, 308, 114
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Decision needed..."
 FONT 8, "MS Sans Serif"
@@ -409,11 +375,9 @@ BEGIN
     DEFPUSHBUTTON   "OK",IDOK,27,66,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,106,66,50,14
     EDITTEXT        IDC_EDIT_BUILDPATH,15,25,154,14,ES_AUTOHSCROLL
-    LTEXT           "Game path to start at:    ( eg ""models/players"" )",
-                    IDC_STATIC,17,15,149,8
-    CONTROL         "Pre-Validate all .car files before mass compile",
-                    IDC_CHECK_PREVALIDATECARS,"Button",BS_AUTOCHECKBOX | 
-                    BS_MULTILINE | WS_TABSTOP,15,46,155,14
+    LTEXT           "Game path to start at:    ( eg ""models/players"" )",IDC_STATIC,17,15,149,8
+    CONTROL         "Pre-Validate all .car files before mass compile",IDC_CHECK_PREVALIDATECARS,
+                    "Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,15,46,155,14
 END
 
 
@@ -462,7 +426,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
@@ -525,21 +489,42 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_PP_MODEL AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_PP_PROPERTIES AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_PP_SEQUENCE AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
 // String Table
 //
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDR_MAINFRAME           "Assimilate\n\nAssimilate\nAssimilate Files (*.car)\n.car\nAssimilate.Document\nAssimilate Document"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     AFX_IDS_APP_TITLE       "Assimilate"
     AFX_IDS_IDLEMESSAGE     "Ready"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_INDICATOR_EXT        "EXT"
     ID_INDICATOR_CAPS       "CAP"
@@ -549,7 +534,7 @@ BEGIN
     ID_INDICATOR_REC        "REC"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_FILE_NEW             "Create a new document\nNew"
     ID_FILE_OPEN            "Open an existing document\nOpen"
@@ -562,13 +547,13 @@ BEGIN
     ID_FILE_PRINT_PREVIEW   "Display full pages\nPrint Preview"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
     ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_FILE_MRU_FILE1       "Open this document"
     ID_FILE_MRU_FILE2       "Open this document"
@@ -588,18 +573,18 @@ BEGIN
     ID_FILE_MRU_FILE16      "Open this document"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
     ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_EDIT_CLEAR           "Erase the selection\nErase"
     ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
@@ -614,13 +599,13 @@ BEGIN
     ID_EDIT_REDO            "Redo the previously undone action\nRedo"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
     ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     AFX_IDS_SCSIZE          "Change the window size"
     AFX_IDS_SCMOVE          "Change the window position"
@@ -631,18 +616,18 @@ BEGIN
     AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     AFX_IDS_SCRESTORE       "Restore the window to normal size"
     AFX_IDS_SCTASKLIST      "Activate Task List"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     AFX_IDS_PREVIEW_CLOSE   "Close print preview mode\nCancel Preview"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDM_ADDFILES            "Add files"
     IDM_EXTERNAL            "Creates the external data file"
@@ -657,7 +642,7 @@ BEGIN
     IDM_EDIT_BUILDDEPENDANT "Build all models who are dependant on the skeleton produced by this CAR file\nBuild model + all dependants"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_VIEW_FRAMEDETAILSONADDITIONALSEQUENCES 
                             "Displays frame details on additional sequences, as opposed to primary"
@@ -666,7 +651,7 @@ BEGIN
                             "View using ModView\nView disk-version via ModView"
 END
 
-#endif    // English (U.S.) resources
+#endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
