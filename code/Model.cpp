@@ -1340,7 +1340,7 @@ void CModelPropPage::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CModelPropPage)
-	DDX_Check(pDX, IDC_CHECK_SKEW90, m_bSkew90);
+	//DDX_Check(pDX, IDC_CHECK_SKEW90, m_bSkew90);
 	DDX_Check(pDX, IDC_CHECK_SMOOTH_ALL, m_bSmooth);
 	DDX_Text(pDX, IDC_EDIT_SKELPATH, m_strSkelPath);
 	DDX_Text(pDX, IDC_EDIT_ORIGINX, m_iOriginX);
@@ -1352,7 +1352,7 @@ void CModelPropPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHECK_MAKESKEL, m_bMakeSkel);
 	DDX_Text(pDX, IDC_EDIT_PCJ, m_strNewPCJ);
 	DDX_Check(pDX, IDC_CHECK_KEEPMOTIONBONE, m_bKeepMotion);
-	DDX_Check(pDX, IDC_CHECK_PREQUAT, m_bPreQuat);
+	//DDX_Check(pDX, IDC_CHECK_PREQUAT, m_bPreQuat);
 	//}}AFX_DATA_MAP
 }
 

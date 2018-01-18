@@ -580,7 +580,7 @@ BEGIN_MESSAGE_MAP(CAssimilatePropPage, CPropertyPage)
 	ON_BN_CLICKED(IDC_QDATA_BROWSE, OnQdataBrowse)
 	ON_BN_CLICKED(IDC_BASE_BROWSE, OnBaseBrowse)
 	ON_BN_CLICKED(IDC_BUTTON_DEFAULTS, OnButtonDefaults)
-	ON_BN_CLICKED(IDC_BUTTON_DEFAULTS_MULTI, OnButtonDefaultsMulti)
+	ON_BN_CLICKED(IDC_BUTTON_DEFAULTS_JA, OnButtonDefaultsJA)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -668,16 +668,10 @@ void CAssimilatePropPage::OnButtonDefaults()
 {
 	UpdateData(true);	// dialog -> vars
 
-	if (m_enumfilename.IsEmpty()	||
-		m_qdata.IsEmpty()			||
-		m_csQuakeDir.IsEmpty()		||
-		GetYesNo("Override all fields with Jedi Outcast defaults,\n\nAre you Sure?")
+	if (m_csQuakeDir.IsEmpty()		||
+		GetYesNo("This will override the current base directory field with the default Jedi Outcast directory.\n\nAre you sure?")
 		)
 	{
-		m_bMultiPlayer  = false;
-		m_enumfilename	= sDEFAULT_ENUM_FILENAME;
-		m_qdata			= sDEFAULT_QDATA_LOCATION;
-		m_buffsize		= dwDEFAULT_BUFFERSIZE;
 		m_csQuakeDir	= sDEFAULT_QUAKEDIR;	
 
 		UpdateData(false);	// vars -> dialog
@@ -685,20 +679,14 @@ void CAssimilatePropPage::OnButtonDefaults()
 }
 
 
-void CAssimilatePropPage::OnButtonDefaultsMulti() 
+void CAssimilatePropPage::OnButtonDefaultsJA() 
 {
 	UpdateData(true);	// dialog -> vars
 
-	if (m_enumfilename.IsEmpty()	||
-		m_qdata.IsEmpty()			||
-		m_csQuakeDir.IsEmpty()		||
-		GetYesNo("Override all fields with Jedi Academy defaults,\n\nAre you Sure?")
+	if (m_csQuakeDir.IsEmpty()		||
+		GetYesNo("This will override the current base directory field with the default Jedi Academy directory.\n\nAre you sure?")
 		)
 	{
-		m_bMultiPlayer  = false;
-		m_enumfilename	= sDEFAULT_ENUM_FILENAME_MULTI;
-		m_qdata			= sDEFAULT_QDATA_LOCATION;
-		m_buffsize		= dwDEFAULT_BUFFERSIZE;
 		m_csQuakeDir	= sDEFAULT_QUAKEDIRJA;	
 
 		UpdateData(false);	// vars -> dialog

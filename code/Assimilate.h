@@ -139,7 +139,7 @@ protected:
 	afx_msg void OnBaseBrowse();
 	virtual BOOL OnInitDialog();
 	afx_msg void OnButtonDefaults();
-	afx_msg void OnButtonDefaultsMulti();
+	afx_msg void OnButtonDefaultsJA();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
