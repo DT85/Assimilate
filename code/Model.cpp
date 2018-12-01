@@ -54,6 +54,11 @@ void CModel::Delete()
 		free(m_psMakeSkelPath);
 		m_psMakeSkelPath = NULL;
 	}
+	if (m_psRefGLAPath != NULL)
+	{
+		free(m_psRefGLAPath);
+		m_psRefGLAPath = NULL;
+	}
 	m_curSequence = NULL;
 
 	PCJList_Clear();	// not really necessary, but useful reminder
@@ -79,6 +84,8 @@ bool CModel::DoProperties()
 		propPage->m_model = this;
 		propPage->m_soilFlag = &dirty;
 		propSheet->AddPage(propPage);
+
+		propPage->SetRefGLAPath(GetRefGLAPath());
 
 		for (int i=0; i<PCJList_GetEntries(); i++)
 		{
@@ -714,6 +721,7 @@ void CModel::Init(CComment* comments)
 	m_path = NULL;
 	m_psSkelPath = NULL;
 	m_psMakeSkelPath = NULL;
+	m_psRefGLAPath = NULL;
 	SetOrigin(0, 0, 0);
 	SetParms(-1, -1, 0, 1);
 	m_iType		= TK_AS_CONVERTMDX_NOASK;
@@ -841,6 +849,29 @@ LPCSTR CModel::PCJList_GetEntry(int iIndex)
 	return "";
 }
 
+void CModel::SetRefGLAPath(LPCSTR psRefGLAPath)
+{
+	if (m_psRefGLAPath != NULL)
+	{
+		free(m_psRefGLAPath);
+	}
+
+	if (psRefGLAPath == NULL)
+	{
+		m_psRefGLAPath = NULL;
+	}
+	else
+	{
+		m_psRefGLAPath = (char*)malloc(strlen(psRefGLAPath) + 1);
+		strcpy(m_psRefGLAPath, psRefGLAPath);
+		_strlwr(m_psRefGLAPath);
+	}
+}
+
+LPCSTR CModel::GetRefGLAPath()
+{
+	return m_psRefGLAPath;
+}
 
 // temporary!!!!!!!
 void CModel::SetIgnoreBaseDeviations(bool bIgnore)
@@ -897,7 +928,6 @@ LPCSTR CModel::GetMakeSkelPath(void)
 {
 	return m_psMakeSkelPath;	// warning, may be NULL or blank
 }	
-
 
 void CModel::SetOrigin(int x, int y, int z)
 {
@@ -1195,6 +1225,13 @@ void CModel::Write(CTxtFile* file)
 			file->Writeln(CAssimilateDoc::GetKeyword(TK_AS_KEEPMOTION, TABLE_QDT));
 		}
 
+		if (GetRefGLAPath())
+		{
+			file->Write("$");
+			file->Write(CAssimilateDoc::GetKeyword(TK_AS_REF_GLA, TABLE_QDT), " ");
+			file->Writeln(va("%s", GetRefGLAPath()));
+		}
+
 		for (int iPCJ=0; iPCJ < PCJList_GetEntries(); iPCJ++)
 		{
 			file->Write("$");
@@ -1273,7 +1310,7 @@ void CModel::Write(CTxtFile* file)
 			{
 				file->Write("-", CAssimilateDoc::GetKeyword(TK_AS_MAKESKEL,	TABLE_CONVERT), " ");
 				file->Write(GetMakeSkelPath(), " ");
-			}		
+			}
 
 			// params below not used for ghoul2
 		}
@@ -1325,6 +1362,7 @@ CModelPropPage::CModelPropPage() : CPropertyPage(CModelPropPage::IDD)
 	m_bLoseDupVerts = FALSE;
 	m_bMakeSkel = FALSE;
 	m_strNewPCJ = _T("");
+	m_strRefGLAPath = _T("");
 	m_bKeepMotion = FALSE;
 	m_bPreQuat = FALSE;
 	//}}AFX_DATA_INIT
@@ -1351,6 +1389,7 @@ void CModelPropPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHECK_LOSEDUPVERTS, m_bLoseDupVerts);
 	DDX_Check(pDX, IDC_CHECK_MAKESKEL, m_bMakeSkel);
 	DDX_Text(pDX, IDC_EDIT_PCJ, m_strNewPCJ);
+	DDX_Text(pDX, IDC_EDIT_REFGLAPATH, m_strRefGLAPath);
 	DDX_Check(pDX, IDC_CHECK_KEEPMOTIONBONE, m_bKeepMotion);
 	//DDX_Check(pDX, IDC_CHECK_PREQUAT, m_bPreQuat);
 	//}}AFX_DATA_MAP
@@ -1399,6 +1438,8 @@ void CModelPropPage::OnOK()
 		m_model->PCJList_AddEntry(GetPCJEntry(i));
 	}
 
+	m_model->SetRefGLAPath(m_strRefGLAPath);
+
 
 	*m_soilFlag = true;
 
@@ -1440,6 +1481,8 @@ BOOL CModelPropPage::OnInitDialog()
 	m_fScale	= m_model->GetScale();
 	m_bKeepMotion = m_model->GetKeepMotion();
 	m_bPreQuat = m_model->GetPreQuat();
+
+	m_strRefGLAPath = m_model->GetRefGLAPath();
 
 	PopulatePCJList();
 
@@ -1485,12 +1528,29 @@ LPCSTR CModelPropPage::GetPCJEntry(int iIndex)
 	return NULL;
 }
 
+void CModelPropPage::SetRefGLAPath(LPCSTR psRefGLAPath)
+{
+	CString strTemp(psRefGLAPath);
+	strTemp.Replace(" ", "");
+	strTemp.Replace("\t", "");
+
+	m_RefGLAPath = strTemp;
+}
+
+LPCSTR CModelPropPage::GetRefGLAPath(void)
+{
+	return m_RefGLAPath;
+}
+
 void CModelPropPage::HandleItemGreying(void)
 {
 	UpdateData(DIALOG_TO_DATA);
 	GetDlgItem(IDC_EDIT_SCALE)->EnableWindow(m_bMakeSkel);
 	GetDlgItem(IDC_EDIT_SKELPATH)->EnableWindow(m_bMakeSkel);
 	GetDlgItem(IDC_STATIC_SKELPATH)->EnableWindow(m_bMakeSkel);
+
+	GetDlgItem(IDC_EDIT_REFGLAPATH)->EnableWindow(m_bMakeSkel);
+	GetDlgItem(IDC_STATIC_REFGLAPATH)->EnableWindow(m_bMakeSkel);
 
 	GetDlgItem(IDC_PCJ_STATIC)->EnableWindow(m_bMakeSkel);
 	GetDlgItem(IDC_LIST_PCJ)->EnableWindow(m_bMakeSkel);

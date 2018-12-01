@@ -97,6 +97,9 @@ public:
 	int		PCJList_GetEntries();
 	LPCSTR	PCJList_GetEntry(int iIndex);
 
+	void	SetRefGLAPath(LPCSTR psRefGLAPath);
+	LPCSTR	GetRefGLAPath(void);
+
 protected:
 	void Init(CComment* comments);
 
@@ -126,6 +129,7 @@ protected:
 	bool				m_bNoSkew90;
 	char*				m_psSkelPath;
 	char*				m_psMakeSkelPath;
+	char*				m_psRefGLAPath;
 	vector <string>		m_vPCJList;
 	bool				m_bPreQuat;
 };
@@ -158,6 +162,7 @@ public:
 	BOOL	m_bLoseDupVerts;
 	BOOL	m_bMakeSkel;
 	CString	m_strNewPCJ;
+	CString	m_strRefGLAPath;
 	BOOL	m_bKeepMotion;
 	BOOL	m_bPreQuat;
 	//}}AFX_DATA
@@ -168,6 +173,10 @@ public:
 
 	int GetPCJEntries(void);
 	LPCSTR GetPCJEntry(int iIndex);
+
+	void SetRefGLAPath(LPCSTR psRefGLAPath);
+	LPCSTR GetRefGLAPath(void);
+	CString	m_RefGLAPath;
 
 
 protected:
@@ -196,6 +205,7 @@ protected:
 
 	void HandleItemGreying(void);	
 	void PopulatePCJList(void);
+public:
 };
 
 extern bool gbReportMissingASEs;

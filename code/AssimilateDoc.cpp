@@ -36,6 +36,7 @@ keywordArray_t CAssimilateDoc::s_Keywords[] =
 	"scale",					TK_AS_SCALE,
 	"keepmotion",				TK_AS_KEEPMOTION,
 	"pcj",						TK_AS_PCJ,
+	"aseanimref_gla",			TK_AS_REF_GLA,
 	"aseanimgrab",				TK_AS_GRAB,	
 	"aseanimgrab_gla",			TK_AS_GRAB_GLA,
 	"aseanimgrabfinalize",		TK_AS_GRABFINALIZE,
@@ -1219,6 +1220,19 @@ void CAssimilateDoc::Parse(LPCSTR psFilename)
 					m_curModel->PCJList_AddEntry(curToken->GetStringValue());
 				}
 				curToken->Delete();
+				break;
+			case TK_AS_REF_GLA:
+				curToken->Delete();
+				{
+					CString strGetRefGLAPath;
+
+					if (!Tokenizer_ReadPath(strGetRefGLAPath, tokenizer, curToken))
+					{
+						return;
+					}
+					m_curModel->SetRefGLAPath(strGetRefGLAPath);
+					//curToken = tokenizer->GetToken();
+				}
 				break;
 			case TK_AS_GRAB:
 				curToken->Delete();

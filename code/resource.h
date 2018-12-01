@@ -111,6 +111,8 @@
 #define IDC_BUTTON_PCJ                  1078
 #define IDC_BUTTON_DELPCJ               1079
 #define IDC_PCJ_STATIC                  1080
+#define IDC_EDIT_REFGLAPATH             1081
+#define IDC_STATIC_REFGLAPATH	        1082
 #define IDM_ADDFILES                    32771
 #define IDM_EXTERNAL                    32772
 #define IDM_RESEQUENCE                  32773
