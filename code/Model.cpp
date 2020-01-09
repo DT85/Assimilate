@@ -502,7 +502,7 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 
 					// does this enum match the one we've built?
 
-					if ( !_stricmp( stringEnum, stringEnumDEAD ) )
+					if ( !stricmp( stringEnum, stringEnumDEAD ) )
 					{
 						bEnumFound = true;
 					}
@@ -511,26 +511,26 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 				if ( bEnumFound )
 				{
 					// ok, there *is* one of these, so let's scan this sequence's additional sequences to see if we've
-					//	got it...
+					// got it...
 
 					CSequence *additionalSeq;	// outside FOR scope
-					for (int i=0; i<MAX_ADDITIONAL_SEQUENCES; i++)
+					for (int i = 0; i < MAX_ADDITIONAL_SEQUENCES; i++)
 					{
 						additionalSeq = curSequence->AdditionalSeqs[i];
 
 						if (additionalSeq->AdditionalSequenceIsValid())
 						{
-							if (!strcmp(additionalSeq->GetEnum(),stringEnum))
+							if (!strcmp(additionalSeq->GetEnum(), stringEnum))
 							{
 								break;	// we've found one!
 							}
 						}
-					}
 
-					// if we didn't find one, NULL the ptr
-					if (int i=MAX_ADDITIONAL_SEQUENCES)
-					{
-						additionalSeq = NULL;
+						// if we didn't find one, NULL the ptr
+						if (i = MAX_ADDITIONAL_SEQUENCES)
+						{
+							additionalSeq = NULL;
+						}
 					}
 
 					// did we find one? (or did it have the wrong info in?)
