@@ -226,13 +226,13 @@ BEGIN
     LTEXT           "X:",IDC_STATIC,24,171,8,8
     LTEXT           "Y:",IDC_STATIC,92,171,8,8
     LTEXT           "Z:",IDC_STATIC,164,171,8,8
-    EDITTEXT        IDC_EDIT_SCALE,251,77,41,14,ES_AUTOHSCROLL
-    LTEXT           "Scale:",IDC_STATIC,229,80,21,8
+    EDITTEXT        IDC_EDIT_SCALE,205,77,41,14,ES_AUTOHSCROLL
+    LTEXT           "Scale:",IDC_STATIC,183,80,21,8
     CONTROL         "Generate .skin file",IDC_CHECK_MAKESKIN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,39,73,10
     CONTROL         "Remove duplicate vertices from meshes",IDC_CHECK_LOSEDUPVERTS,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,28,141,10
-    CONTROL         "Create its own skeleton",IDC_CHECK_MAKESKEL,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,25,80,92,10
-    GROUPBOX        "PCJ List",IDC_PCJ_STATIC,17,196,281,149
+    CONTROL         "Create a skeleton",IDC_CHECK_MAKESKEL,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,25,80,92,10
+    GROUPBOX        "Controllable Joints (PCJ) List",IDC_PCJ_STATIC,17,196,281,149
     LISTBOX         IDC_LIST_PCJ,23,208,269,109,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     EDITTEXT        IDC_EDIT_PCJ,23,325,126,14,ES_AUTOHSCROLL
     PUSHBUTTON      "<---- Add PCJ entry",IDC_BUTTON_PCJ,152,325,68,14
@@ -241,6 +241,7 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,50,213,10
     EDITTEXT        IDC_EDIT_REFGLAPATH,23,133,269,14,ES_AUTOHSCROLL | WS_GROUP
     LTEXT           "Optional GLA file to clone bone indexes from:  (extension needed)",IDC_STATIC_REFGLAPATH,23,121,271,11
+    LTEXT           "(default = 1.0)",IDC_STATIC,249,80,44,8
 END
 
 IDD_PP_SEQUENCE DIALOGEX 0, 0, 542, 201
@@ -341,7 +342,7 @@ BEGIN
     LTEXT           "TORSO_xxxx",IDC_STATIC,248,11,44,8
     LISTBOX         IDC_LIST_BOTH,366,23,160,184,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     LTEXT           "BOTH_xxxx",IDC_STATIC,425,11,38,8
-    LTEXT           "Double-click an entry to select. Entries beginning with ( * ) are already in use.",IDC_STATIC,158,437,258,14
+    LTEXT           "Double-click an entry to select. Entries beginning with ( ** ) are already in use.",IDC_STATIC,158,437,258,14
     CONTROL         "Filter Used Entries",IDC_CHECK_FILTEROUTUSED,"Button",BS_AUTOCHECKBOX | BS_PUSHLIKE | WS_TABSTOP,404,434,70,14
     LISTBOX         IDC_LIST_FACE,19,234,160,184,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     LISTBOX         IDC_LIST_VM,193,234,160,184,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP

@@ -1357,7 +1357,7 @@ CModelPropPage::CModelPropPage() : CPropertyPage(CModelPropPage::IDD)
 	m_iOriginX = 0;
 	m_iOriginY = 0;
 	m_iOriginZ = 0;
-	m_fScale = 0.0f;
+	m_fScale = 1.0f;
 	m_bMakeSkin = FALSE;
 	m_bLoseDupVerts = FALSE;
 	m_bMakeSkel = FALSE;

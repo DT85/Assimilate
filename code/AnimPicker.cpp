@@ -53,7 +53,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CAnimPicker message handlers
 
-const char *sEnumUsedString = "* ";
+const char *sEnumUsedString = "** ";
 const char *sEnumSeperatorString_Prefix = "====== ";	// (the spaces keep these unique/comparable)
 const char *sEnumSeperatorString_Suffix = " ======";	//
 
