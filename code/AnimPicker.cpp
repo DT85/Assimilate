@@ -176,8 +176,8 @@ void CAnimPicker::OnDblclkListVM()
 bool CAnimPicker::ReturnStringIsValid()
 {
 	if (!strlen(m_psReturnString) ||
-		!_strnicmp(m_psReturnString,sEnumUsedString,				strlen(sEnumUsedString))	||
-		!_strnicmp(m_psReturnString,sEnumSeperatorString_Prefix,	strlen(sEnumSeperatorString_Prefix))
+		!strnicmp(m_psReturnString,sEnumUsedString,				strlen(sEnumUsedString))	||
+		!strnicmp(m_psReturnString,sEnumSeperatorString_Prefix,	strlen(sEnumSeperatorString_Prefix))
 		)
 	{
 		return false;
@@ -248,6 +248,8 @@ void CAnimPicker::OnSelchangeListVM()
 
 BOOL CAnimPicker::PreTranslateMessage(MSG* pMsg) 
 {
+	int i = VK_RETURN;
+
 	if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_RETURN)
 	{
 		if (ReturnStringIsValid())

@@ -2301,7 +2301,7 @@ CToken* CTokenizer::TokenFromName(LPCTSTR name)
 		{
 			while (m_keywords[i].m_tokenvalue != TK_EOF)
 			{
-				if (_stricmp(m_keywords[i].m_keyword, name) == 0)
+				if (stricmp(m_keywords[i].m_keyword, name) == 0)
 				{
 					return CUserToken::Create(m_keywords[i].m_tokenvalue, name);
 				}
@@ -2850,11 +2850,14 @@ CToken* CTokenizer::HandleSymbol(byte theByte)
 
 CToken* CTokenizer::HandleDirective()
 {
+	int tokenValue = 0;
 	CToken* theToken = FetchToken();
+
 	if (theToken->GetType() == TK_EOF)
 	{
 		return theToken;
 	}
+
 	if (theToken->GetType() != TK_IDENTIFIER)
 	{
 		Error(TKERR_INVALID_DIRECTIVE);

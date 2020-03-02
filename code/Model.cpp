@@ -22,13 +22,13 @@ CModel::~CModel()
 
 void CModel::Delete()
 {
-	while(m_comments != NULL)
+	while (m_comments != NULL)
 	{
 		CComment* curComment = m_comments;
 		m_comments = curComment->GetNext();
 		curComment->Delete();
 	}
-	while(m_sequences != NULL)
+	while (m_sequences != NULL)
 	{
 		CSequence* curSequence = m_sequences;
 		m_sequences = curSequence->GetNext();
@@ -77,7 +77,7 @@ bool CModel::DoProperties()
 {
 	bool dirty = false;
 
-	{		
+	{
 		CPropertySheet* propSheet = new CPropertySheet(m_name);
 
 		CModelPropPage* propPage = new CModelPropPage();
@@ -87,7 +87,7 @@ bool CModel::DoProperties()
 
 		propPage->SetRefGLAPath(GetRefGLAPath());
 
-		for (int i=0; i<PCJList_GetEntries(); i++)
+		for (int i = 0; i<PCJList_GetEntries(); i++)
 		{
 			propPage->AddPCJEntry(PCJList_GetEntry(i));
 		}
@@ -103,7 +103,7 @@ bool CModel::DoProperties()
 
 void CModel::SetNext(CModel* next)
 {
-	m_next= next;
+	m_next = next;
 }
 
 CModel* CModel::GetNext()
@@ -112,7 +112,7 @@ CModel* CModel::GetNext()
 }
 
 bool CModel::ContainsFile(LPCSTR psFilename)
-{	
+{
 	if (m_sequences == NULL)
 	{
 		return false;
@@ -120,12 +120,12 @@ bool CModel::ContainsFile(LPCSTR psFilename)
 	else
 	{
 		CSequence* curSequence = m_sequences;
-		while(curSequence)
+		while (curSequence)
 		{
-			if (_stricmp(curSequence->GetPath(),psFilename)==0)
+			if (stricmp(curSequence->GetPath(), psFilename) == 0)
 				return true;
 			curSequence = curSequence->GetNext();
-		}		
+		}
 	}
 
 	return false;
@@ -140,7 +140,7 @@ void CModel::AddSequence(CSequence* sequence)
 	else
 	{
 		CSequence* curSequence = m_sequences;
-		while(curSequence->GetNext() != NULL)
+		while (curSequence->GetNext() != NULL)
 		{
 			curSequence = curSequence->GetNext();
 		}
@@ -183,12 +183,12 @@ void CModel::DeleteSequence(CSequence* deleteSequence)
 //  0 elem1 equivalent to elem2 
 // >0 elem1 greater than elem2 
 
-int ModelSequenceCompareFunc( const void *arg1, const void *arg2 )
+int ModelSequenceCompareFunc(const void *arg1, const void *arg2)
 {
 	CSequence *seq1 = (CSequence *) *(CSequence **)arg1;
 	CSequence *seq2 = (CSequence *) *(CSequence **)arg2;
 
-	return (seq1->m_iSequenceNumber - seq2->m_iSequenceNumber);	
+	return (seq1->m_iSequenceNumber - seq2->m_iSequenceNumber);
 }
 
 // change the sequences around in the model till each one is in the position specified by it's member: m_iSequenceNumber
@@ -208,13 +208,13 @@ void CModel::ReOrderSequences()
 
 	// re-order sequences...
 
-	qsort( (void *)&sequences[0], (size_t)(sequences.size()), sizeof(CSequence *), ModelSequenceCompareFunc );
+	qsort((void *)&sequences[0], (size_t)(sequences.size()), sizeof(CSequence *), ModelSequenceCompareFunc);
 
 	// now rebuild links...
 
 	int iTotMasterSequences = GetTotMasterSequences();	// this needs to be eval'd here, you can't do it in the for-next below
 	m_sequences = NULL;
-	for (int i=0; i<iTotMasterSequences; i++)
+	for (int i = 0; i<iTotMasterSequences; i++)
 	{
 		curSequence = sequences[i];
 		curSequence->SetNext(NULL);
@@ -232,21 +232,21 @@ int CModel::AnimEnumInUse(LPCSTR psAnimEnum)
 {
 	int iCount = 0;
 	if (strlen(psAnimEnum))	// added for G2 models, which don't necessarily use enums yet
-	{		
+	{
 		CSequence *curSequence = GetFirstSequence();
 
 		while (curSequence)
 		{
-			if (!strcmp(psAnimEnum,curSequence->GetEnum()))
+			if (!strcmp(psAnimEnum, curSequence->GetEnum()))
 			{
 				iCount++;// return true;
 			}
 
 			// new bit, ask the additional sequences as well...
 			//
-			for (int i=0; i<MAX_ADDITIONAL_SEQUENCES; i++)
+			for (int i = 0; i<MAX_ADDITIONAL_SEQUENCES; i++)
 			{
-				if (!strcmp(psAnimEnum,curSequence->AdditionalSeqs[i]->GetEnum()))
+				if (!strcmp(psAnimEnum, curSequence->AdditionalSeqs[i]->GetEnum()))
 				{
 					iCount++;// return true;
 				}
@@ -267,7 +267,7 @@ int CModel::GetTotMasterSequences()
 {
 	int tot = 0;
 	CSequence* curSequence = m_sequences;
-	while(curSequence != NULL)
+	while (curSequence != NULL)
 	{
 		tot++;
 		curSequence = curSequence->GetNext();
@@ -279,11 +279,11 @@ int CModel::GetTotSequences()
 {
 	int tot = 0;
 	CSequence* curSequence = m_sequences;
-	while(curSequence != NULL)
+	while (curSequence != NULL)
 	{
 		tot++;
 
-		for (int i=0; i<MAX_ADDITIONAL_SEQUENCES; i++)
+		for (int i = 0; i<MAX_ADDITIONAL_SEQUENCES; i++)
 		{
 			if (curSequence->AdditionalSeqs[i]->AdditionalSequenceIsValid())
 				tot++;
@@ -304,64 +304,64 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 	if (bReScanASEFiles && ((CAssimilateApp*)AfxGetApp())->m_pMainWnd)
 	{
 		pProgress = new CProgressCtrl;
-		bool bOK = !!pProgress->Create(	WS_CHILD|WS_VISIBLE|PBS_SMOOTH,		// DWORD dwStyle, 
-									CRect(100,100,200,200),				// const RECT& rect, 
-									((CAssimilateApp*)AfxGetApp())->m_pMainWnd,	// CWnd* pParentWnd, 
-									1									// UINT nID 
-									);
+		bool bOK = !!pProgress->Create(WS_CHILD | WS_VISIBLE | PBS_SMOOTH,		// DWORD dwStyle, 
+			CRect(100, 100, 200, 200),				// const RECT& rect, 
+			((CAssimilateApp*)AfxGetApp())->m_pMainWnd,	// CWnd* pParentWnd, 
+			1									// UINT nID 
+		);
 		if (!bOK)
 		{
 			delete pProgress;
 			pProgress = NULL;
 		}
 	}
-	
+
 	int iTotMasterSequences = GetTotMasterSequences();
 	if (pProgress)
-	{			
-		pProgress->SetRange(0,iTotMasterSequences);
+	{
+		pProgress->SetRange(0, iTotMasterSequences);
 	}
-	int iSequenceNumber=0;
+	int iSequenceNumber = 0;
 
 	int curFrame = 0;
 	CSequence* curSequence = m_sequences;
-	while(curSequence != NULL)
+	while (curSequence != NULL)
 	{
 		if (pProgress)
 		{
 			pProgress->SetPos(iSequenceNumber++);
 			wait.Restore();
 		}
-		
+
 		// mark current enums as valid or not...
 
 		curSequence->SetValidEnum(((CAssimilateApp*)AfxGetApp())->ValidEnum(curSequence->GetEnum()));
-	
-		for (int _i=0; _i<MAX_ADDITIONAL_SEQUENCES; _i++)
+
+		for (int _i = 0; _i<MAX_ADDITIONAL_SEQUENCES; _i++)
 		{
 			CSequence *additionalSeq = curSequence->AdditionalSeqs[_i];
 
 			additionalSeq->SetValidEnum(((CAssimilateApp*)AfxGetApp())->ValidEnum(additionalSeq->GetEnum()));
 		}
 
-		if ( bReScanASEFiles )
+		if (bReScanASEFiles)
 		{
 			// new code, first of all check for changed framecounts (ie updated ASE file), and update sequence if nec...
 
 			CString nameASE = ((CAssimilateApp*)AfxGetApp())->GetQuakeDir();
-					nameASE+= curSequence->GetPath();
+			nameASE += curSequence->GetPath();
 
 			if (!FileExists(nameASE))
 			{
 				if (gbCarWash_DoingScan)
 				{
-					strCarWashErrors += va("Model file missing: \"%s\"\n",nameASE);
+					strCarWashErrors += va("Model file missing: \"%s\"\n", nameASE);
 				}
 				else
 				{
-					if ( gbReportMissingASEs )
-					{	
-						gbReportMissingASEs = GetYesNo(va("Model file missing: \"%s\"\n\nContinue recieving this message?",nameASE));
+					if (gbReportMissingASEs)
+					{
+						gbReportMissingASEs = GetYesNo(va("Model file missing: \"%s\"\n\nContinue recieving this message?", nameASE));
 					}
 				}
 			}
@@ -372,40 +372,40 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 				iFrameCount = curSequence->GetFrameCount();	// default it in case we skip an XSI read
 				iFrameSpeed = curSequence->GetFrameSpeed();	// default it in case we cache this file
 
-				curSequence->ReadASEHeader( nameASE, iStartFrame, iFrameCount, iFrameSpeed, true);	// true = can skip XSI read
+				curSequence->ReadASEHeader(nameASE, iStartFrame, iFrameCount, iFrameSpeed, true);	// true = can skip XSI read
 
-				if ( iFrameCount != curSequence->GetFrameCount() )
+				if (iFrameCount != curSequence->GetFrameCount())
 				{
 					if (gbCarWash_DoingScan)
 					{
-						strCarWashErrors += va("file: \"%s\" has a framecount of %d, but .CAR file says %d\n",nameASE,iFrameCount,curSequence->GetFrameCount());
+						strCarWashErrors += va("file: \"%s\" has a framecount of %d, but .CAR file says %d\n", nameASE, iFrameCount, curSequence->GetFrameCount());
 					}
 					else
 					{
 						// don't mention it if the current count is zero, it's probably a new anim we've just added...
 
-						if ( curSequence->GetFrameCount() )
+						if (curSequence->GetFrameCount())
 						{
 							if (giFixUpdatedASEFrameCounts == YES || giFixUpdatedASEFrameCounts == NO)
 							{
-								CYesNoYesAllNoAll query(	va("Model file: \"%s\"",nameASE),
-															"",
-															va("... has a framecount of %d instead of %d as the QDT/CAR file says",iFrameCount, curSequence->GetFrameCount()),
-															"",
-															"",
-															"Do you want me to fix this?"
-															);
+								CYesNoYesAllNoAll query(va("Model file: \"%s\"", nameASE),
+									"",
+									va("... has a framecount of %d instead of %d as the QDT/CAR file says", iFrameCount, curSequence->GetFrameCount()),
+									"",
+									"",
+									"Do you want me to fix this?"
+								);
 								giFixUpdatedASEFrameCounts = query.DoModal();
 							}
 						}
 
 						// update the sequence?...
 
-						if (giFixUpdatedASEFrameCounts == YES || giFixUpdatedASEFrameCounts == YES_ALL 
+						if (giFixUpdatedASEFrameCounts == YES || giFixUpdatedASEFrameCounts == YES_ALL
 							|| !curSequence->GetFrameCount()	// update: I think this should be here?
 							)
 						{
-							curSequence->SetFrameCount( iFrameCount );
+							curSequence->SetFrameCount(iFrameCount);
 						}
 					}
 				}
@@ -419,9 +419,9 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 			CString stringASEName = nameASE;
 			Filename_BaseOnly(stringASEName);	// now = (eg) "falldeath" or "injured" etc 			
 
-			for (int i=0; ; i++)
+			for (int i = 0; ; i++)
 			{
-				LPCSTR p = ((CAssimilateApp*)AfxGetApp())->GetEnumEntry(i);	
+				LPCSTR p = ((CAssimilateApp*)AfxGetApp())->GetEnumEntry(i);
 
 				if (!p)		// EOS?
 					break;
@@ -431,33 +431,33 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 				// note, I could check stuff like "IsEnumSeperator(LPCSTR lpString)" on <p>, but you'd never
 				//	have one of those enums assigned to a sequence anyway.
 
-				char *psEnumPosAfterUnderScore = strchr(stringEnum,'_');
+				char *psEnumPosAfterUnderScore = strchr(stringEnum, '_');
 				if (psEnumPosAfterUnderScore++)	// check it, and skip to next char 
 				{
 					// does this enum match the ASE name?
 
-					if ( !stricmp( psEnumPosAfterUnderScore, stringASEName ) )
+					if (!stricmp(psEnumPosAfterUnderScore, stringASEName))
 					{
 						// ok, we've found a good candidate, so set it...  (no need for query-prev code, but I wanted to)
 
-						if ( strcmp( curSequence->GetEnum(), stringEnum))
+						if (strcmp(curSequence->GetEnum(), stringEnum))
 						{
 							curSequence->SetEnum(stringEnum);
 						}
 					}
 				}
 				else
-				{						
+				{
 					// this should never happen...
 
 					if (gbCarWash_DoingScan)
 					{
-						strCarWashErrors += va("found an anim enum with no underscore: \"%s\"\n",stringEnum);
+						strCarWashErrors += va("found an anim enum with no underscore: \"%s\"\n", stringEnum);
 					}
 					else
 					{
 						ASSERT(0);
-						ErrorBox(va("Error! Somehow I found an anim enum with no underscore: \"%s\"",stringEnum));
+						ErrorBox(va("Error! Somehow I found an anim enum with no underscore: \"%s\"", stringEnum));
 					}
 				}
 			}
@@ -474,7 +474,7 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 
 		{	// keep scope local for neatness
 
-			if ( strstr (curSequence->GetEnum(), "DEATH") )
+			if (strstr(curSequence->GetEnum(), "DEATH"))
 			{
 				// scan this sequence's additional sequences for a DEAD of the same basic type...
 
@@ -482,15 +482,15 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 
 				ASSERT(!IsEnumSeperator(stringEnumDEAD));
 
-				stringEnumDEAD.Replace("DEATH","DEAD");
+				stringEnumDEAD.Replace("DEATH", "DEAD");
 
 				// 1st, is there even a corresponding DEAD enum in the global enum table that we can look for...
 
 				CString stringEnum;
 				bool bEnumFound = false;
-				for (int iEnumEntry=0; !bEnumFound; iEnumEntry++)
+				for (int iEnumEntry = 0; !bEnumFound; iEnumEntry++)
 				{
-					LPCSTR p = ((CAssimilateApp*)AfxGetApp())->GetEnumEntry(iEnumEntry);	
+					LPCSTR p = ((CAssimilateApp*)AfxGetApp())->GetEnumEntry(iEnumEntry);
 
 					if (!p)		// EOS?
 						break;
@@ -502,13 +502,13 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 
 					// does this enum match the one we've built?
 
-					if ( !stricmp( stringEnum, stringEnumDEAD ) )
+					if (!stricmp(stringEnum, stringEnumDEAD))
 					{
 						bEnumFound = true;
 					}
 				}
 
-				if ( bEnumFound )
+				if (bEnumFound)
 				{
 					// ok, there *is* one of these, so let's scan this sequence's additional sequences to see if we've
 					// got it...
@@ -535,18 +535,18 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 
 					// did we find one? (or did it have the wrong info in?)
 
-					if ( additionalSeq == NULL // didn't find one
-						|| additionalSeq->GetFrameCount()!=1
-						|| additionalSeq->GetLoopFrame() !=-1
-						|| additionalSeq->GetStartFrame()!= curSequence->GetFrameCount()-1
-						|| additionalSeq->GetFrameSpeed()!= curSequence->GetFrameSpeed()
+					if (additionalSeq == NULL // didn't find one
+						|| additionalSeq->GetFrameCount() != 1
+						|| additionalSeq->GetLoopFrame() != -1
+						|| additionalSeq->GetStartFrame() != curSequence->GetFrameCount() - 1
+						|| additionalSeq->GetFrameSpeed() != curSequence->GetFrameSpeed()
 						)
 					{
 						// find a slot to add this new sequence to, or use the faulty one...
 
 						if (additionalSeq == NULL)
 						{
-							for (int i=0; i<MAX_ADDITIONAL_SEQUENCES; i++)
+							for (int i = 0; i<MAX_ADDITIONAL_SEQUENCES; i++)
 							{
 								additionalSeq = curSequence->AdditionalSeqs[i];
 
@@ -559,24 +559,24 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 
 						// so have we got a slot to work with?
 
-						if ( additionalSeq == NULL )
+						if (additionalSeq == NULL)
 						{
 							if (gbCarWash_DoingScan)
 							{
-								strCarWashErrors += va( "Fuck!!!: I need an 'additional sequence' slot free in the entry: \"%s\" to generate a DEAD seq, but there isn't one spare. Edit this yourself later.\n",curSequence->GetPath());
+								strCarWashErrors += va("Fuck!!!: I need an 'additional sequence' slot free in the entry: \"%s\" to generate a DEAD seq, but there isn't one spare. Edit this yourself later.\n", curSequence->GetPath());
 							}
 							else
 							{
-								ErrorBox( va( "Fuck!!!\n\nI need an 'additional sequence' slot free in the ASE:\n\n\"%s\"\n\n... to generate a DEAD seq, but there isn't one spare. Edit this yourself later.",curSequence->GetPath()));
+								ErrorBox(va("Fuck!!!\n\nI need an 'additional sequence' slot free in the ASE:\n\n\"%s\"\n\n... to generate a DEAD seq, but there isn't one spare. Edit this yourself later.", curSequence->GetPath()));
 							}
 						}
 						else
 						{
-							additionalSeq->SetStartFrame( curSequence->GetFrameCount()-1 );
-							additionalSeq->SetFrameCount( 1 );
-							additionalSeq->SetLoopFrame (-1 );
-							additionalSeq->SetFrameSpeed( curSequence->GetFrameSpeed() );
-							additionalSeq->SetEnum ( stringEnumDEAD );
+							additionalSeq->SetStartFrame(curSequence->GetFrameCount() - 1);
+							additionalSeq->SetFrameCount(1);
+							additionalSeq->SetLoopFrame(-1);
+							additionalSeq->SetFrameSpeed(curSequence->GetFrameSpeed());
+							additionalSeq->SetEnum(stringEnumDEAD);
 						}
 					}
 				}
@@ -585,20 +585,23 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 
 		curSequence->SetTargetFrame(curFrame + curSequence->GetStartFrame());	// slightly more legal than just (curFrame)
 
-		// update: now set any additional sequences within it...
+																				// update: now set any additional sequences within it...
 
-		for (int i=0; i<MAX_ADDITIONAL_SEQUENCES; i++)
+		for (int i = 0; i<MAX_ADDITIONAL_SEQUENCES; i++)
 		{
 			curSequence->AdditionalSeqs[i]->SetTargetFrame(curFrame + curSequence->AdditionalSeqs[i]->GetStartFrame());
 		}
 
 		curFrame += curSequence->GetFrameCount();
-		curFrame += curSequence->GetGenLoopFrame()?1:0;	// findme:  is this right?  I hate this system
+		curFrame += curSequence->GetGenLoopFrame() ? 1 : 0;	// findme:  is this right?  I hate this system
 		curSequence = curSequence->GetNext();
 	}
 	m_totFrames = curFrame;
 
 	ghAssimilateView->GetDocument()->SetModifiedFlag();
+#ifdef _DEBUG
+	(ghAssimilateView->GetDocument()->IsModified()) ? OutputDebugString("modified\n") : OutputDebugString("same\n");
+#endif																											   
 
 	if (pProgress)
 	{
@@ -724,14 +727,14 @@ void CModel::Init(CComment* comments)
 	m_psRefGLAPath = NULL;
 	SetOrigin(0, 0, 0);
 	SetParms(-1, -1, 0, 1);
-	m_iType		= TK_AS_CONVERTMDX_NOASK;
-	m_bSmooth	= false;
+	m_iType = TK_AS_CONVERTMDX_NOASK;
+	m_bSmooth = false;
 	m_bLoseDupVerts = false;
-	m_bMakeSkin	= false;
-	m_fScale	= 1.0f;
+	m_bMakeSkin = false;
+	m_fScale = 1.0f;
 	m_bIgnoreBaseDeviations = false;
-	m_bSkew90	= false;
-	m_bNoSkew90	= false;	
+	m_bSkew90 = false;
+	m_bNoSkew90 = false;
 	m_bKeepMotion = false;
 	m_bPreQuat = false;
 
@@ -839,13 +842,13 @@ int	CModel::PCJList_GetEntries()
 }
 
 LPCSTR CModel::PCJList_GetEntry(int iIndex)
-{		
+{
 	if (iIndex < PCJList_GetEntries())
 	{
 		return m_vPCJList[iIndex].c_str();
 	}
 
-	assert( iIndex < PCJList_GetEntries() );
+	assert(iIndex < PCJList_GetEntries());
 	return "";
 }
 
@@ -864,7 +867,7 @@ void CModel::SetRefGLAPath(LPCSTR psRefGLAPath)
 	{
 		m_psRefGLAPath = (char*)malloc(strlen(psRefGLAPath) + 1);
 		strcpy(m_psRefGLAPath, psRefGLAPath);
-		_strlwr(m_psRefGLAPath);
+		strlwr(m_psRefGLAPath);
 	}
 }
 
@@ -918,16 +921,16 @@ void CModel::SetMakeSkelPath(LPCSTR psPath)
 	}
 	else
 	{
-		m_psMakeSkelPath = (char*) malloc (strlen(psPath)+1);
+		m_psMakeSkelPath = (char*)malloc(strlen(psPath) + 1);
 		strcpy(m_psMakeSkelPath, psPath);
-		_strlwr(m_psMakeSkelPath);
+		strlwr(m_psMakeSkelPath);
 	}
 }
 
 LPCSTR CModel::GetMakeSkelPath(void)
 {
 	return m_psMakeSkelPath;	// warning, may be NULL or blank
-}	
+}
 
 void CModel::SetOrigin(int x, int y, int z)
 {
@@ -1000,10 +1003,10 @@ bool CModel::WriteExternal(bool bPromptForNames, bool& bCFGWritten)
 	{
 		CString strInitialPrompt(ghAssimilateView->GetDocument()->GetPathName());
 		Filename_RemoveFilename(strInitialPrompt);
-		strInitialPrompt.Replace("/","\\");
+		strInitialPrompt.Replace("/", "\\");
 		strInitialPrompt += "\\";
 		strInitialPrompt += sANIMATION_CFG_NAME;
-		
+
 		CFileDialog dialog(FALSE, ".cfg", strInitialPrompt, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, "Config Data Files (*.cfg)|*.cfg|All Files (*.*)|*.*||", NULL);
 		if (dialog.DoModal() != IDOK)
 		{
@@ -1014,21 +1017,21 @@ bool CModel::WriteExternal(bool bPromptForNames, bool& bCFGWritten)
 	else
 	{
 		filename = ((CAssimilateApp*)AfxGetApp())->GetQuakeDir();
-		filename+= GetPath();
+		filename += GetPath();
 		filename.MakeLower();
 		filename.Replace('\\', '/');
 		int loc = filename.Find(m_name);//"/root");
-		if (loc>=0)
+		if (loc >= 0)
 		{
-			filename = filename.Left(loc+strlen(m_name));
+			filename = filename.Left(loc + strlen(m_name));
 		}
 		// dup the dirname to use as the model name... (eg "/.../.../klingon" becomes "/.../.../klingon/klingon"
-		filename += "/"; filename += sANIMATION_CFG_NAME;	
+		filename += "/"; filename += sANIMATION_CFG_NAME;
 	}
 	CTxtFile* file = CTxtFile::Create(filename);
 	if (file == NULL || !file->IsValid())
 	{
-		ErrorBox(va("Error creating file \"%s\"!",filename));
+		ErrorBox(va("Error creating file \"%s\"!", filename));
 		return false;
 	}
 
@@ -1038,10 +1041,10 @@ bool CModel::WriteExternal(bool bPromptForNames, bool& bCFGWritten)
 	Filename_RemoveFilename(strQ3FormatCheckName);
 	strQ3FormatCheckName += "\\";
 	strQ3FormatCheckName += sANIMATION_PRE_NAME;
-	strQ3FormatCheckName.Replace("/","\\");
+	strQ3FormatCheckName.Replace("/", "\\");
 
 	bool bExportFormatIsQuake3Multiplayer = //FileExists(strQ3FormatCheckName);
-											((CAssimilateApp*)AfxGetApp())->GetMultiPlayerMode();	
+		((CAssimilateApp*)AfxGetApp())->GetMultiPlayerMode();
 
 	CString strPrePend;
 	if (bExportFormatIsQuake3Multiplayer)
@@ -1049,7 +1052,7 @@ bool CModel::WriteExternal(bool bPromptForNames, bool& bCFGWritten)
 		// multi-player format, check for optional animation.pre file...
 
 		FILE *fhPRE = fopen(strQ3FormatCheckName, "rt");
-		
+
 		if (fhPRE)
 		{
 			// read all the lines in this file and just write them straight to the output file...
@@ -1058,10 +1061,10 @@ bool CModel::WriteExternal(bool bPromptForNames, bool& bCFGWritten)
 			char *psLine;
 			CString strTrimmed;
 
-			while ((psLine = fgets( sLine, sizeof(sLine), fhPRE ))!=NULL)
+			while ((psLine = fgets(sLine, sizeof(sLine), fhPRE)) != NULL)
 			{
 				strTrimmed = psLine;
-				strTrimmed.Replace("\n","");
+				strTrimmed.Replace("\n", "");
 				strTrimmed.TrimRight();
 				strTrimmed.TrimLeft();
 
@@ -1070,11 +1073,11 @@ bool CModel::WriteExternal(bool bPromptForNames, bool& bCFGWritten)
 
 			if (ferror(fhPRE))
 			{
-				ErrorBox(va("Error during reading of file \"%s\"!\n\n( this shouldn't happen )",(LPCSTR)strQ3FormatCheckName));
+				ErrorBox(va("Error during reading of file \"%s\"!\n\n( this shouldn't happen )", (LPCSTR)strQ3FormatCheckName));
 			}
 
 			fclose(fhPRE);
-		}		
+		}
 
 		file->Writeln("");
 		file->Writeln("//");
@@ -1094,12 +1097,12 @@ bool CModel::WriteExternal(bool bPromptForNames, bool& bCFGWritten)
 		//	(sigh), so I have to explicitly call the Writeln() functions to output CRs... :-(
 
 		file->Writeln("//");
-		file->Writeln("// Format:  enum, targetFrame, frameCount, loopFrame, frameSpeed");	
+		file->Writeln("// Format:  enum, targetFrame, frameCount, loopFrame, frameSpeed");
 		file->Writeln("//");
 	}
 
 	CSequence* curSequence = m_sequences;
-	while(curSequence != NULL)
+	while (curSequence != NULL)
 	{
 		curSequence->WriteExternal(this, file, bExportFormatIsQuake3Multiplayer);
 		curSequence = curSequence->GetNext();
@@ -1108,7 +1111,7 @@ bool CModel::WriteExternal(bool bPromptForNames, bool& bCFGWritten)
 
 	if (HasGLA())
 	{
-		_unlink(filename);	// zap it, since it's meaningless here (only has one seq/enum: the whole GLA)
+		unlink(filename);	// zap it, since it's meaningless here (only has one seq/enum: the whole GLA)
 	}
 	else
 	{
@@ -1158,10 +1161,10 @@ void CModel::GetMasterEnumBoundaryFrameNumbers(int *piFirstFrameAfterBOTH, int *
 {
 	ENUMTYPE prevET = ET_INVALID;
 	int iFirstFrameAfterBOTH = 0;
-	int iFirstFrameAfterTORSO= 0;	
-	
+	int iFirstFrameAfterTORSO = 0;
+
 	CSequence* curSequence = m_sequences;
-	while(curSequence != NULL)
+	while (curSequence != NULL)
 	{
 		ENUMTYPE thisET = curSequence->GetEnumType();
 
@@ -1170,12 +1173,12 @@ void CModel::GetMasterEnumBoundaryFrameNumbers(int *piFirstFrameAfterBOTH, int *
 		if (prevET == ET_BOTH && thisET != ET_BOTH)
 		{
 			iFirstFrameAfterBOTH = curSequence->GetTargetFrame();
-			iFirstFrameAfterTORSO= curSequence->GetTargetFrame();	// set this as well in case there are no TORSOs at all
+			iFirstFrameAfterTORSO = curSequence->GetTargetFrame();	// set this as well in case there are no TORSOs at all
 		}
 
 		if (prevET == ET_TORSO && thisET != ET_TORSO)
 		{
-			iFirstFrameAfterTORSO= curSequence->GetTargetFrame();	
+			iFirstFrameAfterTORSO = curSequence->GetTargetFrame();
 		}
 
 		prevET = thisET;
@@ -1187,10 +1190,10 @@ void CModel::GetMasterEnumBoundaryFrameNumbers(int *piFirstFrameAfterBOTH, int *
 	if (prevET == ET_BOTH)
 	{
 		iFirstFrameAfterBOTH = GetTotFrames();
-		iFirstFrameAfterTORSO= GetTotFrames();
+		iFirstFrameAfterTORSO = GetTotFrames();
 	}
 	if (prevET == ET_TORSO)
-	{		
+	{
 		iFirstFrameAfterTORSO = GetTotFrames();
 	}
 
@@ -1201,7 +1204,7 @@ void CModel::GetMasterEnumBoundaryFrameNumbers(int *piFirstFrameAfterBOTH, int *
 
 	if (piFirstFrameAfterTORSO)
 	{
-		*piFirstFrameAfterTORSO= iFirstFrameAfterTORSO;
+		*piFirstFrameAfterTORSO = iFirstFrameAfterTORSO;
 	}
 }
 
@@ -1215,8 +1218,8 @@ void CModel::Write(CTxtFile* file)
 		if (GetScale() != 1.0f)
 		{
 			file->Write("$");
-			file->Write(CAssimilateDoc::GetKeyword(TK_AS_SCALE, TABLE_QDT)," ");
-			file->Writeln(va("%g",GetScale()));
+			file->Write(CAssimilateDoc::GetKeyword(TK_AS_SCALE, TABLE_QDT), " ");
+			file->Writeln(va("%g", GetScale()));
 		}
 
 		if (GetKeepMotion())
@@ -1232,16 +1235,16 @@ void CModel::Write(CTxtFile* file)
 			file->Writeln(va("%s", GetRefGLAPath()));
 		}
 
-		for (int iPCJ=0; iPCJ < PCJList_GetEntries(); iPCJ++)
+		for (int iPCJ = 0; iPCJ < PCJList_GetEntries(); iPCJ++)
 		{
 			file->Write("$");
-			file->Write(CAssimilateDoc::GetKeyword(TK_AS_PCJ, TABLE_QDT)," ");
-			file->Writeln( PCJList_GetEntry(iPCJ) );
+			file->Write(CAssimilateDoc::GetKeyword(TK_AS_PCJ, TABLE_QDT), " ");
+			file->Writeln(PCJList_GetEntry(iPCJ));
 		}
 	}
 
 	CComment* curComment = m_comments;
-	while(curComment != NULL)
+	while (curComment != NULL)
 	{
 		curComment->Write(file);
 		curComment = curComment->GetNext();
@@ -1249,7 +1252,7 @@ void CModel::Write(CTxtFile* file)
 
 	bool bFirstSeqWritten = false;
 	CSequence* curSequence = m_sequences;
-	while(curSequence != NULL)
+	while (curSequence != NULL)
 	{
 		curSequence->Write(file, !bFirstSeqWritten && GetPreQuat());
 		curSequence = curSequence->GetNext();
@@ -1263,7 +1266,7 @@ void CModel::Write(CTxtFile* file)
 	{
 		file->Write("$", CAssimilateDoc::GetKeyword(GetConvertType(), TABLE_QDT));
 		CString path = m_path;
-	
+
 		int loc = path.Find("/base");
 		if (loc > -1)
 		{
@@ -1282,33 +1285,33 @@ void CModel::Write(CTxtFile* file)
 
 		if (IsGhoul2())
 		{
-			if	(GetMakeSkin())
+			if (GetMakeSkin())
 			{
-				file->Write("-", CAssimilateDoc::GetKeyword(TK_AS_MAKESKIN,	TABLE_CONVERT), " ");
+				file->Write("-", CAssimilateDoc::GetKeyword(TK_AS_MAKESKIN, TABLE_CONVERT), " ");
 			}
-			if	(GetSmooth())
+			if (GetSmooth())
 			{
-				file->Write("-", CAssimilateDoc::GetKeyword(TK_AS_SMOOTH,	TABLE_CONVERT), " ");
+				file->Write("-", CAssimilateDoc::GetKeyword(TK_AS_SMOOTH, TABLE_CONVERT), " ");
 			}
 			if (GetLoseDupVerts())
 			{
 				file->Write("-", CAssimilateDoc::GetKeyword(TK_AS_LOSEDUPVERTS, TABLE_CONVERT), " ");
 			}
-			if  (GetIgnoreBaseDeviations())
+			if (GetIgnoreBaseDeviations())
 			{
 				file->Write("-", CAssimilateDoc::GetKeyword(TK_AS_IGNOREBASEDEVIATIONS, TABLE_CONVERT), " ");
 			}
-			if	(GetSkew90())
+			if (GetSkew90())
 			{
-				file->Write("-", CAssimilateDoc::GetKeyword(TK_AS_SKEW90,	TABLE_CONVERT), " ");
+				file->Write("-", CAssimilateDoc::GetKeyword(TK_AS_SKEW90, TABLE_CONVERT), " ");
 			}
-			if	(GetNoSkew90())
+			if (GetNoSkew90())
 			{
 				file->Write("-", CAssimilateDoc::GetKeyword(TK_AS_NOSKEW90, TABLE_CONVERT), " ");
 			}
-			if	(GetMakeSkelPath() && strlen(GetMakeSkelPath()))
+			if (GetMakeSkelPath() && strlen(GetMakeSkelPath()))
 			{
-				file->Write("-", CAssimilateDoc::GetKeyword(TK_AS_MAKESKEL,	TABLE_CONVERT), " ");
+				file->Write("-", CAssimilateDoc::GetKeyword(TK_AS_MAKESKEL, TABLE_CONVERT), " ");
 				file->Write(GetMakeSkelPath(), " ");
 			}
 
@@ -1318,14 +1321,14 @@ void CModel::Write(CTxtFile* file)
 		{
 			if (giLODLevelOverride)
 			{
-				file->Write(va("-lod %d ",giLODLevelOverride));
+				file->Write(va("-lod %d ", giLODLevelOverride));
 			}
 
 			file->Write("-", CAssimilateDoc::GetKeyword(TK_AS_PLAYERPARMS, TABLE_CONVERT), " ");
 			file->Write(0);//m_skipStart+1);	// ignore these, but don't want to update parser and have invalid prev files
 			file->Space();
 			file->Write(0);//m_skipEnd);//max upper frames);
-			file->Space();		
+			file->Space();
 		}
 
 		if (m_originx || m_originy || m_originz)
@@ -1352,7 +1355,7 @@ CModelPropPage::CModelPropPage() : CPropertyPage(CModelPropPage::IDD)
 {
 	//{{AFX_DATA_INIT(CModelPropPage)
 	m_bSkew90 = FALSE;
-	m_bSmooth = FALSE;	
+	m_bSmooth = FALSE;
 	m_strSkelPath = _T("");
 	m_iOriginX = 0;
 	m_iOriginY = 0;
@@ -1378,7 +1381,6 @@ void CModelPropPage::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CModelPropPage)
-	//DDX_Check(pDX, IDC_CHECK_SKEW90, m_bSkew90);
 	DDX_Check(pDX, IDC_CHECK_SMOOTH_ALL, m_bSmooth);
 	DDX_Text(pDX, IDC_EDIT_SKELPATH, m_strSkelPath);
 	DDX_Text(pDX, IDC_EDIT_ORIGINX, m_iOriginX);
@@ -1391,7 +1393,6 @@ void CModelPropPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT_PCJ, m_strNewPCJ);
 	DDX_Text(pDX, IDC_EDIT_REFGLAPATH, m_strRefGLAPath);
 	DDX_Check(pDX, IDC_CHECK_KEEPMOTIONBONE, m_bKeepMotion);
-	//DDX_Check(pDX, IDC_CHECK_PREQUAT, m_bPreQuat);
 	//}}AFX_DATA_MAP
 }
 
@@ -1407,7 +1408,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CModelPropPage message handlers
 
-void CModelPropPage::OnOK() 
+void CModelPropPage::OnOK()
 {
 	if (!m_bMakeSkel && !m_strSkelPath.IsEmpty())
 	{
@@ -1426,14 +1427,14 @@ void CModelPropPage::OnOK()
 	m_model->SetSmooth(!!m_bSmooth);
 	m_model->SetLoseDupVerts(!!m_bLoseDupVerts);
 	m_model->SetMakeSkin(!!m_bMakeSkin);
-	m_model->SetMakeSkelPath(m_bMakeSkel?(LPCSTR)m_strSkelPath:"");
+	m_model->SetMakeSkelPath(m_bMakeSkel ? (LPCSTR)m_strSkelPath : "");
 
 	m_model->SetScale(m_fScale);
 	m_model->SetKeepMotion(!!m_bKeepMotion);
 	m_model->SetPreQuat(!!m_bPreQuat);
 
 	m_model->PCJList_Clear();
-	for (int i=0; i<GetPCJEntries(); i++)
+	for (int i = 0; i<GetPCJEntries(); i++)
 	{
 		m_model->PCJList_AddEntry(GetPCJEntry(i));
 	}
@@ -1448,19 +1449,19 @@ void CModelPropPage::OnOK()
 
 void CModelPropPage::PopulatePCJList(void)
 {
-	CListBox *pListBox = (CListBox *) GetDlgItem(IDC_LIST_PCJ);
+	CListBox *pListBox = (CListBox *)GetDlgItem(IDC_LIST_PCJ);
 	if (pListBox)
 	{
 		pListBox->ResetContent();
 
 		for (int i = 0; i<m_PCJList.size(); i++)
 		{
-			pListBox->InsertString(-1, (LPCSTR) m_PCJList[i]);
+			pListBox->InsertString(-1, (LPCSTR)m_PCJList[i]);
 		}
 	}
 }
 
-BOOL CModelPropPage::OnInitDialog() 
+BOOL CModelPropPage::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
 
@@ -1468,17 +1469,17 @@ BOOL CModelPropPage::OnInitDialog()
 	m_iOriginY = m_model->GetOriginY();
 	m_iOriginZ = m_model->GetOriginZ();
 
-	m_bSkew90	= m_model->GetSkew90();
-	m_bSmooth	= m_model->GetSmooth();
+	m_bSkew90 = m_model->GetSkew90();
+	m_bSmooth = m_model->GetSmooth();
 	m_bLoseDupVerts = m_model->GetLoseDupVerts();
-	m_bMakeSkin	= m_model->GetMakeSkin();
+	m_bMakeSkin = m_model->GetMakeSkin();
 	m_strSkelPath = m_model->GetMakeSkelPath();
 	if (m_strSkelPath.IsEmpty())
 	{
 	}
-	m_bMakeSkel = (m_model->GetMakeSkelPath() && strlen(m_model->GetMakeSkelPath()))?TRUE:FALSE;
+	m_bMakeSkel = (m_model->GetMakeSkelPath() && strlen(m_model->GetMakeSkelPath())) ? TRUE : FALSE;
 
-	m_fScale	= m_model->GetScale();
+	m_fScale = m_model->GetScale();
 	m_bKeepMotion = m_model->GetKeepMotion();
 	m_bPreQuat = m_model->GetPreQuat();
 
@@ -1491,13 +1492,13 @@ BOOL CModelPropPage::OnInitDialog()
 	HandleItemGreying();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE	
+				  // EXCEPTION: OCX Property Pages should return FALSE	
 }
 
 
 void CModelPropPage::DelPCJEntry(int iIndex)
 {
-	if (iIndex<m_PCJList.size())
+	if (iIndex < m_PCJList.size())
 	{
 		m_PCJList.erase(m_PCJList.begin() + iIndex);
 	}
@@ -1506,9 +1507,9 @@ void CModelPropPage::DelPCJEntry(int iIndex)
 void CModelPropPage::AddPCJEntry(LPCSTR psPCJName)
 {
 	CString strTemp(psPCJName);
-			strTemp.Replace(" ","");
-			strTemp.Replace("\t","");
-			
+	strTemp.Replace(" ", "");
+	strTemp.Replace("\t", "");
+
 	m_PCJList.push_back(strTemp);
 }
 
@@ -1518,10 +1519,10 @@ int CModelPropPage::GetPCJEntries(void)
 }
 
 LPCSTR CModelPropPage::GetPCJEntry(int iIndex)
-{		
-	if (iIndex<m_PCJList.size())
+{
+	if (iIndex < m_PCJList.size())
 	{
-		return (LPCSTR) m_PCJList[iIndex];
+		return (LPCSTR)m_PCJList[iIndex];
 	}
 
 	assert(0);
@@ -1557,12 +1558,12 @@ void CModelPropPage::HandleItemGreying(void)
 	GetDlgItem(IDC_EDIT_PCJ)->EnableWindow(m_bMakeSkel);
 	GetDlgItem(IDC_BUTTON_PCJ)->EnableWindow(m_bMakeSkel);
 	GetDlgItem(IDC_BUTTON_DELPCJ)->EnableWindow(m_bMakeSkel);
-	GetDlgItem(IDC_CHECK_KEEPMOTIONBONE)->EnableWindow(m_bMakeSkel);	
+	GetDlgItem(IDC_CHECK_KEEPMOTIONBONE)->EnableWindow(m_bMakeSkel);
 
 	Invalidate();
 }
 
-void CModelPropPage::OnCheckMakeskel() 
+void CModelPropPage::OnCheckMakeskel()
 {
 	UpdateData(DIALOG_TO_DATA);
 
@@ -1574,14 +1575,14 @@ void CModelPropPage::OnCheckMakeskel()
 
 		CString strSuggestedPath(m_model->GetPath());			// eg. "models/players/blah/root"
 		int iLoc = strSuggestedPath.ReverseFind('/');
-		if (iLoc>=0)
+		if (iLoc >= 0)
 		{
 			strSuggestedPath = strSuggestedPath.Left(iLoc);		// eg. "models/players/blah"
 
 			iLoc = strSuggestedPath.ReverseFind('/');
 			if (iLoc >= 0)
 			{
-				CString strDir(strSuggestedPath.Mid(iLoc+1));	// eg. "blah"
+				CString strDir(strSuggestedPath.Mid(iLoc + 1));	// eg. "blah"
 
 				strSuggestedPath += "/";
 				strSuggestedPath += strDir;						// eg. "models/players/blah/blah"
@@ -1593,10 +1594,10 @@ void CModelPropPage::OnCheckMakeskel()
 		}
 	}
 
-	HandleItemGreying();	
+	HandleItemGreying();
 }
 
-void CModelPropPage::OnButtonPcj() 
+void CModelPropPage::OnButtonPcj()
 {
 	UpdateData(DIALOG_TO_DATA);
 
@@ -1608,12 +1609,12 @@ void CModelPropPage::OnButtonPcj()
 		UpdateData(DIALOG_TO_DATA);
 		m_strNewPCJ = "";
 		UpdateData(DATA_TO_DIALOG);
-	}	
+	}
 }
 
-void CModelPropPage::OnButtonDelpcj() 
+void CModelPropPage::OnButtonDelpcj()
 {
-	CListBox *pListBox = (CListBox *) GetDlgItem(IDC_LIST_PCJ);
+	CListBox *pListBox = (CListBox *)GetDlgItem(IDC_LIST_PCJ);
 	if (pListBox)
 	{
 		int iCurSel = pListBox->GetCurSel();

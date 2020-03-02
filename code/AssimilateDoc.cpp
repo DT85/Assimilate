@@ -19,7 +19,7 @@ int giLODLevelOverride = 0;	// MUST default to 0
 void SS_DisposingOfCurrent(LPCSTR psFileName, bool bDirty);
 static bool FileUsesGLAReference(LPCSTR psFilename, LPCSTR psGLAReference);
 
-keywordArray_t CAssimilateDoc::s_Symbols[] = 
+keywordArray_t CAssimilateDoc::s_Symbols[] =
 {
 	"\\",		TK_BACKSLASH,
 	"/",		TK_SLASH,
@@ -30,14 +30,14 @@ keywordArray_t CAssimilateDoc::s_Symbols[] =
 	NULL,		TK_EOF,
 };
 
-keywordArray_t CAssimilateDoc::s_Keywords[] = 
+keywordArray_t CAssimilateDoc::s_Keywords[] =
 {
 	"aseanimgrabinit",			TK_AS_GRABINIT,
 	"scale",					TK_AS_SCALE,
 	"keepmotion",				TK_AS_KEEPMOTION,
 	"pcj",						TK_AS_PCJ,
 	"aseanimref_gla",			TK_AS_REF_GLA,
-	"aseanimgrab",				TK_AS_GRAB,	
+	"aseanimgrab",				TK_AS_GRAB,
 	"aseanimgrab_gla",			TK_AS_GRAB_GLA,
 	"aseanimgrabfinalize",		TK_AS_GRABFINALIZE,
 	"aseanimconvert",			TK_AS_CONVERT,
@@ -46,7 +46,7 @@ keywordArray_t CAssimilateDoc::s_Keywords[] =
 	NULL,						TK_EOF,
 };
 
-keywordArray_t CAssimilateDoc::s_grabKeywords[] = 
+keywordArray_t CAssimilateDoc::s_grabKeywords[] =
 {
 	"frames",				TK_AS_FRAMES,
 	"fill",					TK_AS_FILL,
@@ -63,7 +63,7 @@ keywordArray_t CAssimilateDoc::s_grabKeywords[] =
 	NULL,					TK_EOF,
 };
 
-keywordArray_t CAssimilateDoc::s_convertKeywords[] = 
+keywordArray_t CAssimilateDoc::s_convertKeywords[] =
 {
 	"playerparms",			TK_AS_PLAYERPARMS,
 	"origin",				TK_AS_ORIGIN,
@@ -83,7 +83,7 @@ LPCTSTR CAssimilateDoc::GetKeyword(int token, int table)
 	if ((table == TABLE_ANY) || (table == TABLE_QDT))
 	{
 		int i = 0;
-		while(s_Keywords[i].m_tokenvalue != TK_EOF)
+		while (s_Keywords[i].m_tokenvalue != TK_EOF)
 		{
 			if (s_Keywords[i].m_tokenvalue == token)
 			{
@@ -95,7 +95,7 @@ LPCTSTR CAssimilateDoc::GetKeyword(int token, int table)
 	if ((table == TABLE_ANY) || (table == TABLE_GRAB))
 	{
 		int i = 0;
-		while(s_grabKeywords[i].m_tokenvalue != TK_EOF)
+		while (s_grabKeywords[i].m_tokenvalue != TK_EOF)
 		{
 			if (s_grabKeywords[i].m_tokenvalue == token)
 			{
@@ -107,7 +107,7 @@ LPCTSTR CAssimilateDoc::GetKeyword(int token, int table)
 	if ((table == TABLE_ANY) || (table == TABLE_CONVERT))
 	{
 		int i = 0;
-		while(s_convertKeywords[i].m_tokenvalue != TK_EOF)
+		while (s_convertKeywords[i].m_tokenvalue != TK_EOF)
 		{
 			if (s_convertKeywords[i].m_tokenvalue == token)
 			{
@@ -129,15 +129,15 @@ BEGIN_MESSAGE_MAP(CAssimilateDoc, CDocument)
 	ON_COMMAND(IDM_ADDFILES, OnAddfiles)
 	ON_COMMAND(IDM_EXTERNAL, OnExternal)
 	ON_COMMAND(IDM_RESEQUENCE, OnResequence)
-	ON_COMMAND(IDM_BUILD, OnBuild)	
-	ON_COMMAND(IDM_BUILD_MULTILOD, OnBuildMultiLOD)	
-	ON_COMMAND(IDM_VALIDATE, OnValidate)		
-	ON_COMMAND(IDM_CARWASH,  OnCarWash)
-	ON_COMMAND(IDM_VALIDATE_MULTILOD, OnValidateMultiLOD)	
-	ON_COMMAND(ID_VIEW_ANIMENUMS, OnViewAnimEnums)	
+	ON_COMMAND(IDM_BUILD, OnBuild)
+	ON_COMMAND(IDM_BUILD_MULTILOD, OnBuildMultiLOD)
+	ON_COMMAND(IDM_VALIDATE, OnValidate)
+	ON_COMMAND(IDM_CARWASH, OnCarWash)
+	ON_COMMAND(IDM_VALIDATE_MULTILOD, OnValidateMultiLOD)
+	ON_COMMAND(ID_VIEW_ANIMENUMS, OnViewAnimEnums)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_ANIMENUMS, OnUpdateViewAnimEnums)
-	ON_COMMAND(ID_VIEW_FRAMEDETAILS, OnViewFrameDetails)	
-	ON_UPDATE_COMMAND_UI(ID_VIEW_FRAMEDETAILS, OnUpdateViewFrameDetails)	
+	ON_COMMAND(ID_VIEW_FRAMEDETAILS, OnViewFrameDetails)
+	ON_UPDATE_COMMAND_UI(ID_VIEW_FRAMEDETAILS, OnUpdateViewFrameDetails)
 	ON_UPDATE_COMMAND_UI(IDM_RESEQUENCE, OnUpdateResequence)
 	ON_UPDATE_COMMAND_UI(ID_FILE_SAVE, OnUpdateFileSave)
 	ON_UPDATE_COMMAND_UI(ID_FILE_SAVE_AS, OnUpdateFileSaveAs)
@@ -247,8 +247,8 @@ void CAssimilateDoc::DeleteModel(CModel *deleteModel)
 	// fixme: ditch this whenever possible
 	// keep Mike's var up to date...
 	//
-	scanModel = GetFirstModel();	
-	while(scanModel && scanModel->GetNext())
+	scanModel = GetFirstModel();
+	while (scanModel && scanModel->GetNext())
 	{
 		scanModel = scanModel->GetNext();
 	}
@@ -282,10 +282,10 @@ void CAssimilateDoc::ParseGrab(CTokenizer* tokenizer, int iGrabType)
 	CString path = curToken->GetStringValue();
 	curToken->Delete();
 
-	while(curToken != NULL)
+	while (curToken != NULL)
 	{
 		curToken = tokenizer->GetToken(NULL, TKF_NUMERICIDENTIFIERSTART | TKF_USES_EOL | TKF_SPACETOKENS, 0);
-		switch(curToken->GetType())
+		switch (curToken->GetType())
 		{
 		case TK_SLASH:
 		case TK_BACKSLASH:
@@ -347,7 +347,7 @@ void CAssimilateDoc::ParseGrab(CTokenizer* tokenizer, int iGrabType)
 			curToken = NULL;
 			break;
 		case TK_EOL:
-			tokenizer->PutBackToken(curToken);			
+			tokenizer->PutBackToken(curToken);
 			curToken = NULL;
 			break;
 		default:
@@ -361,7 +361,7 @@ void CAssimilateDoc::ParseGrab(CTokenizer* tokenizer, int iGrabType)
 	int fill = -1;
 	int loop = 0;
 	CString sound;
-	CString action;	
+	CString action;
 	int startFrame = 0;
 	int targetFrame = 0;
 	int framecount = -1;
@@ -369,11 +369,11 @@ void CAssimilateDoc::ParseGrab(CTokenizer* tokenizer, int iGrabType)
 	bool bFrameSpeedFound = false;
 	int iFrameSpeedFromHeader;
 
-	int iStartFrames[MAX_ADDITIONAL_SEQUENCES]={0};
-	int iFrameCounts[MAX_ADDITIONAL_SEQUENCES]={0};
-	int iLoopFrames [MAX_ADDITIONAL_SEQUENCES]={0};
-	int iFrameSpeeds[MAX_ADDITIONAL_SEQUENCES]={0};
-	CString csEnums [MAX_ADDITIONAL_SEQUENCES];
+	int iStartFrames[MAX_ADDITIONAL_SEQUENCES] = { 0 };
+	int iFrameCounts[MAX_ADDITIONAL_SEQUENCES] = { 0 };
+	int iLoopFrames[MAX_ADDITIONAL_SEQUENCES] = { 0 };
+	int iFrameSpeeds[MAX_ADDITIONAL_SEQUENCES] = { 0 };
+	CString csEnums[MAX_ADDITIONAL_SEQUENCES];
 	int iAdditionalSeqNum = 0;
 	bool bGenLoopFrame = false;
 
@@ -382,245 +382,245 @@ void CAssimilateDoc::ParseGrab(CTokenizer* tokenizer, int iGrabType)
 	curToken = tokenizer->GetToken(TKF_USES_EOL);
 	switch (iGrabType)
 	{
-		case TK_AS_GRAB:
-		{			
-			while (curToken->GetType() == TK_DASH)
+	case TK_AS_GRAB:
+	{
+		while (curToken->GetType() == TK_DASH)
+		{
+			bSomeParamsFound = true;
+			curToken->Delete();
+			curToken = tokenizer->GetToken(s_grabKeywords, TKF_USES_EOL, 0);
+			switch (curToken->GetType())
 			{
-				bSomeParamsFound = true;
+			case TK_AS_FRAMES:
 				curToken->Delete();
-				curToken = tokenizer->GetToken(s_grabKeywords, TKF_USES_EOL, 0);
-				switch (curToken->GetType())
+
+				curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
+				if (curToken->GetType() != TK_INTEGER)
 				{
-				case TK_AS_FRAMES:
-					curToken->Delete();
-
-					curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
-					if (curToken->GetType() != TK_INTEGER)
-					{
-						tokenizer->Error(TKERR_EXPECTED_INTEGER, curToken->GetStringValue());
-						curToken->Delete();
-						tokenizer->GetToEndOfLine()->Delete();
-						return;
-					}
-					startFrame = curToken->GetIntValue();
-					curToken->Delete();
-
-					curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
-					if (curToken->GetType() != TK_INTEGER)
-					{
-						tokenizer->Error(TKERR_EXPECTED_INTEGER, curToken->GetStringValue());
-						curToken->Delete();
-						tokenizer->GetToEndOfLine()->Delete();
-						return;
-					}
-					targetFrame = curToken->GetIntValue();
-					curToken->Delete();
-
-					curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
-					if (curToken->GetType() != TK_INTEGER)
-					{
-						tokenizer->Error(TKERR_EXPECTED_INTEGER, curToken->GetStringValue());
-						curToken->Delete();
-						tokenizer->GetToEndOfLine()->Delete();
-						return;
-					}
-					framecount = curToken->GetIntValue();
-					break;
-				case TK_AS_FILL:
-					curToken->Delete();
-
-					curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
-					if (curToken->GetType() != TK_INTEGER)
-					{
-						tokenizer->Error(TKERR_EXPECTED_INTEGER, curToken->GetStringValue());
-						curToken->Delete();
-						tokenizer->GetToEndOfLine()->Delete();
-						return;
-					}
-					fill = curToken->GetIntValue();
-					break;
-				case TK_AS_ENUM:
-					curToken->Delete();
-
-					curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
-					if (curToken->GetType() != TK_IDENTIFIER)
-					{
-						tokenizer->Error(TKERR_EXPECTED_IDENTIFIER, curToken->GetStringValue());
-						curToken->Delete();
-						tokenizer->GetToEndOfLine()->Delete();
-						return;
-					}
-					enumname = curToken->GetStringValue();
-					break;
-				case TK_AS_SOUND:
-					curToken->Delete();
-
-					curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
-					if (curToken->GetType() != TK_IDENTIFIER)
-					{
-						tokenizer->Error(TKERR_EXPECTED_IDENTIFIER, curToken->GetStringValue());
-						curToken->Delete();
-						tokenizer->GetToEndOfLine()->Delete();
-						return;
-					}
-					sound = curToken->GetStringValue();
-					break;
-				case TK_AS_ACTION:
-					curToken->Delete();
-
-					curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
-					if (curToken->GetType() != TK_IDENTIFIER)
-					{
-						tokenizer->Error(TKERR_EXPECTED_IDENTIFIER, curToken->GetStringValue());
-						curToken->Delete();
-						tokenizer->GetToEndOfLine()->Delete();
-						return;
-					}
-					action = curToken->GetStringValue();
-					break;
-				case TK_AS_LOOP:
-					curToken->Delete();
-
-					curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
-					if (curToken->GetType() != TK_INTEGER)
-					{
-						tokenizer->Error(TKERR_EXPECTED_INTEGER, curToken->GetStringValue());
-						curToken->Delete();
-						tokenizer->GetToEndOfLine()->Delete();
-						return;
-					}
-					loop = curToken->GetIntValue();
-					break;
-
-				case TK_AS_QDSKIPSTART:
-				case TK_AS_QDSKIPSTOP:
-					break;
-
-				case TK_AS_GENLOOPFRAME:
-					bGenLoopFrame = true;
-					break;
-
-				case TK_AS_FRAMESPEED:	// this is still read in for compatibility, but gets overwritten lower down
-					curToken->Delete();
-
-					curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
-					if (curToken->GetType() != TK_INTEGER)
-					{
-						tokenizer->Error(TKERR_EXPECTED_INTEGER, curToken->GetStringValue());
-						curToken->Delete();
-						tokenizer->GetToEndOfLine()->Delete();
-						return;
-					}
-					framespeed = curToken->GetIntValue();
-					bFrameSpeedFound = true;
-					break;
-
-				case TK_AS_PREQUAT:					
-					m_curModel->SetPreQuat(true);
-					break;
-				case TK_AS_ADDITIONAL:
-					curToken->Delete();
-
-					if (iAdditionalSeqNum == MAX_ADDITIONAL_SEQUENCES)
-					{
-						tokenizer->Error(TKERR_USERERROR, va("Trying to define > %d additional sequences for this master",MAX_ADDITIONAL_SEQUENCES));
-						tokenizer->GetToEndOfLine()->Delete();
-						return;
-					}
-
-					// startframe...
-					//
-					curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
-					if (curToken->GetType() != TK_INTEGER)
-					{
-						tokenizer->Error(TKERR_EXPECTED_INTEGER, curToken->GetStringValue());
-						curToken->Delete();
-						tokenizer->GetToEndOfLine()->Delete();
-						return;
-					}
-					iStartFrames[iAdditionalSeqNum] = curToken->GetIntValue();
-
-					// framecount...
-					//
-					curToken->Delete();
-					curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
-					if (curToken->GetType() != TK_INTEGER)
-					{
-						tokenizer->Error(TKERR_EXPECTED_INTEGER, curToken->GetStringValue());
-						curToken->Delete();
-						tokenizer->GetToEndOfLine()->Delete();
-						return;
-					}
-					iFrameCounts[iAdditionalSeqNum] = curToken->GetIntValue();
-
-					// loopframe...
-					//
-					curToken->Delete();
-					curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
-					if (curToken->GetType() != TK_INTEGER)
-					{
-						tokenizer->Error(TKERR_EXPECTED_INTEGER, curToken->GetStringValue());
-						curToken->Delete();
-						tokenizer->GetToEndOfLine()->Delete();
-						return;
-					}
-					iLoopFrames[iAdditionalSeqNum] = curToken->GetIntValue();
-
-					// framespeed...
-					//
-					curToken->Delete();
-					curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
-					if (curToken->GetType() != TK_INTEGER)
-					{
-						tokenizer->Error(TKERR_EXPECTED_INTEGER, curToken->GetStringValue());
-						curToken->Delete();
-						tokenizer->GetToEndOfLine()->Delete();
-						return;
-					}
-					iFrameSpeeds[iAdditionalSeqNum] = curToken->GetIntValue();
-
-					// enum...
-					//
-					curToken->Delete();
-					curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
-					if (curToken->GetType() != TK_IDENTIFIER)
-					{
-						tokenizer->Error(TKERR_EXPECTED_IDENTIFIER, curToken->GetStringValue());
-						curToken->Delete();
-						tokenizer->GetToEndOfLine()->Delete();
-						return;
-					}
-					csEnums[iAdditionalSeqNum] = curToken->GetStringValue();
-
-					iAdditionalSeqNum++;
-					break;
-
-				default:
-					tokenizer->Error(TKERR_UNEXPECTED_TOKEN, curToken->GetStringValue());
+					tokenizer->Error(TKERR_EXPECTED_INTEGER, curToken->GetStringValue());
 					curToken->Delete();
 					tokenizer->GetToEndOfLine()->Delete();
 					return;
 				}
+				startFrame = curToken->GetIntValue();
 				curToken->Delete();
-				curToken = tokenizer->GetToken(s_grabKeywords, TKF_USES_EOL, 0);
-			}
-		}
-		break;
 
-		case TK_AS_GRAB_GLA:
-		{
-			// no additional params permitted for this type currently...
+				curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
+				if (curToken->GetType() != TK_INTEGER)
+				{
+					tokenizer->Error(TKERR_EXPECTED_INTEGER, curToken->GetStringValue());
+					curToken->Delete();
+					tokenizer->GetToEndOfLine()->Delete();
+					return;
+				}
+				targetFrame = curToken->GetIntValue();
+				curToken->Delete();
+
+				curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
+				if (curToken->GetType() != TK_INTEGER)
+				{
+					tokenizer->Error(TKERR_EXPECTED_INTEGER, curToken->GetStringValue());
+					curToken->Delete();
+					tokenizer->GetToEndOfLine()->Delete();
+					return;
+				}
+				framecount = curToken->GetIntValue();
+				break;
+			case TK_AS_FILL:
+				curToken->Delete();
+
+				curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
+				if (curToken->GetType() != TK_INTEGER)
+				{
+					tokenizer->Error(TKERR_EXPECTED_INTEGER, curToken->GetStringValue());
+					curToken->Delete();
+					tokenizer->GetToEndOfLine()->Delete();
+					return;
+				}
+				fill = curToken->GetIntValue();
+				break;
+			case TK_AS_ENUM:
+				curToken->Delete();
+
+				curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
+				if (curToken->GetType() != TK_IDENTIFIER)
+				{
+					tokenizer->Error(TKERR_EXPECTED_IDENTIFIER, curToken->GetStringValue());
+					curToken->Delete();
+					tokenizer->GetToEndOfLine()->Delete();
+					return;
+				}
+				enumname = curToken->GetStringValue();
+				break;
+			case TK_AS_SOUND:
+				curToken->Delete();
+
+				curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
+				if (curToken->GetType() != TK_IDENTIFIER)
+				{
+					tokenizer->Error(TKERR_EXPECTED_IDENTIFIER, curToken->GetStringValue());
+					curToken->Delete();
+					tokenizer->GetToEndOfLine()->Delete();
+					return;
+				}
+				sound = curToken->GetStringValue();
+				break;
+			case TK_AS_ACTION:
+				curToken->Delete();
+
+				curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
+				if (curToken->GetType() != TK_IDENTIFIER)
+				{
+					tokenizer->Error(TKERR_EXPECTED_IDENTIFIER, curToken->GetStringValue());
+					curToken->Delete();
+					tokenizer->GetToEndOfLine()->Delete();
+					return;
+				}
+				action = curToken->GetStringValue();
+				break;
+			case TK_AS_LOOP:
+				curToken->Delete();
+
+				curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
+				if (curToken->GetType() != TK_INTEGER)
+				{
+					tokenizer->Error(TKERR_EXPECTED_INTEGER, curToken->GetStringValue());
+					curToken->Delete();
+					tokenizer->GetToEndOfLine()->Delete();
+					return;
+				}
+				loop = curToken->GetIntValue();
+				break;
+
+			case TK_AS_QDSKIPSTART:
+			case TK_AS_QDSKIPSTOP:
+				break;
+
+			case TK_AS_GENLOOPFRAME:
+				bGenLoopFrame = true;
+				break;
+
+			case TK_AS_FRAMESPEED:	// this is still read in for compatibility, but gets overwritten lower down
+				curToken->Delete();
+
+				curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
+				if (curToken->GetType() != TK_INTEGER)
+				{
+					tokenizer->Error(TKERR_EXPECTED_INTEGER, curToken->GetStringValue());
+					curToken->Delete();
+					tokenizer->GetToEndOfLine()->Delete();
+					return;
+				}
+				framespeed = curToken->GetIntValue();
+				bFrameSpeedFound = true;
+				break;
+
+			case TK_AS_PREQUAT:
+				m_curModel->SetPreQuat(true);
+				break;
+			case TK_AS_ADDITIONAL:
+				curToken->Delete();
+
+				if (iAdditionalSeqNum == MAX_ADDITIONAL_SEQUENCES)
+				{
+					tokenizer->Error(TKERR_USERERROR, va("Trying to define > %d additional sequences for this master", MAX_ADDITIONAL_SEQUENCES));
+					tokenizer->GetToEndOfLine()->Delete();
+					return;
+				}
+
+				// startframe...
+				//
+				curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
+				if (curToken->GetType() != TK_INTEGER)
+				{
+					tokenizer->Error(TKERR_EXPECTED_INTEGER, curToken->GetStringValue());
+					curToken->Delete();
+					tokenizer->GetToEndOfLine()->Delete();
+					return;
+				}
+				iStartFrames[iAdditionalSeqNum] = curToken->GetIntValue();
+
+				// framecount...
+				//
+				curToken->Delete();
+				curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
+				if (curToken->GetType() != TK_INTEGER)
+				{
+					tokenizer->Error(TKERR_EXPECTED_INTEGER, curToken->GetStringValue());
+					curToken->Delete();
+					tokenizer->GetToEndOfLine()->Delete();
+					return;
+				}
+				iFrameCounts[iAdditionalSeqNum] = curToken->GetIntValue();
+
+				// loopframe...
+				//
+				curToken->Delete();
+				curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
+				if (curToken->GetType() != TK_INTEGER)
+				{
+					tokenizer->Error(TKERR_EXPECTED_INTEGER, curToken->GetStringValue());
+					curToken->Delete();
+					tokenizer->GetToEndOfLine()->Delete();
+					return;
+				}
+				iLoopFrames[iAdditionalSeqNum] = curToken->GetIntValue();
+
+				// framespeed...
+				//
+				curToken->Delete();
+				curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
+				if (curToken->GetType() != TK_INTEGER)
+				{
+					tokenizer->Error(TKERR_EXPECTED_INTEGER, curToken->GetStringValue());
+					curToken->Delete();
+					tokenizer->GetToEndOfLine()->Delete();
+					return;
+				}
+				iFrameSpeeds[iAdditionalSeqNum] = curToken->GetIntValue();
+
+				// enum...
+				//
+				curToken->Delete();
+				curToken = tokenizer->GetToken(NULL, TKF_USES_EOL, 0);
+				if (curToken->GetType() != TK_IDENTIFIER)
+				{
+					tokenizer->Error(TKERR_EXPECTED_IDENTIFIER, curToken->GetStringValue());
+					curToken->Delete();
+					tokenizer->GetToEndOfLine()->Delete();
+					return;
+				}
+				csEnums[iAdditionalSeqNum] = curToken->GetStringValue();
+
+				iAdditionalSeqNum++;
+				break;
+
+			default:
+				tokenizer->Error(TKERR_UNEXPECTED_TOKEN, curToken->GetStringValue());
+				curToken->Delete();
+				tokenizer->GetToEndOfLine()->Delete();
+				return;
+			}
+			curToken->Delete();
+			curToken = tokenizer->GetToken(s_grabKeywords, TKF_USES_EOL, 0);
 		}
-		break;
+	}
+	break;
+
+	case TK_AS_GRAB_GLA:
+	{
+		// no additional params permitted for this type currently...
+	}
+	break;
 	}
 
 	path.MakeLower();
 
 	// if no extension, assume ".xsi"... (or ".gla" now)
 
-	if (!(path.GetAt(path.GetLength()-4) == '.'))
+	if (!(path.GetAt(path.GetLength() - 4) == '.'))
 	{
-		path += (iGrabType == TK_AS_GRAB)?".xsi":".gla";
+		path += (iGrabType == TK_AS_GRAB) ? ".xsi" : ".gla";
 	}
 
 	if (curToken->GetType() != TK_EOL)
@@ -640,14 +640,14 @@ void CAssimilateDoc::ParseGrab(CTokenizer* tokenizer, int iGrabType)
 		// read in values from the actual file, in case we need to use them...
 
 		CString nameASE = ((CAssimilateApp*)AfxGetApp())->GetQuakeDir();
-				nameASE+= path;
+		nameASE += path;
 		int iStartFrame, iFrameCount;
-		ReadASEHeader( nameASE, iStartFrame, iFrameCount, iFrameSpeedFromHeader, (iGrabType == TK_AS_GRAB_GLA) );
+		ReadASEHeader(nameASE, iStartFrame, iFrameCount, iFrameSpeedFromHeader, (iGrabType == TK_AS_GRAB_GLA));
 
 		startFrame = 0;	// always
-		targetFrame= 0;	// any old shite value
+		targetFrame = 0;	// any old shite value
 		framecount = iFrameCount;
-		
+
 		if (iGrabType != TK_AS_GRAB_GLA)
 		{
 			if (!bFrameSpeedFound)
@@ -659,7 +659,7 @@ void CAssimilateDoc::ParseGrab(CTokenizer* tokenizer, int iGrabType)
 
 	curToken->Delete();
 
-	CSequence* sequence = CSequence::_Create(bGenLoopFrame,(iGrabType == TK_AS_GRAB_GLA), path, startFrame, targetFrame, framecount, framespeed, iFrameSpeedFromHeader);
+	CSequence* sequence = CSequence::_Create(bGenLoopFrame, (iGrabType == TK_AS_GRAB_GLA), path, startFrame, targetFrame, framecount, framespeed, iFrameSpeedFromHeader);
 	m_curModel->AddSequence(sequence);
 	sequence->AddComment(m_curModel->ExtractComments());
 	sequence->DeriveName();
@@ -677,21 +677,21 @@ void CAssimilateDoc::ParseGrab(CTokenizer* tokenizer, int iGrabType)
 	sequence->SetValidEnum(((CAssimilateApp*)AfxGetApp())->ValidEnum(sequence->GetEnum()));
 	sequence->SetLoopFrame(loop);
 
-	for (int i=0; i<MAX_ADDITIONAL_SEQUENCES; i++)
+	for (int i = 0; i<MAX_ADDITIONAL_SEQUENCES; i++)
 	{
 		sequence->AdditionalSeqs[i]->SetStartFrame(iStartFrames[i]);
 		sequence->AdditionalSeqs[i]->SetFrameCount(iFrameCounts[i]);
 		sequence->AdditionalSeqs[i]->SetFrameSpeed(iFrameSpeeds[i]);
-		sequence->AdditionalSeqs[i]->SetLoopFrame (iLoopFrames [i]);
-		sequence->AdditionalSeqs[i]->SetEnum	  (csEnums	   [i]);
-		sequence->AdditionalSeqs[i]->SetValidEnum (((CAssimilateApp*)AfxGetApp())->ValidEnum(sequence->AdditionalSeqs[i]->GetEnum()));
+		sequence->AdditionalSeqs[i]->SetLoopFrame(iLoopFrames[i]);
+		sequence->AdditionalSeqs[i]->SetEnum(csEnums[i]);
+		sequence->AdditionalSeqs[i]->SetValidEnum(((CAssimilateApp*)AfxGetApp())->ValidEnum(sequence->AdditionalSeqs[i]->GetEnum()));
 	}
 }
 
 
 // return = success.  if false ret, return from caller because of error
 
-bool Tokenizer_ReadPath(CString& path, CTokenizer* &tokenizer, CToken* &curToken )
+bool Tokenizer_ReadPath(CString& path, CTokenizer* &tokenizer, CToken* &curToken)
 {
 	curToken = tokenizer->GetToken(NULL, TKF_NUMERICIDENTIFIERSTART | TKF_USES_EOL, 0);
 	if (curToken->GetType() != TK_IDENTIFIER)
@@ -704,10 +704,10 @@ bool Tokenizer_ReadPath(CString& path, CTokenizer* &tokenizer, CToken* &curToken
 	path += curToken->GetStringValue();
 	curToken->Delete();
 
-	while(curToken != NULL)
+	while (curToken != NULL)
 	{
-		curToken = tokenizer->GetToken(NULL, TKF_NUMERICIDENTIFIERSTART | TKF_USES_EOL | (path.IsEmpty()?0:TKF_SPACETOKENS), 0);
-		switch(curToken->GetType())
+		curToken = tokenizer->GetToken(NULL, TKF_NUMERICIDENTIFIERSTART | TKF_USES_EOL | (path.IsEmpty() ? 0 : TKF_SPACETOKENS), 0);
+		switch (curToken->GetType())
 		{
 		case TK_SLASH:
 		case TK_BACKSLASH:
@@ -788,9 +788,9 @@ void CAssimilateDoc::ParseConvert(CTokenizer* tokenizer, int iTokenType)
 		return;
 	}
 	CToken* curToken = NULL;
-	CString path;	
+	CString path;
 
-	if (!Tokenizer_ReadPath(path, tokenizer, curToken ))
+	if (!Tokenizer_ReadPath(path, tokenizer, curToken))
 		return;
 
 	int originx = 0;	// important to default to 0!
@@ -802,11 +802,11 @@ void CAssimilateDoc::ParseConvert(CTokenizer* tokenizer, int iTokenType)
 	int parm4 = 0;
 
 	curToken = tokenizer->GetToken();
-	while(curToken->GetType() == TK_DASH)
+	while (curToken->GetType() == TK_DASH)
 	{
 		curToken->Delete();
 		curToken = tokenizer->GetToken(s_convertKeywords, 0, 0);
-		switch(curToken->GetType())
+		switch (curToken->GetType())
 		{
 		case TK_AS_ORIGIN:
 			curToken->Delete();
@@ -865,7 +865,7 @@ void CAssimilateDoc::ParseConvert(CTokenizer* tokenizer, int iTokenType)
 			parm3 = curToken->GetIntValue();
 			curToken->Delete();
 
-		parm4 = 1;
+			parm4 = 1;
 
 			curToken = tokenizer->GetToken();
 			break;
@@ -901,18 +901,18 @@ void CAssimilateDoc::ParseConvert(CTokenizer* tokenizer, int iTokenType)
 			break;
 
 		case TK_AS_MAKESKEL:
-			{
-				CString strMakeSkelPath;
-				curToken->Delete();
+		{
+			CString strMakeSkelPath;
+			curToken->Delete();
 
-				if (!Tokenizer_ReadPath(strMakeSkelPath, tokenizer, curToken))
-				{
-					return;
-				}
-				m_lastModel->SetMakeSkelPath(strMakeSkelPath);
-				curToken = tokenizer->GetToken();
+			if (!Tokenizer_ReadPath(strMakeSkelPath, tokenizer, curToken))
+			{
+				return;
 			}
-			break;
+			m_lastModel->SetMakeSkelPath(strMakeSkelPath);
+			curToken = tokenizer->GetToken();
+		}
+		break;
 		default:
 			tokenizer->Error(TKERR_UNEXPECTED_TOKEN, curToken->GetStringValue());
 			curToken->Delete();
@@ -932,7 +932,7 @@ void CAssimilateDoc::AddComment(LPCTSTR comment)
 {
 	// some code to stop those damn timestamps accumulating...
 
-	if (!_strnicmp(comment,sSAVEINFOSTRINGCHECK,strlen(sSAVEINFOSTRINGCHECK)))
+	if (!strnicmp(comment, sSAVEINFOSTRINGCHECK, strlen(sSAVEINFOSTRINGCHECK)))
 	{
 		return;
 	}
@@ -963,7 +963,7 @@ void CAssimilateDoc::AddComment(LPCTSTR comment)
 #include <stdio.h>
 #include <io.h>
 
-char **Sys_ListFiles( const char *directory, const char *extension, int *numfiles ) {
+char **Sys_ListFiles(const char *directory, const char *extension, int *numfiles) {
 	char		search[MAX_OSPATH];
 	int			nfiles;
 	char		**listCopy;
@@ -973,51 +973,52 @@ char **Sys_ListFiles( const char *directory, const char *extension, int *numfile
 	int			flag;
 	int			i;
 
-	if ( !extension) {
+	if (!extension) {
 		extension = "";
 	}
 
-	if ( extension[0] == '/' && extension[1] == 0 ) {
+	if (extension[0] == '/' && extension[1] == 0) {
 		extension = "";
 		flag = 0;
-	} else {
+	}
+	else {
 		flag = _A_SUBDIR;
 	}
 
-	sprintf( search, "%s\\*%s", directory, extension );
+	sprintf(search, "%s\\*%s", directory, extension);
 
 	// search
 	nfiles = 0;
 
-	findhandle = _findfirst (search, &findinfo);
+	findhandle = _findfirst(search, &findinfo);
 	if (findhandle == -1) {
 		*numfiles = 0;
 		return NULL;
 	}
 
 	do {
-		if ( flag ^ ( findinfo.attrib & _A_SUBDIR ) ) {
-			if ( nfiles == MAX_FOUND_FILES - 1 ) {
+		if (flag ^ (findinfo.attrib & _A_SUBDIR)) {
+			if (nfiles == MAX_FOUND_FILES - 1) {
 				break;
 			}
-			list[ nfiles ] = _strdup( _strlwr(findinfo.name) );
+			list[nfiles] = strdup(strlwr(findinfo.name));
 			nfiles++;
 		}
-	} while ( _findnext (findhandle, &findinfo) != -1 );
+	} while (_findnext(findhandle, &findinfo) != -1);
 
-	list[ nfiles ] = 0;
+	list[nfiles] = 0;
 
-	_findclose (findhandle);
+	_findclose(findhandle);
 
 	// return a copy of the list
 	*numfiles = nfiles;
 
-	if ( !nfiles ) {
+	if (!nfiles) {
 		return NULL;
 	}
 
-	listCopy = (char **) malloc( ( nfiles + 1 ) * sizeof( *listCopy ) );
-	for ( i = 0 ; i < nfiles ; i++ ) {
+	listCopy = (char **)malloc((nfiles + 1) * sizeof(*listCopy));
+	for (i = 0; i < nfiles; i++) {
 		listCopy[i] = list[i];
 	}
 	listCopy[i] = NULL;
@@ -1025,18 +1026,18 @@ char **Sys_ListFiles( const char *directory, const char *extension, int *numfile
 	return listCopy;
 }
 
-void	Sys_FreeFileList( char **_list ) {
+void	Sys_FreeFileList(char **_list) {
 	int		i;
 
-	if ( !_list ) {
+	if (!_list) {
 		return;
 	}
 
-	for ( i = 0 ; _list[i] ; i++ ) {
-		free( _list[i] );
+	for (i = 0; _list[i]; i++) {
+		free(_list[i]);
 	}
 
-	free( _list );
+	free(_list);
 }
 
 
@@ -1048,16 +1049,16 @@ int iCARsFound = 0;
 void AlphaSortCARs(void)
 {
 	typedef set <string>	SortedStrings_t;
-							SortedStrings_t SortedStrings;
+	SortedStrings_t SortedStrings;
 
-	for (int i=0; i<iCARsFound; i++)
+	for (int i = 0; i<iCARsFound; i++)
 	{
 		CString strThisFile = strCARsFound;
 		int iLoc = strThisFile.Find("\n");
-		if (iLoc>=0)
+		if (iLoc >= 0)
 		{
 			SortedStrings.insert(SortedStrings.end(), (LPCSTR)(strThisFile.Left(iLoc)));
-			strCARsFound= strCARsFound.Mid(iLoc+1);
+			strCARsFound = strCARsFound.Mid(iLoc + 1);
 		}
 	}
 
@@ -1072,15 +1073,15 @@ void AlphaSortCARs(void)
 	}
 }
 
-void R_CheckCARs( LPCSTR psDir, int iScanDepth, LPCSTR psGLAReferenceItShouldInclude )
+void R_CheckCARs(LPCSTR psDir, int iScanDepth, LPCSTR psGLAReferenceItShouldInclude)
 {
-	((CMainFrame*)AfxGetMainWnd())->StatusMessage(va("(%d .CAR files found so far) Scanning Dir: %s",iCARsFound,psDir));
+	((CMainFrame*)AfxGetMainWnd())->StatusMessage(va("(%d .CAR files found so far) Scanning Dir: %s", iCARsFound, psDir));
 
 	// ignore any dir with "test" in it...
 
-	if (strstr(psDir,"\\backup")
+	if (strstr(psDir, "\\backup")
 		||
-		strstr(psDir,"\\ignore_")
+		strstr(psDir, "\\ignore_")
 		)
 	{
 		strSkippedDirs += psDir;
@@ -1096,28 +1097,28 @@ void R_CheckCARs( LPCSTR psDir, int iScanDepth, LPCSTR psGLAReferenceItShouldInc
 	if (numdirs > 2)
 	{
 		{
-			for (i=2;i<numdirs;i++)
+			for (i = 2; i<numdirs; i++)
 			{
 				sprintf(altname, "%s\\%s", psDir, dirFiles[i]);
 				{
-					R_CheckCARs(altname, iScanDepth+1, psGLAReferenceItShouldInclude );
+					R_CheckCARs(altname, iScanDepth + 1, psGLAReferenceItShouldInclude);
 				}
 			}
 		}
 	}
-	sysFiles = Sys_ListFiles( psDir, ".car", &numSysFiles );
-	for ( i=0; i<numSysFiles; i++ )
+	sysFiles = Sys_ListFiles(psDir, ".car", &numSysFiles);
+	for (i = 0; i<numSysFiles; i++)
 	{
 		CString strThisFile = va("%s\\%s", psDir, sysFiles[i]);
 
-		if (strstr((LPCSTR) strThisFile,"copy of "))
+		if (strstr((LPCSTR)strThisFile, "copy of "))
 		{
 			strSkippedFiles += strThisFile;
 			strSkippedFiles += "\n";
 			continue;
 		}
 
-		if (psGLAReferenceItShouldInclude && psGLAReferenceItShouldInclude [0]
+		if (psGLAReferenceItShouldInclude && psGLAReferenceItShouldInclude[0]
 			&&
 			!FileUsesGLAReference(strThisFile, psGLAReferenceItShouldInclude)
 			)
@@ -1131,8 +1132,8 @@ void R_CheckCARs( LPCSTR psDir, int iScanDepth, LPCSTR psGLAReferenceItShouldInc
 		iCARsFound++;
 	}
 
-	Sys_FreeFileList( sysFiles );
-	Sys_FreeFileList( dirFiles );
+	Sys_FreeFileList(sysFiles);
+	Sys_FreeFileList(dirFiles);
 }
 
 void CAssimilateDoc::Parse(CFile* file)
@@ -1141,7 +1142,7 @@ void CAssimilateDoc::Parse(CFile* file)
 }
 
 void CAssimilateDoc::Parse(LPCSTR psFilename)
-{	
+{
 	gbParseError = false;
 	CAlertErrHandler errhandler;
 	CTokenizer* tokenizer = CTokenizer::Create(TKF_NOCASEKEYWORDS | TKF_COMMENTTOKENS);
@@ -1156,11 +1157,11 @@ void CAssimilateDoc::Parse(LPCSTR psFilename)
 	gbSkipXSIRead = false;
 
 	int tokType = TK_UNDEFINED;
-	while(tokType != TK_EOF)
+	while (tokType != TK_EOF)
 	{
 		CToken* curToken = tokenizer->GetToken();
 		tokType = curToken->GetType();
-		switch(tokType)
+		switch (tokType)
 		{
 		case TK_EOF:
 			curToken->Delete();
@@ -1168,7 +1169,7 @@ void CAssimilateDoc::Parse(LPCSTR psFilename)
 		case TK_DOLLAR:
 			curToken->Delete();
 			curToken = tokenizer->GetToken();
-			switch(curToken->GetType())
+			switch (curToken->GetType())
 			{
 			case TK_AS_GRABINIT:
 				curToken->Delete();
@@ -1184,8 +1185,8 @@ void CAssimilateDoc::Parse(LPCSTR psFilename)
 					tokenizer->GetToEndOfLine()->Delete();
 					return;
 				}
-				m_curModel->SetScale((curToken->GetType() == TK_FLOAT)?curToken->GetFloatValue():curToken->GetIntValue());
-				curToken->Delete();				
+				m_curModel->SetScale((curToken->GetType() == TK_FLOAT) ? curToken->GetFloatValue() : curToken->GetIntValue());
+				curToken->Delete();
 				break;
 			case TK_AS_KEEPMOTION:
 				curToken->Delete();
@@ -1213,10 +1214,10 @@ void CAssimilateDoc::Parse(LPCSTR psFilename)
 						return;
 					}
 
-					m_curModel->PCJList_AddEntry(va("$%s",curToken->GetStringValue()));
+					m_curModel->PCJList_AddEntry(va("$%s", curToken->GetStringValue()));
 				}
 				else
-				{	
+				{
 					m_curModel->PCJList_AddEntry(curToken->GetStringValue());
 				}
 				curToken->Delete();
@@ -1236,11 +1237,11 @@ void CAssimilateDoc::Parse(LPCSTR psFilename)
 				break;
 			case TK_AS_GRAB:
 				curToken->Delete();
-				ParseGrab(tokenizer,TK_AS_GRAB);
+				ParseGrab(tokenizer, TK_AS_GRAB);
 				break;
 			case TK_AS_GRAB_GLA:
 				curToken->Delete();
-				ParseGrab(tokenizer,TK_AS_GRAB_GLA);
+				ParseGrab(tokenizer, TK_AS_GRAB_GLA);
 				break;
 			case TK_AS_GRABFINALIZE:
 				curToken->Delete();
@@ -1248,15 +1249,15 @@ void CAssimilateDoc::Parse(LPCSTR psFilename)
 				break;
 			case TK_AS_CONVERT:
 				curToken->Delete();
-				ParseConvert(tokenizer,TK_AS_CONVERT);
+				ParseConvert(tokenizer, TK_AS_CONVERT);
 				break;
 			case TK_AS_CONVERTMDX:
 				curToken->Delete();
-				ParseConvert(tokenizer,TK_AS_CONVERTMDX);
+				ParseConvert(tokenizer, TK_AS_CONVERTMDX);
 				break;
 			case TK_AS_CONVERTMDX_NOASK:
 				curToken->Delete();
-				ParseConvert(tokenizer,TK_AS_CONVERTMDX_NOASK);
+				ParseConvert(tokenizer, TK_AS_CONVERTMDX_NOASK);
 				break;
 			case TK_COMMENT:
 				AddComment(curToken->GetStringValue());
@@ -1288,13 +1289,13 @@ void CAssimilateDoc::Write(CFile* file)
 	CTxtFile* outfile = CTxtFile::Create(file);
 
 	CModel* curModel = m_modelList;
-	while(curModel != NULL)
+	while (curModel != NULL)
 	{
 		curModel->Write(outfile);
 		curModel = curModel->GetNext();
 	}
 	CComment* curComment = m_comments;
-	while(curComment != NULL)
+	while (curComment != NULL)
 	{
 		curComment->Write(outfile);
 		curComment = curComment->GetNext();
@@ -1334,18 +1335,18 @@ void CAssimilateDoc::Dump(CDumpContext& dc) const
 /////////////////////////////////////////////////////////////////////////////
 // CAssimilateDoc commands
 
-void CAssimilateDoc::DeleteContents() 
+void CAssimilateDoc::DeleteContents()
 {
 	// TODO: Add your specialized code here and/or call the base class
 	UpdateAllViews(NULL, AS_DELETECONTENTS, NULL);
 
-	while(m_comments != NULL)
+	while (m_comments != NULL)
 	{
 		CComment* curComment = m_comments;
 		m_comments = curComment->GetNext();
 		curComment->Delete();
 	}
-	while(m_modelList != NULL)
+	while (m_modelList != NULL)
 	{
 		CModel* curModel = m_modelList;
 		m_modelList = curModel->GetNext();
@@ -1354,7 +1355,7 @@ void CAssimilateDoc::DeleteContents()
 	m_curModel = NULL;
 	m_lastModel = NULL;
 
-	gbReportMissingASEs = true;	
+	gbReportMissingASEs = true;
 	giFixUpdatedASEFrameCounts = YES;
 
 	CDocument::DeleteContents();
@@ -1379,26 +1380,26 @@ int CAssimilateDoc::GetNumModels()
 	return iCount;
 }
 
-void CAssimilateDoc::OnAddfiles() 
+void CAssimilateDoc::OnAddfiles()
 {
 	// TODO: Add your command handler code here
-	CFileDialog theDialog(true, ".xsi", NULL, OFN_EXPLORER | OFN_ALLOWMULTISELECT | OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST, 
-					_T("Anim Files (*.ase)(*.xsi)(*.gla)|*.ase;*.xsi;*.gla|All Files|*.*||"), NULL);
-					
-/*
-==================================
-Model files (*.MDR)(*.MD3)|*.md?|
-==================================
-*/
+	CFileDialog theDialog(true, ".xsi", NULL, OFN_EXPLORER | OFN_ALLOWMULTISELECT | OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST,
+		_T("Anim Files (*.ase)(*.xsi)(*.gla)|*.ase;*.xsi;*.gla|All Files|*.*||"), NULL);
+
+	/*
+	==================================
+	Model files (*.MDR)(*.MD3)|*.md?|
+	==================================
+	*/
 	char filenamebuffer[16384];
 	filenamebuffer[0] = '\0';
 	theDialog.m_ofn.lpstrFile = filenamebuffer;
 	theDialog.m_ofn.nMaxFile = sizeof(filenamebuffer);
 
-	CString 
-	strInitialDir = ((CAssimilateApp*)AfxGetApp())->GetQuakeDir();
-	strInitialDir+= "models/players";
-	strInitialDir.Replace("/","\\");
+	CString
+		strInitialDir = ((CAssimilateApp*)AfxGetApp())->GetQuakeDir();
+	strInitialDir += "models/players";
+	strInitialDir.Replace("/", "\\");
 
 	theDialog.m_ofn.lpstrInitialDir = strInitialDir;
 
@@ -1411,12 +1412,12 @@ Model files (*.MDR)(*.MD3)|*.md?|
 	CWaitCursor waitcursor;
 
 	POSITION pos = theDialog.GetStartPosition();
-	while(pos != NULL)
+	while (pos != NULL)
 	{
 		CString thisfile = theDialog.GetNextPathName(pos);
 
 		Filename_RemoveBASEQ(thisfile);
-		AddFile(thisfile);		
+		AddFile(thisfile);
 	}
 	SetModifiedFlag();
 	UpdateAllViews(NULL, AS_NEWFILE, NULL);
@@ -1426,9 +1427,9 @@ Model files (*.MDR)(*.MD3)|*.md?|
 void CAssimilateDoc::AddFile(LPCTSTR name)
 {
 	CString strTemp(name);
-			strTemp.MakeLower();
-	if (!strstr(strTemp,"root.xsi") || GetYesNo("You're trying to add \"root.xsi\", which is inherent, you should only do this if you're making a model that has no seperate anim files\n\nProceed?"))
-	{	
+	strTemp.MakeLower();
+	if (!strstr(strTemp, "root.xsi") || GetYesNo("You're trying to add \"root.xsi\", which is inherent, you should only do this if you're making a model that has no seperate anim files\n\nProceed?"))
+	{
 		// update, ignore any files with a "_1" (2,3, etc) just before the suffix (this skips LOD files)...
 
 		{
@@ -1439,8 +1440,8 @@ void CAssimilateDoc::AddFile(LPCTSTR name)
 
 			if (!curModel)
 			{
-				curModel = AddModel();	
-			
+				curModel = AddModel();
+
 				CString path = name;
 				path.MakeLower();
 				path.Replace('\\', '/');
@@ -1466,15 +1467,15 @@ void CAssimilateDoc::AddFile(LPCTSTR name)
 }
 
 void CAssimilateDoc::OnExternal()
-{		
+{
 	bool bCFGWritten = false;
 
-	if (WriteCFGFiles(true,bCFGWritten))
+	if (WriteCFGFiles(true, bCFGWritten))
 	{
-		CString strReport;	
+		CString strReport;
 
 		if (bCFGWritten)
-		{		
+		{
 			if (((CAssimilateApp*)AfxGetApp())->GetMultiPlayerMode())
 			{
 				strReport = "\n\n( CFG file written for MULTI-PLAYER format )";
@@ -1497,13 +1498,13 @@ void CAssimilateDoc::OnExternal()
 
 bool CAssimilateDoc::WriteCFGFiles(bool bPromptForNames, bool &bCFGWritten)
 {
-	bCFGWritten = false;	
+	bCFGWritten = false;
 
 	CModel* curModel = m_modelList;
-	while(curModel != NULL)
+	while (curModel != NULL)
 	{
 		bool bThisCFGWritten = false;
-		if (!curModel->WriteExternal(bPromptForNames,bThisCFGWritten))
+		if (!curModel->WriteExternal(bPromptForNames, bThisCFGWritten))
 		{
 			return false;
 		}
@@ -1519,7 +1520,7 @@ bool CAssimilateDoc::WriteCFGFiles(bool bPromptForNames, bool &bCFGWritten)
 void CAssimilateDoc::Resequence()
 {
 	CModel* curModel = m_modelList;
-	while(curModel != NULL)
+	while (curModel != NULL)
 	{
 		curModel->Resequence(true);
 		curModel = curModel->GetNext();
@@ -1529,7 +1530,7 @@ void CAssimilateDoc::Resequence()
 	UpdateAllViews(NULL, AS_FILESUPDATED, NULL);	// needed
 }
 
-void CAssimilateDoc::OnResequence() 
+void CAssimilateDoc::OnResequence()
 {
 	extern bool gbSkipXSIRead_QuestionAsked;
 	extern bool gbSkipXSIRead;
@@ -1575,9 +1576,9 @@ bool CAssimilateDoc::Build(bool bAllowedToShowSuccessBox, int iLODLevel, bool bS
 
 		if (!bSkipSave)
 		{
-			OnFileSave();		
+			OnFileSave();
 		}
-		
+
 		CString csQDataLocation = ((CAssimilateApp*)AfxGetApp())->GetQDataFilename();
 
 		// hack-city!!!!!!!!!!
@@ -1586,11 +1587,11 @@ bool CAssimilateDoc::Build(bool bAllowedToShowSuccessBox, int iLODLevel, bool bS
 		if (curModel->GetPreQuat())
 		{
 			csQDataLocation.MakeLower();
-			csQDataLocation.Replace("carcass","carcass_prequat");
+			csQDataLocation.Replace("carcass", "carcass_prequat");
 		}
-		
+
 		CString params = csQDataLocation;
-		
+
 		if (!bSkipSave)
 		{
 			params += " -keypress";
@@ -1610,8 +1611,8 @@ bool CAssimilateDoc::Build(bool bAllowedToShowSuccessBox, int iLODLevel, bool bS
 		startupinfo.cbReserved2 = 0;
 		startupinfo.lpReserved2 = NULL;
 
-		params.Replace("/","\\");
-		csQDataLocation.Replace("/","\\");
+		params.Replace("/", "\\");
+		csQDataLocation.Replace("/", "\\");
 
 		LPTSTR paramsPass = params.GetBuffer(params.GetLength() + 1);
 
@@ -1622,16 +1623,16 @@ bool CAssimilateDoc::Build(bool bAllowedToShowSuccessBox, int iLODLevel, bool bS
 			WaitForSingleObject(pi.hProcess, INFINITE);
 			EndWait();
 			DWORD result;
-			GetExitCodeProcess(pi.hProcess,&result);
+			GetExitCodeProcess(pi.hProcess, &result);
 			if (result)
 			{
 				char error[64];
-				sprintf(error,"Process returned error: %d",result);
-				MessageBox(NULL,error,"Build Failed",MB_OK|MB_ICONERROR);
+				sprintf(error, "Process returned error: %d", result);
+				MessageBox(NULL, error, "Build Failed", MB_OK | MB_ICONERROR);
 			}
 			CloseHandle(pi.hProcess);
 
-			if (result==0)
+			if (result == 0)
 			{
 				// QData was run successfully at this point, so write the CFG file(s)...
 				//
@@ -1642,7 +1643,7 @@ bool CAssimilateDoc::Build(bool bAllowedToShowSuccessBox, int iLODLevel, bool bS
 				else
 				{
 					bool bCFGWritten = false;
-					if (WriteCFGFiles(false,bCFGWritten))	// false = no name prompt, derive automatically from model name
+					if (WriteCFGFiles(false, bCFGWritten))	// false = no name prompt, derive automatically from model name
 					{
 						// success (on a plate)...
 						//
@@ -1678,12 +1679,12 @@ bool CAssimilateDoc::Build(bool bAllowedToShowSuccessBox, int iLODLevel, bool bS
 		else
 		{
 			EndWait();
-			MessageBox(NULL,"Could not spawn process.","Build Failed",MB_OK|MB_ICONERROR);
+			MessageBox(NULL, "Could not spawn process.", "Build Failed", MB_OK | MB_ICONERROR);
 		}
 		params.ReleaseBuffer();
-	}	
+	}
 
-	giLODLevelOverride = 0;	
+	giLODLevelOverride = 0;
 
 	return bSuccess;
 }
@@ -1695,9 +1696,9 @@ void CAssimilateDoc::OnBuildMultiLOD()
 	// to save time, I'll run all the validates first, and only if they're all ok will I go on to the build
 	//	(which incidentally does a harmless re-validate again)
 
-	for (int i=0; i< 1+EXTRA_LOD_LEVELS; i++)
+	for (int i = 0; i< 1 + EXTRA_LOD_LEVELS; i++)
 	{
-		iErrors += Validate(false, i)?0:1;
+		iErrors += Validate(false, i) ? 0 : 1;
 	}
 
 	// go ahead if all clear...  
@@ -1707,12 +1708,12 @@ void CAssimilateDoc::OnBuildMultiLOD()
 
 	if (!iErrors)
 	{
-		for (int i=EXTRA_LOD_LEVELS; i>=0; i--)
+		for (int i = EXTRA_LOD_LEVELS; i >= 0; i--)
 		{
-			Build(	!i,		// bool bAllowedToShowSuccessBox (ie only on last one)
-					i,		// int iLODLevel
-					false	// bool bSkipSave
-					);
+			Build(!i,		// bool bAllowedToShowSuccessBox (ie only on last one)
+				i,		// int iLODLevel
+				false	// bool bSkipSave
+			);
 		}
 	}
 }
@@ -1722,11 +1723,11 @@ void CAssimilateDoc::OnBuildMultiLOD()
 // 1) save qdt, 2) run qdata on it, 3) if success, save .cfg file...
 
 void CAssimilateDoc::OnBuild()
-{	
-	Build(	true,	// bool bAllowedToShowSuccessBox, 
-			0,		// int iLODLevel
-			false	// bool bSkipSave
-			);
+{
+	Build(true,	// bool bAllowedToShowSuccessBox, 
+		0,		// int iLODLevel
+		false	// bool bSkipSave
+	);
 }
 
 
@@ -1736,7 +1737,7 @@ void CAssimilateDoc::ClearModelUserSelectionBools()
 
 	while (curModel)
 	{
-		curModel->SetUserSelectionBool(false);		
+		curModel->SetUserSelectionBool(false);
 		curModel = curModel->GetNext();
 	}
 }
@@ -1772,25 +1773,25 @@ static bool FileUsesGLAReference(LPCSTR psFilename, LPCSTR psGLAReference)
 {
 	bool bReturn = false;
 
-	FILE *fHandle = fopen(psFilename,"rt");
+	FILE *fHandle = fopen(psFilename, "rt");
 	if (fHandle)
 	{
 		int iLen = filesize(fHandle);
 		if (iLen>0)
 		{
-			char *psText = (char*) malloc(iLen+1);
+			char *psText = (char*)malloc(iLen + 1);
 			if (psText)
 			{
-				fread(psText,1,iLen,fHandle);
-				psText[iLen]='\0';
+				fread(psText, 1, iLen, fHandle);
+				psText[iLen] = '\0';
 
-				_strlwr(psText);
+				strlwr(psText);
 
 				// this is a simple test that could be made more precise, but for now...
 				//
-				if ( (strstr(psText,"aseanimgrab_gla") || strstr(psText,"makeskel"))
+				if ((strstr(psText, "aseanimgrab_gla") || strstr(psText, "makeskel"))
 					&&
-					strstr(psText,psGLAReference)
+					strstr(psText, psGLAReference)
 					)
 				{
 					bReturn = true;
@@ -1818,11 +1819,11 @@ CString strMustContainThisGLA;	// MUST be blank, else name of GLA to be present 
 void CAssimilateDoc::OnCarWashActual()
 {
 	gbCarwashErrorsOccured = false;
-	CString strStartDir = gpsCARWashDirOverride?gpsCARWashDirOverride:((CAssimilateApp*)AfxGetApp())->GetQuakeDir();
-	strStartDir.Replace("/","\\");
+	CString strStartDir = gpsCARWashDirOverride ? gpsCARWashDirOverride : ((CAssimilateApp*)AfxGetApp())->GetQuakeDir();
+	strStartDir.Replace("/", "\\");
 
 	if (!strStartDir.GetLength())
-	{			
+	{
 		ErrorBox("Quake path not known at this point. Check preferences are set correctly.");
 		gbCarwashErrorsOccured = true;
 		return;
@@ -1837,7 +1838,7 @@ void CAssimilateDoc::OnCarWashActual()
 
 	if (gbQueryGoAhead)
 	{
-		if (!GetYesNo(va("About to scan: \"%s\\*.CAR /s\"\n\n"/*"This can take a LONG time, "*/"Proceed?",strStartDir)))
+		if (!GetYesNo(va("About to scan: \"%s\\*.CAR /s\"\n\n"/*"This can take a LONG time, "*/"Proceed?", strStartDir)))
 			return;
 	}
 
@@ -1849,8 +1850,8 @@ void CAssimilateDoc::OnCarWashActual()
 	iCARsFound = 0;
 	strSkippedDirs.Empty();
 	strSkippedFiles.Empty();
-	
-	R_CheckCARs( strStartDir, 0, strMustContainThisGLA);	//bool bBuildListOnly
+
+	R_CheckCARs(strStartDir, 0, strMustContainThisGLA);	//bool bBuildListOnly
 	AlphaSortCARs();	// not important to alpha-sort here (during car-wash), just looks nicer
 	((CMainFrame*)AfxGetMainWnd())->StatusMessage("Ready");
 
@@ -1858,20 +1859,20 @@ void CAssimilateDoc::OnCarWashActual()
 
 	CString strReport;
 	if (!iCARsFound)
-	{			
+	{
 		ASSERT(0);
 		strReport = "No suitable .CAR files found for processing!\n\n";
 
 		if (!strSkippedDirs.IsEmpty())
 		{
-			strReport+= "Skipped Dirs:\n\n";
-			strReport+= strSkippedDirs;
+			strReport += "Skipped Dirs:\n\n";
+			strReport += strSkippedDirs;
 		}
 
 		if (!strSkippedFiles.IsEmpty())
 		{
-			strReport+= "\n\nSkipped Files:\n\n";
-			strReport+= strSkippedFiles;
+			strReport += "\n\nSkipped Files:\n\n";
+			strReport += strSkippedFiles;
 		}
 		ErrorBox(strReport);
 		gbCarwashErrorsOccured = true;
@@ -1886,18 +1887,18 @@ void CAssimilateDoc::OnCarWashActual()
 		CString strTotalErrors;
 
 		strReport = "Processed files:\n\n";
-		for (int i=0; i<iCARsFound; i++)
-		{						
+		for (int i = 0; i<iCARsFound; i++)
+		{
 			CString strThisFile = strCARsFound;
 			int iLoc = strThisFile.Find("\n");
-			if (iLoc>=0)
+			if (iLoc >= 0)
 			{
 				strThisFile = strThisFile.Left(iLoc);
-				strCARsFound= strCARsFound.Mid(iLoc+1);
+				strCARsFound = strCARsFound.Mid(iLoc + 1);
 
 				strReport += strThisFile + "\n";
 
-				((CMainFrame*)AfxGetMainWnd())->StatusMessage(va("Scanning File %d/%d: %s",i+1,iCARsFound,(LPCSTR)strThisFile));
+				((CMainFrame*)AfxGetMainWnd())->StatusMessage(va("Scanning File %d/%d: %s", i + 1, iCARsFound, (LPCSTR)strThisFile));
 
 				if (1)
 				{
@@ -1905,7 +1906,7 @@ void CAssimilateDoc::OnCarWashActual()
 					Parse(strThisFile);
 					if (gbParseError)
 					{
-						strTotalErrors += va("\nParse error in CAR file \"%s\"\n",(LPCSTR)strThisFile);					
+						strTotalErrors += va("\nParse error in CAR file \"%s\"\n", (LPCSTR)strThisFile);
 					}
 					else
 					{
@@ -1915,8 +1916,8 @@ void CAssimilateDoc::OnCarWashActual()
 						{
 							// "something is wrong..."
 
-							strTotalErrors += va("\nError in file \"%s\":\n\n%s\n",(LPCSTR)strThisFile,(LPCSTR)strCarWashErrors);
-						}						
+							strTotalErrors += va("\nError in file \"%s\":\n\n%s\n", (LPCSTR)strThisFile, (LPCSTR)strCarWashErrors);
+						}
 						strCarWashErrors.Empty();
 					}
 				}
@@ -1924,7 +1925,7 @@ void CAssimilateDoc::OnCarWashActual()
 			else
 			{
 				ASSERT(0);
-				strThisFile.Insert(0,"I fucked up, the following line didn't seem to have a CR:  (tell me! -Ste)\n\n");
+				strThisFile.Insert(0, "I fucked up, the following line didn't seem to have a CR:  (tell me! -Ste)\n\n");
 				ErrorBox(strThisFile);
 			}
 		}
@@ -1936,18 +1937,18 @@ void CAssimilateDoc::OnCarWashActual()
 
 		OnNewDocument();	// trash whatever was loaded last
 
-		strReport+= "\n\nSkipped Dirs:\n\n";
-		strReport+= strSkippedDirs;
-		strReport+= "\n\nSkipped Files:\n\n";
-		strReport+= strSkippedFiles;
+		strReport += "\n\nSkipped Dirs:\n\n";
+		strReport += strSkippedDirs;
+		strReport += "\n\nSkipped Files:\n\n";
+		strReport += strSkippedFiles;
 
 		if (strTotalErrors.IsEmpty())
 		{
-			strReport.Insert(0,"(No additional errors found)\n\n");
+			strReport.Insert(0, "(No additional errors found)\n\n");
 		}
 		else
 		{
-			strReport+= "\n\nAdditional errors will now be sent to Notepad!...";
+			strReport += "\n\nAdditional errors will now be sent to Notepad!...";
 			gbCarwashErrorsOccured = true;
 		}
 
@@ -1979,22 +1980,22 @@ bool SendToNotePad(LPCSTR psWhatever, LPCSTR psLocalFileName)
 {
 	bool bReturn = false;
 
-	LPCSTR psOutputFileName = va("%s\\%s",scGetTempPath(),psLocalFileName);
+	LPCSTR psOutputFileName = va("%s\\%s", scGetTempPath(), psLocalFileName);
 
-	FILE *handle = fopen(psOutputFileName,"wt");
+	FILE *handle = fopen(psOutputFileName, "wt");
 	if (handle)
 	{
-		fprintf(handle,psWhatever);
+		fprintf(handle, psWhatever);
 		fclose(handle);
 
 		char sExecString[MAX_PATH];
 
-		sprintf(sExecString,"notepad %s",psOutputFileName);
+		sprintf(sExecString, "notepad %s", psOutputFileName);
 
 		if (WinExec(sExecString,	//  LPCSTR lpCmdLine,  // address of command line
-					SW_SHOWNORMAL	//  UINT uCmdShow      // window style for new application
-					)
-			>31	// don't ask me, Windoze just uses >31 as OK in this call.
+			SW_SHOWNORMAL	//  UINT uCmdShow      // window style for new application
+		)
+		>31	// don't ask me, Windoze just uses >31 as OK in this call.
 			)
 		{
 			// ok...
@@ -2003,12 +2004,12 @@ bool SendToNotePad(LPCSTR psWhatever, LPCSTR psLocalFileName)
 		}
 		else
 		{
-			ErrorBox("Unable to locate/run NOTEPAD on this machine!\n\n(let me know about this -Ste)");		
+			ErrorBox("Unable to locate/run NOTEPAD on this machine!\n\n(let me know about this -Ste)");
 		}
 	}
 	else
 	{
-		ErrorBox(va("Unable to create file \"%s\" for notepad to use!",psOutputFileName));
+		ErrorBox(va("Unable to create file \"%s\" for notepad to use!", psOutputFileName));
 	}
 
 	return bReturn;
@@ -2019,20 +2020,20 @@ bool SendToNotePad(LPCSTR psWhatever, LPCSTR psLocalFileName)
 
 void CAssimilateDoc::OnValidate()
 {
-	Validate(!gbCarWash_DoingScan);	
+	Validate(!gbCarWash_DoingScan);
 }
 
 void CAssimilateDoc::OnValidateMultiLOD()
 {
 	int iErrors = 0;
-	for (int i=0; i< 1+EXTRA_LOD_LEVELS; i++)
+	for (int i = 0; i< 1 + EXTRA_LOD_LEVELS; i++)
 	{
-		iErrors += Validate(false, i)?0:1;
+		iErrors += Validate(false, i) ? 0 : 1;
 	}
 
 	if (!iErrors)
 	{
-		InfoBox(va("Everything seems OK\n\n(Original + %d LOD levels checked)",EXTRA_LOD_LEVELS));
+		InfoBox(va("Everything seems OK\n\n(Original + %d LOD levels checked)", EXTRA_LOD_LEVELS));
 	}
 }
 
@@ -2055,9 +2056,9 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 	{
 		CString sOutputTextFile;
 
-		sOutputTextFile.Format("%s\\validation_faults%s.txt",scGetTempPath(),iLODLevel?va("_LOD%d",iLODLevel):"");
+		sOutputTextFile.Format("%s\\validation_faults%s.txt", scGetTempPath(), iLODLevel ? va("_LOD%d", iLODLevel) : "");
 
-		FILE *hFile = fopen(sOutputTextFile,"wt");
+		FILE *hFile = fopen(sOutputTextFile, "wt");
 
 		if (hFile)
 		{
@@ -2070,28 +2071,28 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 				else
 				{
 					// >1 models, 1 selected, ask if we should do all...
-			
-					bValidateAll = GetYesNo(va("Validate ALL models?\n\n( NO = model \"%s\" only )",curModel->GetName()));
+
+					bValidateAll = GetYesNo(va("Validate ALL models?\n\n( NO = model \"%s\" only )", curModel->GetName()));
 				}
 			}
 
 			if (bValidateAll)
 			{
-				curModel = ghAssimilateView->GetDocument()->GetFirstModel();			
-			}	
-			
+				curModel = ghAssimilateView->GetDocument()->GetFirstModel();
+			}
+
 			if (iLODLevel)
 			{
-				fprintf(hFile,"(LOD Level %d)\n",iLODLevel);
+				fprintf(hFile, "(LOD Level %d)\n", iLODLevel);
 			}
 
 			while (curModel)
 			{
-				fprintf(hFile,"\nModel: \"%s\"\n\n",curModel->GetName());
+				fprintf(hFile, "\nModel: \"%s\"\n\n", curModel->GetName());
 
 				int iThisModelFaults = iFaults;
 
-				if (	( curModel->GetMakeSkelPath()	&& strlen(curModel->GetMakeSkelPath()) )
+				if ((curModel->GetMakeSkelPath() && strlen(curModel->GetMakeSkelPath()))
 					)
 				{
 					// ... then all is fine
@@ -2101,14 +2102,14 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 					// this is an error, UNLESS you have a GLA sequence...
 
 					if (!curModel->HasGLA())
-					{					
+					{
 						fprintf(hFile, "Model must have a 'makeskel' path\n    ( Double-click on the top tree item's name (should be a folder), then click \"Makes it's own skeleton\" in the dialog )\n");
 						iFaults++;
 					}
 				}
 
 				// validate all sequences within this model...
-			
+
 				int iGLACount = 0;
 				int iXSICount = 0;
 				CSequence* curSequence = curModel->GetFirstSequence();
@@ -2125,24 +2126,24 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 						iXSICount++;
 					}
 
-					#define SEQREPORT CString temp;temp.Format("Sequence \"%s\":",curSequence->GetName());while (temp.GetLength()<35)temp+=" ";
+#define SEQREPORT CString temp;temp.Format("Sequence \"%s\":",curSequence->GetName());while (temp.GetLength()<35)temp+=" ";
 
 					// check 1, does the ASE file exist? (actually this is talking about XSIs/GLAs, but WTF...
 
 					CString nameASE = ((CAssimilateApp*)AfxGetApp())->GetQuakeDir();
-							nameASE+= curSequence->GetPath();
+					nameASE += curSequence->GetPath();
 
 					Filename_AccountForLOD(nameASE, iLODLevel);
 
-					const int iNameSpacing=35;
+					const int iNameSpacing = 35;
 
 					if (!FileExists(nameASE))
 					{
 						if (!gbCarWash_DoingScan)	// because this will only duplicate reports otherwise
 						{
 							SEQREPORT;
-							temp += va(" ASE/XSI/GLA file not found: \"%s\"\n",nameASE);
-							fprintf(hFile,temp);
+							temp += va(" ASE/XSI/GLA file not found: \"%s\"\n", nameASE);
+							fprintf(hFile, temp);
 							iFaults++;
 						}
 					}
@@ -2154,23 +2155,23 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 						// read this file's framecount...
 
 						int iStartFrame, iFrameCount, iFrameSpeed;
-						curSequence->ReadASEHeader( nameASE, iStartFrame, iFrameCount, iFrameSpeed);
+						curSequence->ReadASEHeader(nameASE, iStartFrame, iFrameCount, iFrameSpeed);
 
 						// read basefile's framecount...
 
 						CString baseASEname = ((CAssimilateApp*)AfxGetApp())->GetQuakeDir();
-								baseASEname+= curSequence->GetPath();
+						baseASEname += curSequence->GetPath();
 
 						int iStartFrameBASE, iFrameCountBASE, iFrameSpeedBASE;
-						curSequence->ReadASEHeader( baseASEname, iStartFrameBASE, iFrameCountBASE, iFrameSpeedBASE);
+						curSequence->ReadASEHeader(baseASEname, iStartFrameBASE, iFrameCountBASE, iFrameSpeedBASE);
 
 						// same?...
 
 						if (iFrameCount != iFrameCountBASE)
 						{
 							SEQREPORT;
-							temp += va(" (SERIOUS ERROR) base ASE has %d frames, but this LOD version has %d frames!\n",iFrameCountBASE,iFrameCount);
-							fprintf(hFile,temp);							
+							temp += va(" (SERIOUS ERROR) base ASE has %d frames, but this LOD version has %d frames!\n", iFrameCountBASE, iFrameCount);
+							fprintf(hFile, temp);
 							iFaults++;
 						}
 					}
@@ -2180,8 +2181,8 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 					if (curSequence->GetLoopFrame() >= curSequence->GetFrameCount())
 					{
 						SEQREPORT;
-						temp += va(" loopframe %d is illegal, max = %d\n",curSequence->GetLoopFrame(),curSequence->GetFrameCount()-1);
-						fprintf(hFile,temp);							
+						temp += va(" loopframe %d is illegal, max = %d\n", curSequence->GetLoopFrame(), curSequence->GetFrameCount() - 1);
+						fprintf(hFile, temp);
 						iFaults++;
 					}
 
@@ -2192,8 +2193,8 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 						if (curSequence->GetEnumType() == ET_INVALID)
 						{
 							SEQREPORT;
-							temp += va(" invalid animation enum \"%s\"\n",curSequence->GetEnum());
-							fprintf(hFile,temp);							
+							temp += va(" invalid animation enum \"%s\"\n", curSequence->GetEnum());
+							fprintf(hFile, temp);
 							iFaults++;
 						}
 					}
@@ -2202,20 +2203,20 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 					if (iEnumUsageCount>1)
 					{
 						SEQREPORT;
-						temp += va(" animation enum \"%s\" is used %d times\n",curSequence->GetEnum(),iEnumUsageCount);
-						fprintf(hFile,temp);							
+						temp += va(" animation enum \"%s\" is used %d times\n", curSequence->GetEnum(), iEnumUsageCount);
+						fprintf(hFile, temp);
 						iFaults++;
-					}					
+					}
 
 					// a whole bunch of checks for the additional sequences...
 
 					if (!curSequence->IsGLA())
 					{
-						for (int i=0; i<MAX_ADDITIONAL_SEQUENCES; i++)
+						for (int i = 0; i<MAX_ADDITIONAL_SEQUENCES; i++)
 						{
 							CSequence *additionalSeq = curSequence->AdditionalSeqs[i];
 
-							#define ADDITIONALSEQREPORT CString temp;temp.Format("Sequence \"%s\": (Additional: \"%s\"):",curSequence->GetName(),additionalSeq->GetEnum());while (temp.GetLength()<60)temp+=" ";
+#define ADDITIONALSEQREPORT CString temp;temp.Format("Sequence \"%s\": (Additional: \"%s\"):",curSequence->GetName(),additionalSeq->GetEnum());while (temp.GetLength()<60)temp+=" ";
 
 							if (additionalSeq->AdditionalSequenceIsValid())
 							{
@@ -2224,19 +2225,19 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 								int iEnumUsageCount = curModel->AnimEnumInUse(additionalSeq->GetEnum());
 								if (iEnumUsageCount>1)
 								{
-									ADDITIONALSEQREPORT;								
-									temp += va(" animation enum \"%s\" is used %d times\n",additionalSeq->GetEnum(),iEnumUsageCount);
-									fprintf(hFile,temp);
+									ADDITIONALSEQREPORT;
+									temp += va(" animation enum \"%s\" is used %d times\n", additionalSeq->GetEnum(), iEnumUsageCount);
+									fprintf(hFile, temp);
 									iFaults++;
 								}
 
 								// additional sequences must actually have some frames...
 
-								if (additionalSeq->GetFrameCount()<=0)
+								if (additionalSeq->GetFrameCount() <= 0)
 								{
 									ADDITIONALSEQREPORT;
-									temp += va(" a frame count of %d is illegal (min = 1)\n",additionalSeq->GetFrameCount());
-									fprintf(hFile,temp);
+									temp += va(" a frame count of %d is illegal (min = 1)\n", additionalSeq->GetFrameCount());
+									fprintf(hFile, temp);
 									iFaults++;
 								}
 								else
@@ -2247,12 +2248,12 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 									{
 										ADDITIONALSEQREPORT;
 										temp += va(" illegal start/count range of %d..%d exceeds master range of %d..%d\n",
-													additionalSeq->GetStartFrame(),
-													additionalSeq->GetStartFrame() + additionalSeq->GetFrameCount(),
-													curSequence->GetStartFrame(),
-													curSequence->GetStartFrame() + curSequence->GetFrameCount()
-													);
-										fprintf(hFile,temp);
+											additionalSeq->GetStartFrame(),
+											additionalSeq->GetStartFrame() + additionalSeq->GetFrameCount(),
+											curSequence->GetStartFrame(),
+											curSequence->GetStartFrame() + curSequence->GetFrameCount()
+										);
+										fprintf(hFile, temp);
 										iFaults++;
 									}
 									else
@@ -2262,8 +2263,8 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 										if (additionalSeq->GetLoopFrame() >= additionalSeq->GetFrameCount())
 										{
 											ADDITIONALSEQREPORT;
-											temp += va(" loopframe %d is illegal, max is %d\n",additionalSeq->GetLoopFrame(),additionalSeq->GetFrameCount()-1);
-											fprintf(hFile,temp);
+											temp += va(" loopframe %d is illegal, max is %d\n", additionalSeq->GetLoopFrame(), additionalSeq->GetFrameCount() - 1);
+											fprintf(hFile, temp);
 											iFaults++;
 										}
 									}
@@ -2277,9 +2278,9 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 								{
 									// it's a bad sequence (probably because of its enum being deleted from anims.h since it was saved)
 
-									ADDITIONALSEQREPORT;								
-									temp += va(" this animation enum no longer exists in \"%s\"\n",sDEFAULT_ENUM_FILENAME);
-									fprintf(hFile,temp);
+									ADDITIONALSEQREPORT;
+									temp += va(" this animation enum no longer exists in \"%s\"\n", sDEFAULT_ENUM_FILENAME);
+									fprintf(hFile, temp);
 									iFaults++;
 								}
 							}
@@ -2303,7 +2304,7 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 						iFaults++;
 					}
 
-					if (iGLACount && (curModel->GetMakeSkelPath() && strlen(curModel->GetMakeSkelPath())) )
+					if (iGLACount && (curModel->GetMakeSkelPath() && strlen(curModel->GetMakeSkelPath())))
 					{
 						fprintf(hFile, "Model has both a GLA sequence and a '-makeskel' path, this is meaningless\n");
 						iFaults++;
@@ -2312,16 +2313,16 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 
 				if (iThisModelFaults == iFaults)
 				{
-					fprintf(hFile,"(ok)\n");	// just to be nice if reporting on >1 model...
+					fprintf(hFile, "(ok)\n");	// just to be nice if reporting on >1 model...
 				}
 				else
 				{
-					fprintf(hFile,"\n(%d faults)\n",iFaults-iThisModelFaults);
+					fprintf(hFile, "\n(%d faults)\n", iFaults - iThisModelFaults);
 				}
 
 				curModel = curModel->GetNext();
 				if (!bValidateAll)
-					break;			
+					break;
 
 			}
 
@@ -2333,12 +2334,12 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 
 				CString sExecString;
 
-				sExecString.Format("notepad %s",sOutputTextFile);
+				sExecString.Format("notepad %s", sOutputTextFile);
 
 				if (WinExec(sExecString,	//  LPCSTR lpCmdLine,  // address of command line
-							SW_SHOWNORMAL	//  UINT uCmdShow      // window style for new application
-							)
-					>31	// don't ask me, Windoze just uses >31 as OK in this call.
+					SW_SHOWNORMAL	//  UINT uCmdShow      // window style for new application
+				)
+	>31	// don't ask me, Windoze just uses >31 as OK in this call.
 					)
 				{
 					// ok.
@@ -2358,7 +2359,7 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 		}
 		else
 		{
-			ErrorBox(va("Arrgh! Unable to create file '%s'!\n\n(let me know about this -Ste)",sOutputTextFile));
+			ErrorBox(va("Arrgh! Unable to create file '%s'!\n\n(let me know about this -Ste)", sOutputTextFile));
 		}
 
 	}
@@ -2370,61 +2371,61 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 }
 
 
-void CAssimilateDoc::OnUpdateResequence(CCmdUI* pCmdUI) 
-{	
-	pCmdUI->Enable(!!GetNumModels());	
+void CAssimilateDoc::OnUpdateResequence(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable(!!GetNumModels());
 }
 
-void CAssimilateDoc::OnUpdateFileSave(CCmdUI* pCmdUI) 
+void CAssimilateDoc::OnUpdateFileSave(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable(!!GetNumModels());	
+	pCmdUI->Enable(!!GetNumModels());
 }
 
-void CAssimilateDoc::OnUpdateFileSaveAs(CCmdUI* pCmdUI) 
+void CAssimilateDoc::OnUpdateFileSaveAs(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable(!!GetNumModels());	
+	pCmdUI->Enable(!!GetNumModels());
 }
 
-void CAssimilateDoc::OnUpdateExternal(CCmdUI* pCmdUI) 
+void CAssimilateDoc::OnUpdateExternal(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable(!!GetNumModels());		
+	pCmdUI->Enable(!!GetNumModels());
 }
 
-void CAssimilateDoc::OnUpdateValidate(CCmdUI* pCmdUI) 
+void CAssimilateDoc::OnUpdateValidate(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable(!!GetNumModels());		
+	pCmdUI->Enable(!!GetNumModels());
 }
 
-void CAssimilateDoc::OnUpdateBuild(CCmdUI* pCmdUI) 
+void CAssimilateDoc::OnUpdateBuild(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable(!!GetNumModels());		
+	pCmdUI->Enable(!!GetNumModels());
 }
 
 
 
 BOOL CAssimilateDoc::DoFileSave()
-{	
+{
 	// sourcesafe stuff
 	{
 		///////////////////////////////////////////
 		//
 		// some stuff so I can leave the code below untouched...
 		//
-		LPCSTR filename = (LPCSTR) m_strPathName;
-		#define Sys_Printf(blah) StatusText(blah)
+		LPCSTR filename = (LPCSTR)m_strPathName;
+#define Sys_Printf(blah) StatusText(blah)
 		//
 		///////////////////////////////////////////
 		//
 		// now do seperate check for files that are still write-protected...
 		//
-		DWORD dw = GetFileAttributes( filename );
+		DWORD dw = GetFileAttributes(filename);
 
-		if (dw != 0xFFFFFFFF && ( dw & FILE_ATTRIBUTE_READONLY ))
+		if (dw != 0xFFFFFFFF && (dw & FILE_ATTRIBUTE_READONLY))
 		{
 			// hmmm, still write protected...
 			//
 			{
-				ErrorBox( va("The file \"%s\" is write-protected, but you don't appear to have SourceSafe set up properly on this machine, so I can't tell if the file is protected or just not checked out to you.\n\nIf you really want to edit this you'll have to write-enable it yourself (which I'm deliberately not offering to do for you here <g>)",filename));
+				ErrorBox(va("The file \"%s\" is write-protected, but you don't appear to have SourceSafe set up properly on this machine, so I can't tell if the file is protected or just not checked out to you.\n\nIf you really want to edit this you'll have to write-enable it yourself (which I'm deliberately not offering to do for you here <g>)", filename));
 			}
 		}
 	}
@@ -2434,7 +2435,9 @@ BOOL CAssimilateDoc::DoFileSave()
 	if (b == TRUE)
 	{
 		// sourcesafe
-		#define Sys_Printf(blah) StatusText(blah)
+		LPCSTR filename = (LPCSTR)m_strPathName;
+
+#define Sys_Printf(blah) StatusText(blah)
 	}
 
 	StatusText(NULL);
@@ -2442,7 +2445,7 @@ BOOL CAssimilateDoc::DoFileSave()
 	return b;
 }
 
-BOOL CAssimilateDoc::OnSaveDocument(LPCTSTR lpszPathName) 
+BOOL CAssimilateDoc::OnSaveDocument(LPCTSTR lpszPathName)
 {
 	CString strFileName = lpszPathName;
 
@@ -2476,23 +2479,23 @@ void CAssimilateDoc::OnEditBuildDependant()
 		if (psCurrentGLAName)
 		{
 			char sCurrentGLAName[1024];
-			strcpy(sCurrentGLAName,psCurrentGLAName);
+			strcpy(sCurrentGLAName, psCurrentGLAName);
 			strMustContainThisGLA = sCurrentGLAName;
 			CBuildAll dlgBuildAll(strInitialBuildPath, gbPreValidate);
 
 			if (dlgBuildAll.DoModal() == IDOK)
-			{		
+			{
 				dlgBuildAll.GetData(strInitialBuildPath, gbPreValidate);
 
 				strStartDir += strInitialBuildPath;
-				strStartDir.Replace("/","\\");
-				while (strStartDir.Replace("\\\\","\\")){}	
+				strStartDir.Replace("/", "\\");
+				while (strStartDir.Replace("\\\\", "\\")) {}
 
 				if (gbPreValidate)
 				{
 					gbQueryGoAhead = false;
-					gpsCARWashDirOverride = (LPCSTR) strStartDir;
-					
+					gpsCARWashDirOverride = (LPCSTR)strStartDir;
+
 					OnCarWashActual();
 					gbQueryGoAhead = true;
 					gpsCARWashDirOverride = NULL;
@@ -2515,7 +2518,7 @@ void CAssimilateDoc::OnEditBuildDependant()
 
 				// build up a list...
 
-				R_CheckCARs( strStartDir, 0, strMustContainThisGLA);	//bool bBuildListOnly
+				R_CheckCARs(strStartDir, 0, strMustContainThisGLA);	//bool bBuildListOnly
 				AlphaSortCARs();	// important to do them in alpha-order during build, because of "_humanoid" - type dirs.
 				((CMainFrame*)AfxGetMainWnd())->StatusMessage("Ready");
 
@@ -2523,20 +2526,20 @@ void CAssimilateDoc::OnEditBuildDependant()
 
 				CString strReport;
 				if (!iCARsFound)
-				{			
+				{
 					ASSERT(0);
 					strReport = "No suitable .CAR files found for processing!\n\n";
 
 					if (!strSkippedDirs.IsEmpty())
 					{
-						strReport+= "Skipped Dirs:\n\n";
-						strReport+= strSkippedDirs;
+						strReport += "Skipped Dirs:\n\n";
+						strReport += strSkippedDirs;
 					}
 
 					if (!strSkippedFiles.IsEmpty())
 					{
-						strReport+= "\n\nSkipped Files:\n\n";
-						strReport+= strSkippedFiles;
+						strReport += "\n\nSkipped Files:\n\n";
+						strReport += strSkippedFiles;
 					}
 					ErrorBox(strReport);
 				}
@@ -2548,42 +2551,42 @@ void CAssimilateDoc::OnEditBuildDependant()
 					CString strTotalErrors;
 
 					strReport = "Processed files:\n\n";
-					for (int i=0; i<iCARsFound; i++)
+					for (int i = 0; i<iCARsFound; i++)
 					{
 						CString strThisFile = strCARsFound;
 						int iLoc = strThisFile.Find("\n");
-						if (iLoc>=0)
+						if (iLoc >= 0)
 						{
 							strThisFile = strThisFile.Left(iLoc);
-							strCARsFound= strCARsFound.Mid(iLoc+1);
+							strCARsFound = strCARsFound.Mid(iLoc + 1);
 
 							strReport += strThisFile + "\n";
 
-							((CMainFrame*)AfxGetMainWnd())->StatusMessage(va("Scanning File %d/%d: %s",i+1,iCARsFound,(LPCSTR)strThisFile));
+							((CMainFrame*)AfxGetMainWnd())->StatusMessage(va("Scanning File %d/%d: %s", i + 1, iCARsFound, (LPCSTR)strThisFile));
 
 							if (1)
 							{
-								OnNewDocument();				
+								OnNewDocument();
 								if (OnOpenDocument_Actual(strThisFile, false))
 								{
 									if (gbParseError)
 									{
-										strTotalErrors += va("\nParse error in file \"%s\"\n",(LPCSTR)strThisFile);
+										strTotalErrors += va("\nParse error in file \"%s\"\n", (LPCSTR)strThisFile);
 										break;
 									}
 									else
 									{
 										m_strPathName = strThisFile;	// fucking stupid MFC doesn't set this!!!!!!!!!!!!!
-										bool bSuccess = Build(	false,	// bool bAllowedToShowSuccessBox, 
-																0,		// int iLODLevel
-																true	// bool bSkipSave
-																);				
+										bool bSuccess = Build(false,	// bool bAllowedToShowSuccessBox, 
+											0,		// int iLODLevel
+											true	// bool bSkipSave
+										);
 
 										if (!strCarWashErrors.IsEmpty())
 										{
 											// "something is wrong..."
 
-											strTotalErrors += va("\nError in file \"%s\":\n\n%s\n",strThisFile,strCarWashErrors);
+											strTotalErrors += va("\nError in file \"%s\":\n\n%s\n", strThisFile, strCarWashErrors);
 										}
 										strCarWashErrors.Empty();
 
@@ -2593,7 +2596,7 @@ void CAssimilateDoc::OnEditBuildDependant()
 								}
 								else
 								{
-									strTotalErrors += va("\nUnable to open file \"%s\"\n",(LPCSTR)strThisFile);
+									strTotalErrors += va("\nUnable to open file \"%s\"\n", (LPCSTR)strThisFile);
 									break;
 								}
 							}
@@ -2605,7 +2608,7 @@ void CAssimilateDoc::OnEditBuildDependant()
 						else
 						{
 							ASSERT(0);
-							strThisFile.Insert(0,"I fucked up, the following line didn't seem to have a CR:  (tell me! -Ste)\n\n");
+							strThisFile.Insert(0, "I fucked up, the following line didn't seem to have a CR:  (tell me! -Ste)\n\n");
 							ErrorBox(strThisFile);
 						}
 					}
@@ -2617,18 +2620,18 @@ void CAssimilateDoc::OnEditBuildDependant()
 
 					OnNewDocument();	// trash whatever was loaded last
 
-					strReport+= "\n\nSkipped Dirs:\n\n";
-					strReport+= strSkippedDirs;
-					strReport+= "\n\nSkipped Files:\n\n";
-					strReport+= strSkippedFiles;
+					strReport += "\n\nSkipped Dirs:\n\n";
+					strReport += strSkippedDirs;
+					strReport += "\n\nSkipped Files:\n\n";
+					strReport += strSkippedFiles;
 
 					if (strTotalErrors.IsEmpty())
 					{
-						strReport.Insert(0,"(No additional errors found)\n\n");
+						strReport.Insert(0, "(No additional errors found)\n\n");
 					}
 					else
 					{
-						strReport+= "\n\nAdditional errors will now be sent to Notepad!...";
+						strReport += "\n\nAdditional errors will now be sent to Notepad!...";
 					}
 					InfoBox(strReport);
 
@@ -2653,11 +2656,11 @@ void CAssimilateDoc::OnEditBuildDependant()
 	((CMainFrame*)AfxGetMainWnd())->StatusMessage("Ready");
 }
 
-void CAssimilateDoc::OnEditBuildall() 
+void CAssimilateDoc::OnEditBuildall()
 {
 	// validity-check...
 
-	CString strStartDir = ((CAssimilateApp*)AfxGetApp())->GetQuakeDir();	
+	CString strStartDir = ((CAssimilateApp*)AfxGetApp())->GetQuakeDir();
 
 	if (!strStartDir.GetLength())
 	{
@@ -2668,17 +2671,17 @@ void CAssimilateDoc::OnEditBuildall()
 	CBuildAll dlgBuildAll(strInitialBuildPath, gbPreValidate);
 
 	if (dlgBuildAll.DoModal() == IDOK)
-	{		
+	{
 		dlgBuildAll.GetData(strInitialBuildPath, gbPreValidate);
 
 		strStartDir += strInitialBuildPath;
-		strStartDir.Replace("/","\\");
-		while (strStartDir.Replace("\\\\","\\")){}	
+		strStartDir.Replace("/", "\\");
+		while (strStartDir.Replace("\\\\", "\\")) {}
 
 		if (gbPreValidate)
 		{
 			gbQueryGoAhead = false;
-			gpsCARWashDirOverride = (LPCSTR) strStartDir;
+			gpsCARWashDirOverride = (LPCSTR)strStartDir;
 			OnCarWash();
 			gbQueryGoAhead = true;
 			gpsCARWashDirOverride = NULL;
@@ -2701,7 +2704,7 @@ void CAssimilateDoc::OnEditBuildall()
 
 		// build up a list...
 
-		R_CheckCARs( strStartDir, 0, "" );	//bool bBuildListOnly
+		R_CheckCARs(strStartDir, 0, "");	//bool bBuildListOnly
 		AlphaSortCARs();	// important to do them in alpha-order during build, because of "_humanoid" - type dirs.
 		((CMainFrame*)AfxGetMainWnd())->StatusMessage("Ready");
 
@@ -2709,20 +2712,20 @@ void CAssimilateDoc::OnEditBuildall()
 
 		CString strReport;
 		if (!iCARsFound)
-		{			
+		{
 			ASSERT(0);
 			strReport = "No suitable .CAR files found for processing!\n\n";
 
 			if (!strSkippedDirs.IsEmpty())
 			{
-				strReport+= "Skipped Dirs:\n\n";
-				strReport+= strSkippedDirs;
+				strReport += "Skipped Dirs:\n\n";
+				strReport += strSkippedDirs;
 			}
 
 			if (!strSkippedFiles.IsEmpty())
 			{
-				strReport+= "\n\nSkipped Files:\n\n";
-				strReport+= strSkippedFiles;
+				strReport += "\n\nSkipped Files:\n\n";
+				strReport += strSkippedFiles;
 			}
 			ErrorBox(strReport);
 		}
@@ -2734,40 +2737,40 @@ void CAssimilateDoc::OnEditBuildall()
 			CString strTotalErrors;
 
 			strReport = "Processed files:\n\n";
-			for (int i=0; i<iCARsFound; i++)
+			for (int i = 0; i<iCARsFound; i++)
 			{
 				CString strThisFile = strCARsFound;
 				int iLoc = strThisFile.Find("\n");
-				if (iLoc>=0)
+				if (iLoc >= 0)
 				{
 					strThisFile = strThisFile.Left(iLoc);
-					strCARsFound= strCARsFound.Mid(iLoc+1);
+					strCARsFound = strCARsFound.Mid(iLoc + 1);
 
 					strReport += strThisFile + "\n";
 
-					((CMainFrame*)AfxGetMainWnd())->StatusMessage(va("Scanning File %d/%d: %s",i+1,iCARsFound,(LPCSTR)strThisFile));
+					((CMainFrame*)AfxGetMainWnd())->StatusMessage(va("Scanning File %d/%d: %s", i + 1, iCARsFound, (LPCSTR)strThisFile));
 
-					OnNewDocument();				
+					OnNewDocument();
 					if (OnOpenDocument_Actual(strThisFile, false))
 					{
 						if (gbParseError)
 						{
-							strTotalErrors += va("\nParse error in file \"%s\"\n",(LPCSTR)strThisFile);
+							strTotalErrors += va("\nParse error in file \"%s\"\n", (LPCSTR)strThisFile);
 							break;
 						}
 						else
 						{
 							m_strPathName = strThisFile;	// fucking stupid MFC doesn't set this!!!!!!!!!!!!!
-							bool bSuccess = Build(	false,	// bool bAllowedToShowSuccessBox, 
-													0,		// int iLODLevel
-													true	// bool bSkipSave
-													);				
+							bool bSuccess = Build(false,	// bool bAllowedToShowSuccessBox, 
+								0,		// int iLODLevel
+								true	// bool bSkipSave
+							);
 
 							if (!strCarWashErrors.IsEmpty())
 							{
 								// "something is wrong..."	:-)
 
-								strTotalErrors += va("\nError in file \"%s\":\n\n%s\n",strThisFile,strCarWashErrors);
+								strTotalErrors += va("\nError in file \"%s\":\n\n%s\n", strThisFile, strCarWashErrors);
 							}
 							strCarWashErrors.Empty();
 
@@ -2777,14 +2780,14 @@ void CAssimilateDoc::OnEditBuildall()
 					}
 					else
 					{
-						strTotalErrors += va("\nUnable to open file \"%s\"\n",(LPCSTR)strThisFile);
+						strTotalErrors += va("\nUnable to open file \"%s\"\n", (LPCSTR)strThisFile);
 						break;
 					}
 				}
 				else
 				{
 					ASSERT(0);
-					strThisFile.Insert(0,"I fucked up, the following line didn't seem to have a CR:  (tell me! -Ste)\n\n");
+					strThisFile.Insert(0, "I fucked up, the following line didn't seem to have a CR:  (tell me! -Ste)\n\n");
 					ErrorBox(strThisFile);
 				}
 			}
@@ -2794,18 +2797,18 @@ void CAssimilateDoc::OnEditBuildall()
 
 			OnNewDocument();	// trash whatever was loaded last
 
-			strReport+= "\n\nSkipped Dirs:\n\n";
-			strReport+= strSkippedDirs;
-			strReport+= "\n\nSkipped Files:\n\n";
-			strReport+= strSkippedFiles;
+			strReport += "\n\nSkipped Dirs:\n\n";
+			strReport += strSkippedDirs;
+			strReport += "\n\nSkipped Files:\n\n";
+			strReport += strSkippedFiles;
 
 			if (strTotalErrors.IsEmpty())
 			{
-				strReport.Insert(0,"(No additional errors found)\n\n");
+				strReport.Insert(0, "(No additional errors found)\n\n");
 			}
 			else
 			{
-				strReport+= "\n\nAdditional errors will now be sent to Notepad!...";
+				strReport += "\n\nAdditional errors will now be sent to Notepad!...";
 			}
 			InfoBox(strReport);
 
@@ -2826,55 +2829,58 @@ void SS_DisposingOfCurrent(LPCSTR psFileName, bool bDirty)
 {
 	if (psFileName[0])
 	{
-		#undef Sys_Printf
-		#define Sys_Printf(blah)
+		LPCSTR filename = psFileName;	// compile laziness
+
+#undef Sys_Printf
+#define Sys_Printf(blah)
 	}
 }
 
 
 
-BOOL CAssimilateDoc::OnOpenDocument_Actual(LPCTSTR lpszPathName, bool bCheckOut) 
+BOOL CAssimilateDoc::OnOpenDocument_Actual(LPCTSTR lpszPathName, bool bCheckOut)
 {
 	SS_DisposingOfCurrent(m_strPathName, !!IsModified());
 
 	if (bCheckOut)
 	{
 		// checkout the new file?
+		LPCSTR filename = lpszPathName;	// compile-laziness :-)
 	}
 
 	if (!CDocument::OnOpenDocument(lpszPathName))
 		return FALSE;
-	
+
 	return TRUE;
 }
 
 
-BOOL CAssimilateDoc::OnOpenDocument(LPCTSTR lpszPathName) 
+BOOL CAssimilateDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
-	return OnOpenDocument_Actual(lpszPathName, true) ;
+	return OnOpenDocument_Actual(lpszPathName, true);
 }
 
-void CAssimilateDoc::OnCloseDocument() 
+void CAssimilateDoc::OnCloseDocument()
 {
 	SS_DisposingOfCurrent(m_strPathName, !!IsModified());
-	
+
 	CDocument::OnCloseDocument();
 }
 
-void CAssimilateDoc::OnViewFramedetailsonadditionalsequences() 
+void CAssimilateDoc::OnViewFramedetailsonadditionalsequences()
 {
 	gbViewFrameDetails_Additional = !gbViewFrameDetails_Additional;
 	UpdateAllViews(NULL, AS_FILESUPDATED, NULL);
 }
 
-void CAssimilateDoc::OnUpdateViewFramedetailsonadditionalsequences(CCmdUI* pCmdUI) 
+void CAssimilateDoc::OnUpdateViewFramedetailsonadditionalsequences(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck(gbViewFrameDetails_Additional);	
+	pCmdUI->SetCheck(gbViewFrameDetails_Additional);
 }
 
-void CAssimilateDoc::OnUpdateEditBuilddependant(CCmdUI* pCmdUI) 
+void CAssimilateDoc::OnUpdateEditBuilddependant(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable(!!GetNumModels());			
+	pCmdUI->Enable(!!GetNumModels());
 }
 
 
@@ -2882,57 +2888,57 @@ void CAssimilateDoc::OnUpdateEditBuilddependant(CCmdUI* pCmdUI)
 bool RunApp(LPCSTR psAppCommand)
 {
 	CString strExec = psAppCommand;	// eg "start q:\\bin_nt\\behaved.exe";
-			strExec.Replace("/","\\");	// otherwise it only works under NT...
+	strExec.Replace("/", "\\");	// otherwise it only works under NT...
 
 	char sBatchFilename[512];
-	
-	GetTempPath(sizeof(sBatchFilename), sBatchFilename);
-	strcat(sBatchFilename,"~temp.bat");
 
-	FILE *handle = fopen(sBatchFilename,"wt");
-	fprintf(handle,strExec);
-	fprintf(handle,"\n");
+	GetTempPath(sizeof(sBatchFilename), sBatchFilename);
+	strcat(sBatchFilename, "~temp.bat");
+
+	FILE *handle = fopen(sBatchFilename, "wt");
+	fprintf(handle, strExec);
+	fprintf(handle, "\n");
 	fclose(handle);
 
 	STARTUPINFO startupinfo;
 	PROCESS_INFORMATION	 ProcessInformation;
 
-	GetStartupInfo (&startupinfo);
+	GetStartupInfo(&startupinfo);
 
 	BOOL ret = CreateProcess(sBatchFilename,
-						NULL,					// pointer to command line string
-						NULL,					// pointer to process security attributes 
-						NULL,					// pointer to thread security attributes 
-						FALSE,					// handle inheritance flag 
-						0,						// creation flags 
-						NULL,					// pointer to new environment block 
-						NULL,					// pointer to current directory name 
-						&startupinfo,			// pointer to STARTUPINFO 
-						&ProcessInformation 	// pointer to PROCESS_INFORMATION  
-						);
+		NULL,					// pointer to command line string
+		NULL,					// pointer to process security attributes 
+		NULL,					// pointer to thread security attributes 
+		FALSE,					// handle inheritance flag 
+		0,						// creation flags 
+		NULL,					// pointer to new environment block 
+		NULL,					// pointer to current directory name 
+		&startupinfo,			// pointer to STARTUPINFO 
+		&ProcessInformation 	// pointer to PROCESS_INFORMATION  
+	);
 
 	return !!ret;
 }
 
 
-void CAssimilateDoc::OnEditLaunchmodviewoncurrent() 
+void CAssimilateDoc::OnEditLaunchmodviewoncurrent()
 {
 	char sExecString[MAX_PATH];
 
 	sprintf(sExecString, "start %s.glm", Filename_WithoutExt(m_strPathName));
 
-	if (RunApp (sExecString))
+	if (RunApp(sExecString))
 	{
 		// ok...
 
 	}
 	else
 	{
-		ErrorBox(va("CreateProcess() call \"%s\" failed!\n\n(let me know about this -Ste)",sExecString));
+		ErrorBox(va("CreateProcess() call \"%s\" failed!\n\n(let me know about this -Ste)", sExecString));
 	}
 }
 
-void CAssimilateDoc::OnUpdateEditLaunchmodviewoncurrent(CCmdUI* pCmdUI) 
+void CAssimilateDoc::OnUpdateEditLaunchmodviewoncurrent(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable(!!GetNumModels());
 }

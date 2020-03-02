@@ -11,7 +11,6 @@ CAssimilateView* ghAssimilateView = NULL;
 
 /////////////////////////////////////////////////////////////////////////////
 // CAssimilateView
-
 IMPLEMENT_DYNCREATE(CAssimilateView, CTreeView)
 
 BEGIN_MESSAGE_MAP(CAssimilateView, CTreeView)
@@ -31,7 +30,6 @@ END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CAssimilateView construction/destruction
-
 CAssimilateView::CAssimilateView()
 {
 	ghAssimilateView = this;
@@ -45,7 +43,6 @@ BOOL CAssimilateView::PreCreateWindow(CREATESTRUCT& cs)
 {
 	// TODO: Modify the Window class or styles here by modifying
 	//  the CREATESTRUCT cs
-
 	if (!CTreeView::PreCreateWindow(cs))
 	{
 		return FALSE;
@@ -56,7 +53,6 @@ BOOL CAssimilateView::PreCreateWindow(CREATESTRUCT& cs)
 
 /////////////////////////////////////////////////////////////////////////////
 // CAssimilateView drawing
-
 void CAssimilateView::OnDraw(CDC* pDC)
 {
 	CAssimilateDoc* pDoc = GetDocument();
@@ -66,7 +62,6 @@ void CAssimilateView::OnDraw(CDC* pDC)
 
 /////////////////////////////////////////////////////////////////////////////
 // CAssimilateView printing
-
 BOOL CAssimilateView::OnPreparePrinting(CPrintInfo* pInfo)
 {
 	// default preparation
@@ -85,7 +80,6 @@ void CAssimilateView::OnEndPrinting(CDC*, CPrintInfo*)
 
 /////////////////////////////////////////////////////////////////////////////
 // CAssimilateView diagnostics
-
 #ifdef _DEBUG
 void CAssimilateView::AssertValid() const
 {
@@ -106,15 +100,14 @@ CAssimilateDoc* CAssimilateView::GetDocument() // non-debug version is inline
 
 /////////////////////////////////////////////////////////////////////////////
 // CAssimilateView message handlers
-
-void CAssimilateView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
-{	
+void CAssimilateView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
+{
 	// TODO: Add your specialized code here and/or call the base class
 	CTreeCtrl& tree = GetTreeCtrl();
 
-	switch(lHint)
+	switch (lHint)
 	{
-	case AS_DELETECONTENTS:		
+	case AS_DELETECONTENTS:
 		tree.DeleteAllItems();
 		break;
 	case AS_NEWFILE:
@@ -123,7 +116,7 @@ void CAssimilateView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 		BuildTree();
 		UpdateTree();
 		break;
-	case AS_FILESUPDATED:		
+	case AS_FILESUPDATED:
 		UpdateTree();	// sorts tree according to enum names, sorts model according to new tree, re-draws tree
 		break;
 	default:
@@ -133,17 +126,13 @@ void CAssimilateView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 	SetFirstModelTitleAndMode();
 }
 
-
-
 // in practise, the Assimilate app will only ever use one sort type, but wtf...
-
 typedef enum
 {
 	TS_BY_ENUMTYPE = 0,
 } TREESORTTYPE;
 
 // tree item compare callback,
-
 // returns (to windows):- (so do NOT change these defines)
 
 #define ITEM1_BEFORE_ITEM2 -1
@@ -152,187 +141,191 @@ typedef enum
 //
 int CALLBACK TreeCompareFunc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 {
-	CSequence* seq1 = (CSequence*) lParam1;
-	CSequence* seq2 = (CSequence*) lParam2;
+	CSequence* seq1 = (CSequence*)lParam1;
+	CSequence* seq2 = (CSequence*)lParam2;
 
 	switch (lParamSort)
 	{
-		case TS_BY_ENUMTYPE:
+	case TS_BY_ENUMTYPE:
+	{
+		// enumtypes are enum'd lower-numbers-more-important...
+
+		if (seq1->GetEnumType() < seq2->GetEnumType())
 		{
-			// enumtypes are enum'd lower-numbers-more-important...
-
-			if (seq1->GetEnumType() < seq2->GetEnumType())
-			{
-				return ITEM1_BEFORE_ITEM2;
-			}
-
-			if (seq1->GetEnumType() > seq2->GetEnumType())
-			{
-				return ITEM1_AFTER_ITEM2;
-			}
-
-			// must be same type, so sort alphabetically...
-			// (strcmp almost returns correct values, except the results are signed anynums, not explicitly -1/0/1)
-
-			return ITEM1_MATCHES_ITEM2;
+			return ITEM1_BEFORE_ITEM2;
 		}
-		break;
+
+		if (seq1->GetEnumType() > seq2->GetEnumType())
+		{
+			return ITEM1_AFTER_ITEM2;
+		}
+
+		// must be same type, so sort alphabetically...
+		// (strcmp almost returns correct values, except the results are signed anynums, not explicitly -1/0/1)
+
+		return ITEM1_MATCHES_ITEM2;
+	}
+	break;
 	}
 
 	ASSERT(0);
-	return ITEM1_MATCHES_ITEM2;	
+	return ITEM1_MATCHES_ITEM2;
 }
 
 bool TreeSort(CTreeCtrl& tree, TREESORTTYPE ts)
 {
-	HTREEITEM hTreeItem_Model = tree.GetRootItem();	// "klingon"
+	HTREEITEM hTreeItem_Model = tree.GetRootItem();
 
 	while (hTreeItem_Model)
 	{
 		TVSORTCB sortParams;
-
-		sortParams.hParent		= hTreeItem_Model;
-		sortParams.lpfnCompare	= TreeCompareFunc;
-		sortParams.lParam		= ts;
-
+		sortParams.hParent = hTreeItem_Model;
+		sortParams.lpfnCompare = TreeCompareFunc;
+		sortParams.lParam = ts;
 		tree.SortChildrenCB(&sortParams);
-
-		hTreeItem_Model = tree.GetNextSiblingItem(hTreeItem_Model);				
+		hTreeItem_Model = tree.GetNextSiblingItem(hTreeItem_Model);
 	}
 
 	return true;
 }
 
 // returns true if any delete has taken place (sequence or model)...
-
 bool CAssimilateView::DeleteCurrentItem(bool bNoQueryForSequenceDelete)
 {
-	// ok, what *is* the current item?
+#ifdef _DEBUG
+	OutputDebugString(va("DeleteCurrentItem %s\n",bNoQueryForSequenceDelete?"CTRL":""));
+#endif
 
+	// ok, what *is* the current item?
 	CTreeCtrl& tree = GetTreeCtrl();
 	HTREEITEM theItem = tree.GetSelectedItem();
+
 	if (theItem == NULL)
 	{
 		return false;
 	}
 
 	// ok, so it's either a model or a sequence...
-
 	CModel* curModel = NULL;
+
 	if (tree.GetParentItem(theItem) == NULL)
 	{
 		curModel = (CModel*)tree.GetItemData(theItem);
 		if (curModel != NULL)
 		{
-			if (GetYesNo(va("Delete whole model \"%s\"?",curModel->GetName())))
-			{				
+			if (GetYesNo(va("Delete whole model \"%s\"?", curModel->GetName())))
+			{
 				tree.DeleteItem(theItem);
 				GetDocument()->DeleteModel(curModel);
 				GetDocument()->SetModifiedFlag();
+
 				return true;
-			}			
+			}
 		}
 	}
 	else
 	{
 		curModel = (CModel*)tree.GetItemData(tree.GetParentItem(theItem));
 		CSequence* curSequence = (CSequence*)tree.GetItemData(theItem);
+
 		if (curSequence != NULL)
 		{
 			// ask them if they're sure, unless the ctrl key is also pressed...
-
-			if (bNoQueryForSequenceDelete || GetYesNo(va("Delete sequence \"%s\"?",curSequence->GetName())))
+			if (bNoQueryForSequenceDelete || GetYesNo(va("Delete sequence \"%s\"?", curSequence->GetName())))
 			{
 				tree.DeleteItem(theItem);
 				curModel->DeleteSequence(curSequence);
 				GetDocument()->SetModifiedFlag();
+
 				return true;
 			}
 		}
 	}
-
 	return false;
 }
 
 // also re-orders model(s) sequences to match tree order...
-
 void CAssimilateView::SortTree()
 {
-	TreeSort(GetTreeCtrl(),TS_BY_ENUMTYPE);
+	TreeSort(GetTreeCtrl(), TS_BY_ENUMTYPE);
 
 	// now update models to reflect their positions within the tree struct...
-
 	HTREEITEM hTreeItem_Model = GetTreeCtrl().GetRootItem();
 
 	while (hTreeItem_Model)
 	{
-		CModel* curModel = (CModel*) GetTreeCtrl().GetItemData(hTreeItem_Model);
+		CModel* curModel = (CModel*)GetTreeCtrl().GetItemData(hTreeItem_Model);
+
+#ifdef _DEBUG
+		OutputDebugString(va("item = '%s'\n",(LPCSTR) GetTreeCtrl().GetItemText(hTreeItem_Model)));
+#endif
 
 		int iSequenceNum = 0;
-
 		HTREEITEM hTreeItem_Sequence = GetTreeCtrl().GetChildItem(hTreeItem_Model);
 
 		while (hTreeItem_Sequence)
 		{
-			CSequence* curSequence = (CSequence*) GetTreeCtrl().GetItemData(hTreeItem_Sequence);
-
+			CSequence* curSequence = (CSequence*)GetTreeCtrl().GetItemData(hTreeItem_Sequence);
 			curSequence->m_iSequenceNumber = iSequenceNum++;
-
 			hTreeItem_Sequence = GetTreeCtrl().GetNextSiblingItem(hTreeItem_Sequence);
 		}
 
 		curModel->ReOrderSequences();
-
-		hTreeItem_Model = GetTreeCtrl().GetNextSiblingItem(hTreeItem_Model);		
+		hTreeItem_Model = GetTreeCtrl().GetNextSiblingItem(hTreeItem_Model);
 	}
 
-	// sod it, too much work to check if re-ordering actually took place. Let's assume it did... :-)
-
+	// sod it, too much work to check if re-ordering actually took place. Let's assume it did...
 	GetDocument()->SetModifiedFlag();
 }
 
 // sorts tree according to enum names, sorts model according to new tree, re-draws tree
 //	(re-draw = changes icons & text according to enum-validity and prefs)
-
 void CAssimilateView::UpdateTree()
 {
-	HTREEITEM hTreeItem_Model = GetTreeCtrl().GetRootItem();	// "klingon"
+	SortTree(); // sorts tree by enum name, sorts model according to new tree
+
+	HTREEITEM hTreeItem_Model = GetTreeCtrl().GetRootItem();
 
 	while (hTreeItem_Model)
 	{
-		CModel* curModel = (CModel*) GetTreeCtrl().GetItemData(hTreeItem_Model);
+		CModel* curModel = (CModel*)GetTreeCtrl().GetItemData(hTreeItem_Model);
+
+#ifdef _DEBUG
+		OutputDebugString(va("item = '%s'\n",(LPCSTR) GetTreeCtrl().GetItemText(hTreeItem_Model)));
+#endif
 
 		HTREEITEM hTreeItem_Sequence = GetTreeCtrl().GetChildItem(hTreeItem_Model);
 
 		while (hTreeItem_Sequence)
-		{			
-			CSequence* curSequence = (CSequence*) GetTreeCtrl().GetItemData(hTreeItem_Sequence);		
+		{
+			CSequence* curSequence = (CSequence*)GetTreeCtrl().GetItemData(hTreeItem_Sequence);
+
+#ifdef _DEBUG
+			OutputDebugString(va("item = '%s'\n",(LPCSTR) GetTreeCtrl().GetItemText(hTreeItem_Sequence)));
+#endif
+			//gQuakeHelperTreeViewhandle->GetTreeCtrl().SetItemState(hTreeItem, bMatch?TVIS_SELECTED:0, TVIS_SELECTED);					
 
 			// update this tree item accordingly...
-
 			CDC *pDC = GetDC();
-			GetTreeCtrl().SetItemText(hTreeItem_Sequence, curSequence->GetDisplayNameForTree(curModel,gbViewAnimEnums,gbViewFrameDetails,gbViewFrameDetails_Additional,pDC));
+			GetTreeCtrl().SetItemText(hTreeItem_Sequence, curSequence->GetDisplayNameForTree(curModel, gbViewAnimEnums, gbViewFrameDetails, gbViewFrameDetails_Additional, pDC));
 			ReleaseDC(pDC);
 			int iIcon = curSequence->GetDisplayIconForTree(curModel);
 			GetTreeCtrl().SetItemImage(hTreeItem_Sequence, iIcon, iIcon);
 			hTreeItem_Sequence = GetTreeCtrl().GetNextSiblingItem(hTreeItem_Sequence);
 		}
 
-		hTreeItem_Model = GetTreeCtrl().GetNextSiblingItem(hTreeItem_Model);		
+		hTreeItem_Model = GetTreeCtrl().GetNextSiblingItem(hTreeItem_Model);
 	}
 }
-
 
 PlayerMode_e CAssimilateView::GetSingleOrMultiPlayerMode()
 {
 	PlayerMode_e ePlayerMode = eMODE_BAD;
-
 	LPCSTR psEnumFilename = ((CAssimilateApp*)AfxGetApp())->GetEnumFilename();
 
-	if (psEnumFilename && !_stricmp(psEnumFilename,sDEFAULT_ENUM_FILENAME))
+	if (psEnumFilename && !stricmp(psEnumFilename, sDEFAULT_ENUM_FILENAME))
 		ePlayerMode = eMODE_SINGLE;
-
-	else if (psEnumFilename && !_stricmp(psEnumFilename,sDEFAULT_ENUM_FILENAME_MULTI))
+	else if (psEnumFilename && !stricmp(psEnumFilename, sDEFAULT_ENUM_FILENAME_MULTI))
 		ePlayerMode = eMODE_MULTI;
 
 	return ePlayerMode;
@@ -341,9 +334,9 @@ PlayerMode_e CAssimilateView::GetSingleOrMultiPlayerMode()
 void CAssimilateView::SetFirstModelTitleAndMode()
 {
 	PlayerMode_e ePlayerMode = GetSingleOrMultiPlayerMode();
-
 	CTreeCtrl& tree = GetTreeCtrl();
 	CModel* curModel = GetDocument()->GetFirstModel();
+
 	if (curModel)
 	{
 		HTREEITEM hTreeItem = tree.GetRootItem();
@@ -352,20 +345,21 @@ void CAssimilateView::SetFirstModelTitleAndMode()
 }
 
 void CAssimilateView::BuildTree()
-{	
+{
 	CTreeCtrl& tree = GetTreeCtrl();
-
 	CModel* curModel = GetDocument()->GetFirstModel();
-	while(curModel != NULL)
+
+	while (curModel != NULL)
 	{
 		HTREEITEM item = tree.InsertItem(curModel->GetName());
 		tree.SetItemData(item, DWORD(curModel));
 		tree.SetItemImage(item, ObjID_Folder, ObjID_Folder);
 		CSequence* curSequence = curModel->GetFirstSequence();
-		while(curSequence != NULL)
-		{			
+
+		while (curSequence != NULL)
+		{
 			CDC *pDC = GetDC();
-			HTREEITEM seqItem = tree.InsertItem(curSequence->GetDisplayNameForTree(curModel,gbViewAnimEnums,gbViewFrameDetails,gbViewFrameDetails_Additional,pDC), item);
+			HTREEITEM seqItem = tree.InsertItem(curSequence->GetDisplayNameForTree(curModel, gbViewAnimEnums, gbViewFrameDetails, gbViewFrameDetails_Additional, pDC), item);
 			ReleaseDC(pDC);
 			tree.SetItemData(seqItem, DWORD(curSequence));
 
@@ -380,19 +374,26 @@ void CAssimilateView::BuildTree()
 	SetFirstModelTitleAndMode();
 }
 
-void CAssimilateView::OnDblclk(NMHDR* pNMHDR, LRESULT* pResult) 
-{	
+void CAssimilateView::OnDblclk(NMHDR* pNMHDR, LRESULT* pResult)
+{
+#ifdef _DEBUG
+	OutputDebugString("double\n");
+#endif
+
 	*pResult = 0;
 
 	CTreeCtrl& tree = GetTreeCtrl();
 	HTREEITEM theItem = tree.GetSelectedItem();
+
 	if (theItem == NULL)
 	{
 		return;
 	}
+
 	if (tree.GetParentItem(theItem) == NULL)
 	{
 		CModel* theModel = (CModel*)tree.GetItemData(theItem);
+
 		if (theModel != NULL)
 		{
 			if (theModel->DoProperties())
@@ -405,6 +406,7 @@ void CAssimilateView::OnDblclk(NMHDR* pNMHDR, LRESULT* pResult)
 	else
 	{
 		CSequence* theSequence = (CSequence*)tree.GetItemData(theItem);
+
 		if (theSequence != NULL)
 		{
 			if (theSequence->DoProperties())
@@ -416,11 +418,10 @@ void CAssimilateView::OnDblclk(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 }
 
-
-void CAssimilateView::OnInitialUpdate() 
+void CAssimilateView::OnInitialUpdate()
 {
 	CTreeView::OnInitialUpdate();
-	
+
 	// TODO: Add your specialized code here and/or call the base class
 	CImageList *pimagelist;
 	pimagelist = new CImageList();
@@ -428,36 +429,42 @@ void CAssimilateView::OnInitialUpdate()
 	CTreeCtrl& theTree = GetTreeCtrl();
 	CImageList* oldImageList;
 	oldImageList = theTree.GetImageList(TVSIL_NORMAL);
+
 	if (oldImageList != NULL)
 		delete(oldImageList);
-	theTree.SetImageList(pimagelist, TVSIL_NORMAL);	
+
+	theTree.SetImageList(pimagelist, TVSIL_NORMAL);
 }
 
-void CAssimilateView::OnDestroy() 
+void CAssimilateView::OnDestroy()
 {
 	CTreeCtrl& theTree = GetTreeCtrl();
 	CImageList *pimagelist;
 	pimagelist = theTree.GetImageList(TVSIL_NORMAL);
+
 	if (pimagelist != NULL)
 	{
 		pimagelist->DeleteImageList();
 		delete pimagelist;
 	}
 	CTreeView::OnDestroy();
-	
+
 	// TODO: Add your message handler code here
-	
+
 }
 
-void CAssimilateView::OnItemexpanded(NMHDR* pNMHDR, LRESULT* pResult) 
+void CAssimilateView::OnItemexpanded(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_TREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;
+
 	// TODO: Add your control notification handler code here
 	CTreeCtrl& theTree = GetTreeCtrl();
 	HTREEITEM curSelection = pNMTreeView->itemNew.hItem;
+
 	if (theTree.GetParentItem(curSelection) == NULL)
 	{
 		int expandState = theTree.GetItemState(curSelection, TVIS_EXPANDED);
+
 		if (theTree.GetItemState(curSelection, TVIS_EXPANDED) & TVIS_EXPANDED)
 		{
 			theTree.SetItemImage(curSelection, ObjID_OpenFolder, ObjID_OpenFolder);
@@ -470,16 +477,19 @@ void CAssimilateView::OnItemexpanded(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CAssimilateView::OnRButtonDblClk(UINT nFlags, CPoint point) 
+void CAssimilateView::OnRButtonDblClk(UINT nFlags, CPoint point)
 {
 	// TODO: Add your message handler code here and/or call default
+
 	CTreeCtrl& tree = GetTreeCtrl();
 	HTREEITEM theItem = tree.GetSelectedItem();
+
 	if (theItem == NULL)
 	{
 		CTreeView::OnRButtonDblClk(nFlags, point);
 		return;	//don't have an item, don't go on
 	}
+
 	if (tree.GetParentItem(theItem) == NULL)
 	{
 		CModel* theModel = (CModel*)tree.GetItemData(theItem);
@@ -496,33 +506,33 @@ void CAssimilateView::OnRButtonDblClk(UINT nFlags, CPoint point)
 	}
 }
 
-
-void CAssimilateView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
+void CAssimilateView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	switch (nChar)
 	{
-		case VK_DELETE:
-		{			
-			if (DeleteCurrentItem(!!(GetAsyncKeyState(VK_CONTROL))))	// NoQueryForSequenceDelete if CTRL pressed
-			{
-				UpdateTree();	// sorts tree according to enum names, sorts model according to new tree, re-draws tree
-			}
+	case VK_DELETE:
+	{
+		if (DeleteCurrentItem(!!(GetAsyncKeyState(VK_CONTROL))))	// NoQueryForSequenceDelete if CTRL pressed
+		{
+			UpdateTree();	// sorts tree according to enum names, sorts model according to new tree, re-draws tree
 		}
-		break;
 	}
-	
+	break;
+	}
+
 	CTreeView::OnKeyDown(nChar, nRepCnt, nFlags);
 }
 
-
 // currently tells the document which model is the one the user considers current (ie which one is blue in tree)
-
-void CAssimilateView::OnSelchanged(NMHDR* pNMHDR, LRESULT* pResult) 
+void CAssimilateView::OnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 {
+#ifdef _DEBUG
+	OutputDebugString("OnSelchanged TOP\n");
+#endif
 	GetDocument()->ClearModelUserSelectionBools();
 
-	NM_TREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;	
-	HTREEITEM theItem = pNMTreeView->itemNew.hItem;	
+	NM_TREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;
+	HTREEITEM theItem = pNMTreeView->itemNew.hItem;
 
 	if (!theItem)
 	{
@@ -550,4 +560,12 @@ void CAssimilateView::OnSelchanged(NMHDR* pNMHDR, LRESULT* pResult)
 			theModel->SetUserSelectionBool();
 		}
 	}
+
+#ifdef _DEBUG
+	OutputDebugString("OnSelchanged\n");
+	if (theModel)
+	{
+		OutputDebugString(va("Model = %s\n",theModel->GetName()));
+	}
+#endif
 }

@@ -26,7 +26,7 @@ BEGIN_MESSAGE_MAP(CAssimilateApp, CWinApp)
 	ON_COMMAND(ID_FILE_PRINT_SETUP, CWinApp::OnFilePrintSetup)
 END_MESSAGE_MAP()
 
-keywordArray_t CAssimilateApp::s_Symbols[] = 
+keywordArray_t CAssimilateApp::s_Symbols[] =
 {
 	"{",		TK_OBRACE,
 	"}",		TK_CBRACE,
@@ -35,7 +35,7 @@ keywordArray_t CAssimilateApp::s_Symbols[] =
 	NULL,		TK_EOF,
 };
 
-keywordArray_t CAssimilateApp::s_Keywords[] = 
+keywordArray_t CAssimilateApp::s_Keywords[] =
 {
 	"enum",					TK_ENUM,
 	NULL,					TK_EOF,
@@ -64,26 +64,26 @@ const TCHAR CAssimilateApp::c_QuakeDir[] = "Quake Dir";
 void CAssimilateApp::LoadRegistry()
 {
 	m_bMultiPlayerMode = !!GetProfileInt(c_prefSection, "m_bMultiPlayerMode", m_bMultiPlayerMode);
-	m_enumFilename	= GetProfileString(c_prefSection, c_enumFilename, m_enumFilename);
-	m_buffersize	= GetProfileInt	  (c_prefSection, c_buffersize, m_buffersize);
+	m_enumFilename = GetProfileString(c_prefSection, c_enumFilename, m_enumFilename);
+	m_buffersize = GetProfileInt(c_prefSection, c_buffersize, m_buffersize);
 	m_QDataFilename = GetProfileString(c_prefSection, c_QDataFilename, m_QDataFilename);
-	m_QuakeDir		= GetProfileString(c_prefSection, c_QuakeDir, m_QuakeDir);
+	m_QuakeDir = GetProfileString(c_prefSection, c_QuakeDir, m_QuakeDir);
 	gbViewAnimEnums = !!GetProfileInt(c_prefSection, "gbViewAnimEnums", gbViewAnimEnums);
 	gbViewFrameDetails = !!GetProfileInt(c_prefSection, "gbViewFrameDetails", gbViewFrameDetails);
 	gbViewFrameDetails_Additional = !!GetProfileInt(c_prefSection, "gbViewFrameDetails_Additional", gbViewFrameDetails_Additional);
-	
+
 }
 
 void CAssimilateApp::SaveRegistry()
 {
 	WriteProfileInt(c_prefSection, "m_bMultiPlayerMode", m_bMultiPlayerMode);
 	WriteProfileString(c_prefSection, c_enumFilename, m_enumFilename);
-	WriteProfileInt	  (c_prefSection, c_buffersize, m_buffersize);
+	WriteProfileInt(c_prefSection, c_buffersize, m_buffersize);
 	WriteProfileString(c_prefSection, c_QDataFilename, m_QDataFilename);
 	WriteProfileString(c_prefSection, c_QuakeDir, m_QuakeDir);
 	WriteProfileInt(c_prefSection, "gbViewAnimEnums", gbViewAnimEnums);
-	WriteProfileInt(c_prefSection, "gbViewFrameDetails", gbViewFrameDetails);	
-	WriteProfileInt(c_prefSection, "gbViewFrameDetails_Additional", gbViewFrameDetails_Additional);	
+	WriteProfileInt(c_prefSection, "gbViewFrameDetails", gbViewFrameDetails);
+	WriteProfileInt(c_prefSection, "gbViewFrameDetails_Additional", gbViewFrameDetails_Additional);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -92,11 +92,11 @@ void CAssimilateApp::SaveRegistry()
 BOOL CAssimilateApp::InitInstance()
 {
 	m_bMultiPlayerMode = bDEFAULT_MULTIPLAYER_MODE;
-	m_enumFilename	= sDEFAULT_ENUM_FILENAME;
-	m_buffersize	= dwDEFAULT_BUFFERSIZE;
+	m_enumFilename = sDEFAULT_ENUM_FILENAME;
+	m_buffersize = dwDEFAULT_BUFFERSIZE;
 	m_QDataFilename = sDEFAULT_QDATA_LOCATION;
-	m_QuakeDir		= sDEFAULT_QUAKEDIR;
-	
+	m_QuakeDir = sDEFAULT_QUAKEDIR;
+
 	AfxEnableControlContainer();
 
 	// Standard initialization
@@ -105,14 +105,14 @@ BOOL CAssimilateApp::InitInstance()
 	//  the specific initialization routines you do not need.
 
 #ifdef _AFXDLL
-	//Enable3dControls();			// Call this when using MFC in a shared DLL
+	Enable3dControls();			// Call this when using MFC in a shared DLL
 #else
 	Enable3dControlsStatic();	// Call this when linking to MFC statically
 #endif
 
-	// Change the registry key under which our settings are stored.
-	// TODO: You should modify this string to be something appropriate
-	// such as the name of your company or organization.
+								// Change the registry key under which our settings are stored.
+								// TODO: You should modify this string to be something appropriate
+								// such as the name of your company or organization.
 	SetRegistryKey(_T("Local AppWizard-Generated Applications"));
 
 	LoadStdProfileSettings(12);  // Load standard INI file options (including MRU)
@@ -166,9 +166,9 @@ BOOL CAssimilateApp::InitInstance()
 //
 bool CAssimilateApp::ValidEnum(LPCTSTR name)
 {
-	for (EnumTable_t::iterator i = m_enumTable.begin(); i!= m_enumTable.end(); ++i)
+	for (EnumTable_t::iterator i = m_enumTable.begin(); i != m_enumTable.end(); ++i)
 	{
-		if (!_stricmp((*i).first,name))
+		if (!stricmp((*i).first, name))
 		{
 			return true;
 		}
@@ -181,9 +181,9 @@ bool CAssimilateApp::ValidEnum(LPCTSTR name)
 //
 LPCSTR CAssimilateApp::GetEnumComment(LPCSTR psEnum)
 {
-	for (EnumTable_t::iterator i = m_enumTable.begin(); i!= m_enumTable.end(); ++i)
+	for (EnumTable_t::iterator i = m_enumTable.begin(); i != m_enumTable.end(); ++i)
 	{
-		if (!_stricmp((*i).first,psEnum))
+		if (!stricmp((*i).first, psEnum))
 		{
 			LPCSTR p = (*i).second;
 
@@ -227,10 +227,10 @@ int CAssimilateApp::GetEnumTableEntries()
 }
 LPCSTR CAssimilateApp::GetEnumEntry(int iIndex)
 {
-	for (EnumTable_t::iterator i = m_enumTable.begin(); i!= m_enumTable.end(); ++i)
+	for (EnumTable_t::iterator i = m_enumTable.begin(); i != m_enumTable.end(); ++i)
 	{
 		if (!iIndex--)
-		{			
+		{
 			return (*i).first;
 		}
 	}
@@ -266,7 +266,7 @@ bool CAssimilateApp::SetQuakeDir(LPCTSTR psQuakeDir)
 {
 	CString name = psQuakeDir;
 	name.MakeLower();
-	name.Replace('\\','/');
+	name.Replace('\\', '/');
 	if (name.Compare(m_QuakeDir) == 0)
 	{
 		return false;
@@ -274,7 +274,7 @@ bool CAssimilateApp::SetQuakeDir(LPCTSTR psQuakeDir)
 	m_QuakeDir = name;
 	return true;
 }
-	
+
 bool CAssimilateApp::SetQDataFilename(LPCTSTR filename)
 {
 	CString name = filename;
@@ -300,23 +300,27 @@ bool CAssimilateApp::SetBufferSize(DWORD buffersize)
 
 void CAssimilateApp::LoadEnumTable(LPCTSTR filename)
 {
-	m_enumTable.clear();	
+	int iIndex_Both = 0,
+		iIndex_Torso = 0,
+		iIndex_Legs = 0;
+
+	m_enumTable.clear();
 	CTokenizer* tokenizer = CTokenizer::Create();
 	tokenizer->AddParseFile(filename);
 	tokenizer->SetKeywords(s_Keywords);
 	tokenizer->SetSymbols(s_Symbols);
-	CToken* curToken = tokenizer->GetToken(TKF_NODIRECTIVES|TKF_IGNOREDIRECTIVES);
+	CToken* curToken = tokenizer->GetToken(TKF_NODIRECTIVES | TKF_IGNOREDIRECTIVES);
 
 	bool bFinished = false;
-	while(curToken->GetType() != TK_EOF && !bFinished)
+	while (curToken->GetType() != TK_EOF && !bFinished)
 	{
 		switch (curToken->GetType())
 		{
 		case TK_ENUM:
-			while((curToken->GetType() != TK_EOF) && (curToken->GetType() != TK_OBRACE))
+			while ((curToken->GetType() != TK_EOF) && (curToken->GetType() != TK_OBRACE))
 			{
 				curToken->Delete();
-				curToken = tokenizer->GetToken(NULL, TKF_NODIRECTIVES|TKF_IGNOREDIRECTIVES|TKF_USES_EOL|TKF_COMMENTTOKENS, 0);
+				curToken = tokenizer->GetToken(NULL, TKF_NODIRECTIVES | TKF_IGNOREDIRECTIVES | TKF_USES_EOL | TKF_COMMENTTOKENS, 0);
 			}
 			while ((curToken->GetType() != TK_EOF) && (curToken->GetType() != TK_CBRACE))
 			{
@@ -325,22 +329,22 @@ void CAssimilateApp::LoadEnumTable(LPCTSTR filename)
 					CString curEnumName = curToken->GetStringValue();	// useful later
 
 					curToken->Delete();
-					curToken = tokenizer->GetToken(NULL, TKF_NODIRECTIVES|TKF_IGNOREDIRECTIVES|TKF_USES_EOL|TKF_COMMENTTOKENS, 0);
+					curToken = tokenizer->GetToken(NULL, TKF_NODIRECTIVES | TKF_IGNOREDIRECTIVES | TKF_USES_EOL | TKF_COMMENTTOKENS, 0);
 
 					// only add the kind of symbols we know about...
 					//
 					if (GetEnumTypeFromString(curEnumName) != ET_INVALID)
 					{
 						if (!ValidEnum(curEnumName))	// ie if not already in the table...
-						{							
+						{
 							// now skip past any crud like " = 0," and check for comments...
 							//
 							CString Comment;
 
-							while (	(curToken->GetType() != TK_EOF) &&
-									(curToken->GetType() != TK_EOL) &&
-									(curToken->GetType() != TK_CBRACE)
-									)
+							while ((curToken->GetType() != TK_EOF) &&
+								(curToken->GetType() != TK_EOL) &&
+								(curToken->GetType() != TK_CBRACE)
+								)
 							{
 								if (curToken->GetType() == TK_COMMENT)
 								{
@@ -348,7 +352,7 @@ void CAssimilateApp::LoadEnumTable(LPCTSTR filename)
 
 									// only read comment like "//#"...
 									//
-									if (psComment[0]=='#')
+									if (psComment[0] == '#')
 									{
 										psComment++;
 										while (isspace(*psComment)) psComment++;
@@ -363,11 +367,11 @@ void CAssimilateApp::LoadEnumTable(LPCTSTR filename)
 								}
 
 								curToken->Delete();
-								curToken = tokenizer->GetToken(NULL, TKF_NODIRECTIVES|TKF_IGNOREDIRECTIVES|TKF_USES_EOL|TKF_COMMENTTOKENS, 0);						
+								curToken = tokenizer->GetToken(NULL, TKF_NODIRECTIVES | TKF_IGNOREDIRECTIVES | TKF_USES_EOL | TKF_COMMENTTOKENS, 0);
 							}
 
-							pair<CString,CString> pr(curEnumName,Comment);
-							m_enumTable.push_back(pr);	
+							pair<CString, CString> pr(curEnumName, Comment);
+							m_enumTable.push_back(pr);
 						}
 					}
 				}
@@ -378,7 +382,7 @@ void CAssimilateApp::LoadEnumTable(LPCTSTR filename)
 					if (curToken->GetType() == TK_COMMENT)
 					{
 						LPCSTR psComment = curToken->GetStringValue();
-						
+
 						// only count comments beginning "//#"...
 						//
 						if (psComment[0] == '#')
@@ -390,9 +394,9 @@ void CAssimilateApp::LoadEnumTable(LPCTSTR filename)
 							CString comment;
 
 							int loc = curEnumName.Find("#");
-							if (loc>=0)
+							if (loc >= 0)
 							{
-								comment = curEnumName.Mid(loc+1);
+								comment = curEnumName.Mid(loc + 1);
 								curEnumName = curEnumName.Left(loc);
 								comment.TrimLeft();
 							}
@@ -405,15 +409,15 @@ void CAssimilateApp::LoadEnumTable(LPCTSTR filename)
 							{
 								if (!ValidEnum(curEnumName))	// ie if not already in the table...
 								{
-									pair <CString,CString> pr(curEnumName,comment);
-									m_enumTable.push_back(pr);	
+									pair <CString, CString> pr(curEnumName, comment);
+									m_enumTable.push_back(pr);
 								}
 							}
 						}
 					}
 
 					curToken->Delete();
-					curToken = tokenizer->GetToken(NULL, TKF_NODIRECTIVES|TKF_IGNOREDIRECTIVES|TKF_USES_EOL|TKF_COMMENTTOKENS, 0);						
+					curToken = tokenizer->GetToken(NULL, TKF_NODIRECTIVES | TKF_IGNOREDIRECTIVES | TKF_USES_EOL | TKF_COMMENTTOKENS, 0);
 				}
 			}
 			bFinished = true;
@@ -424,7 +428,7 @@ void CAssimilateApp::LoadEnumTable(LPCTSTR filename)
 		if (curToken->GetType() != TK_EOF)
 		{
 			curToken->Delete();
-			curToken = tokenizer->GetToken(TKF_NODIRECTIVES|TKF_IGNOREDIRECTIVES);
+			curToken = tokenizer->GetToken(TKF_NODIRECTIVES | TKF_IGNOREDIRECTIVES);
 		}
 	}
 	if (curToken->GetType() != TK_EOF)
@@ -443,21 +447,21 @@ class CAboutDlg : public CDialog
 public:
 	CAboutDlg();
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CAboutDlg)
 	enum { IDD = IDD_ABOUTBOX };
 	//}}AFX_DATA
 
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CAboutDlg)
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+														//}}AFX_VIRTUAL
 
-// Implementation
+														// Implementation
 protected:
 	//{{AFX_MSG(CAboutDlg)
-		// No message handlers
+	// No message handlers
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
@@ -477,7 +481,7 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
 	//{{AFX_MSG_MAP(CAboutDlg)
-		// No message handlers
+	// No message handlers
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -492,7 +496,7 @@ void CAssimilateApp::OnAppAbout()
 // CAssimilateApp message handlers
 
 
-int CAssimilateApp::ExitInstance() 
+int CAssimilateApp::ExitInstance()
 {
 	m_enumTable.clear();
 	SaveRegistry();
@@ -500,10 +504,10 @@ int CAssimilateApp::ExitInstance()
 	return CWinApp::ExitInstance();
 }
 
-void CAssimilateApp::OnProperties() 
+void CAssimilateApp::OnProperties()
 {
 	CString strOldEnumFilename(m_enumFilename);
-		
+
 	bool dirty = false;
 	CPropertySheet* propSheet = new CPropertySheet("Assimilate");
 	CAssimilatePropPage* propPage = new CAssimilatePropPage();
@@ -523,7 +527,7 @@ void CAssimilateApp::OnProperties()
 			&&
 			ghAssimilateView->GetDocument()->GetNumModels()		// ...and any models loaded
 			)
-		{				
+		{
 			//if (GetYesNo("Enum table changed, do you want to re-enumerate?\n\n( You should nearly always answer YES here )"))
 				ghAssimilateView->GetDocument()->Resequence();
 
@@ -587,7 +591,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CAssimilatePropPage message handlers
 
-void CAssimilatePropPage::OnEnumBrowse() 
+void CAssimilatePropPage::OnEnumBrowse()
 {
 	// TODO: Add your control notification handler code here
 	CFileDialog theDialog(true, ".h", NULL, OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST, _T("Enum File (*.h)|*.h|All Files|*.*||"), NULL);
@@ -600,7 +604,7 @@ void CAssimilatePropPage::OnEnumBrowse()
 	UpdateData(FALSE);
 }
 
-void CAssimilatePropPage::OnQdataBrowse() 
+void CAssimilatePropPage::OnQdataBrowse()
 {
 	// TODO: Add your control notification handler code here
 	CFileDialog theDialog(true, ".exe", NULL, OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST, _T("QData File (*.exe)|*.exe|All Files|*.*||"), NULL);
@@ -630,65 +634,73 @@ void CAssimilatePropPage::OnBaseBrowse()
 	UpdateData(FALSE);
 }
 
-void CAssimilatePropPage::OnOK() 
+void CAssimilatePropPage::OnOK()
 {
 	// TODO: Add your specialized code here and/or call the base class
 	CAssimilateApp* app = (CAssimilateApp*)AfxGetApp();
-	*m_soilFlag =	!!
-					(
-					app->SetEnumFilename(m_enumfilename)	|	// note single OR rather than double, else not all execute
-					app->SetQDataFilename(m_qdata)			|
-					app->SetBufferSize(m_buffsize)			|
-					app->SetQuakeDir(m_csQuakeDir)			|
-					app->SetMultiPlayerMode(!!m_bMultiPlayer)
-					);
+	*m_soilFlag = !!
+		(
+			app->SetEnumFilename(m_enumfilename) |	// note single OR rather than double, else not all execute
+			app->SetQDataFilename(m_qdata) |
+			app->SetBufferSize(m_buffsize) |
+			app->SetQuakeDir(m_csQuakeDir) |
+			app->SetMultiPlayerMode(!!m_bMultiPlayer)
+			);
 
 	CPropertyPage::OnOK();
 }
 
-BOOL CAssimilatePropPage::OnInitDialog() 
+BOOL CAssimilatePropPage::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
-	
+
 	// TODO: Add extra initialization here
 	CAssimilateApp* app = (CAssimilateApp*)AfxGetApp();
-	m_bMultiPlayer  = app->GetMultiPlayerMode();
-	m_enumfilename	= app->GetEnumFilename();
-	m_qdata			= app->GetQDataFilename();
-	m_buffsize		= app->GetBufferSize();
-	m_csQuakeDir	= app->GetQuakeDir();
+	m_bMultiPlayer = app->GetMultiPlayerMode();
+	m_enumfilename = app->GetEnumFilename();
+	m_qdata = app->GetQDataFilename();
+	m_buffsize = app->GetBufferSize();
+	m_csQuakeDir = app->GetQuakeDir();
 
 	UpdateData(FALSE);
-	
+
 	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+				  // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CAssimilatePropPage::OnButtonDefaults() 
+void CAssimilatePropPage::OnButtonDefaults()
 {
 	UpdateData(true);	// dialog -> vars
 
-	if (m_csQuakeDir.IsEmpty()		||
+	if (m_enumfilename.IsEmpty() ||
+		m_qdata.IsEmpty() ||
+		m_csQuakeDir.IsEmpty() ||
 		GetYesNo("This will override the current base directory field with the default Jedi Outcast directory.\n\nAre you sure?")
 		)
 	{
-		m_csQuakeDir	= sDEFAULT_QUAKEDIR;	
+		m_qdata = sDEFAULT_QDATA_LOCATION;
+		m_buffsize = dwDEFAULT_BUFFERSIZE;
+		m_csQuakeDir = sDEFAULT_QUAKEDIR;
 
 		UpdateData(false);	// vars -> dialog
-	}	
+	}
 }
 
 
-void CAssimilatePropPage::OnButtonDefaultsJA() 
+void CAssimilatePropPage::OnButtonDefaultsJA()
 {
 	UpdateData(true);	// dialog -> vars
 
-	if (m_csQuakeDir.IsEmpty()		||
+	if (m_enumfilename.IsEmpty() ||
+		m_qdata.IsEmpty() ||
+		m_csQuakeDir.IsEmpty() ||
 		GetYesNo("This will override the current base directory field with the default Jedi Academy directory.\n\nAre you sure?")
 		)
 	{
-		m_csQuakeDir	= sDEFAULT_QUAKEDIRJA;	
+		m_qdata = sDEFAULT_QDATA_LOCATION;
+		m_buffsize = dwDEFAULT_BUFFERSIZE;
+		m_csQuakeDir = sDEFAULT_QUAKEDIRJA;
 
 		UpdateData(false);	// vars -> dialog
-	}	
+	}
 }

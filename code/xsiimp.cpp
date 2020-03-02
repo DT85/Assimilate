@@ -830,7 +830,7 @@ int XSI_FindBone(char *bonename)
 	int j;
 	for (j=0;j<nsNodes;j++)
 	{
-		if (!_strcmpi(bonename,sNodes[j].name))
+		if (!strcmpi(bonename,sNodes[j].name))
 			return j;
 	}
 	return -1;
