@@ -135,9 +135,9 @@ typedef enum
 // tree item compare callback,
 // returns (to windows):- (so do NOT change these defines)
 
-#define ITEM1_BEFORE_ITEM2 -1
-#define ITEM1_MATCHES_ITEM2 0
-#define ITEM1_AFTER_ITEM2   1
+#define ITEM1_BEFORE_ITEM2		-1
+#define ITEM1_MATCHES_ITEM2		0
+#define ITEM1_AFTER_ITEM2		1
 //
 int CALLBACK TreeCompareFunc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 {
@@ -146,26 +146,38 @@ int CALLBACK TreeCompareFunc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 
 	switch (lParamSort)
 	{
-	case TS_BY_ENUMTYPE:
-	{
-		// enumtypes are enum'd lower-numbers-more-important...
-
-		if (seq1->GetEnumType() < seq2->GetEnumType())
+		case TS_BY_ENUMTYPE:
 		{
-			return ITEM1_BEFORE_ITEM2;
+			// enumtypes are enum'd lower-numbers-more-important...
+
+			if (seq1->GetEnumType() < seq2->GetEnumType())
+			{
+				return ITEM1_BEFORE_ITEM2;
+			}
+
+			if (seq1->GetEnumType() > seq2->GetEnumType())
+			{
+				return ITEM1_AFTER_ITEM2;
+			}
+
+			// must be same type, so sort alphabetically...
+			// (strcmp almost returns correct values, except the results are signed anynums, not explicitly -1/0/1)
+
+			int i = strcmp(seq1->GetEnum(), seq2->GetEnum());
+
+			if (i < 0)
+			{
+				return ITEM1_BEFORE_ITEM2;
+			}
+
+			if (i > 0)
+			{
+				return ITEM1_AFTER_ITEM2;
+			}
+
+			return ITEM1_MATCHES_ITEM2;
 		}
-
-		if (seq1->GetEnumType() > seq2->GetEnumType())
-		{
-			return ITEM1_AFTER_ITEM2;
-		}
-
-		// must be same type, so sort alphabetically...
-		// (strcmp almost returns correct values, except the results are signed anynums, not explicitly -1/0/1)
-
-		return ITEM1_MATCHES_ITEM2;
-	}
-	break;
+		break;
 	}
 
 	ASSERT(0);

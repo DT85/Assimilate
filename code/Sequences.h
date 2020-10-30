@@ -18,10 +18,10 @@ enum
 //
 typedef enum
 {
-	ET_BOTH = 0,
+	ET_FACE = 0,
+	ET_BOTH,
 	ET_TORSO,
 	ET_LEGS,
-	ET_FACE,
 	ET_VM,
 	ET_INVALID,
 
