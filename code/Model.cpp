@@ -1157,11 +1157,14 @@ LPCSTR CModel::GLAName(void)
 // should only be called once model is known to be in a sorted state or results are meaningless.
 // either param can be NULL if not interested in them...
 
-void CModel::GetMasterEnumBoundaryFrameNumbers(int *piFirstFrameAfterBOTH, int *piFirstFrameAfterTORSO)
+void CModel::GetMasterEnumBoundaryFrameNumbers(int *piFirstFrameAfterVM, int *piFirstFrameAfterFACE, int *piFirstFrameAfterBOTH, int *piFirstFrameAfterTORSO, int *piFirstFrameAfterLEGS)
 {
 	ENUMTYPE prevET = ET_INVALID;
+	int iFirstFrameAfterFACE = 0;
 	int iFirstFrameAfterBOTH = 0;
 	int iFirstFrameAfterTORSO = 0;
+	int iFirstFrameAfterLEGS = 0;
+	int iFirstFrameAfterVM = 0;
 
 	CSequence* curSequence = m_sequences;
 	while (curSequence != NULL)
@@ -1170,15 +1173,31 @@ void CModel::GetMasterEnumBoundaryFrameNumbers(int *piFirstFrameAfterBOTH, int *
 
 		// update any frame markers first...
 
+		if (prevET == ET_FACE && thisET != ET_FACE)
+		{
+			iFirstFrameAfterFACE = curSequence->GetTargetFrame();
+		}
+
 		if (prevET == ET_BOTH && thisET != ET_BOTH)
 		{
 			iFirstFrameAfterBOTH = curSequence->GetTargetFrame();
 			iFirstFrameAfterTORSO = curSequence->GetTargetFrame();	// set this as well in case there are no TORSOs at all
+			iFirstFrameAfterLEGS = curSequence->GetTargetFrame();	// set this as well in case there are no LEGS at all
 		}
 
 		if (prevET == ET_TORSO && thisET != ET_TORSO)
 		{
 			iFirstFrameAfterTORSO = curSequence->GetTargetFrame();
+		}
+
+		if (prevET == ET_LEGS && thisET != ET_LEGS)
+		{
+			iFirstFrameAfterLEGS = curSequence->GetTargetFrame();
+		}
+
+		if (prevET == ET_VM && thisET != ET_VM)
+		{
+			iFirstFrameAfterVM = curSequence->GetTargetFrame();
 		}
 
 		prevET = thisET;
@@ -1187,14 +1206,36 @@ void CModel::GetMasterEnumBoundaryFrameNumbers(int *piFirstFrameAfterBOTH, int *
 	}
 	// bug fix, if there are no leg frames at all, then we need to check if the ...AfterTORSO marker needs moving...
 
+	if (prevET == ET_FACE)
+	{
+		iFirstFrameAfterFACE = GetTotFrames();
+	}
+
 	if (prevET == ET_BOTH)
 	{
 		iFirstFrameAfterBOTH = GetTotFrames();
 		iFirstFrameAfterTORSO = GetTotFrames();
+		iFirstFrameAfterLEGS = GetTotFrames();
 	}
+
 	if (prevET == ET_TORSO)
 	{
 		iFirstFrameAfterTORSO = GetTotFrames();
+	}
+
+	if (prevET == ET_LEGS)
+	{
+		iFirstFrameAfterLEGS = GetTotFrames();
+	}
+
+	if (prevET == ET_VM)
+	{
+		iFirstFrameAfterVM = GetTotFrames();
+	}
+
+	if (piFirstFrameAfterFACE)
+	{
+		*piFirstFrameAfterFACE = iFirstFrameAfterFACE;
 	}
 
 	if (piFirstFrameAfterBOTH)
@@ -1205,6 +1246,16 @@ void CModel::GetMasterEnumBoundaryFrameNumbers(int *piFirstFrameAfterBOTH, int *
 	if (piFirstFrameAfterTORSO)
 	{
 		*piFirstFrameAfterTORSO = iFirstFrameAfterTORSO;
+	}
+
+	if (piFirstFrameAfterLEGS)
+	{
+		*piFirstFrameAfterLEGS = iFirstFrameAfterLEGS;
+	}
+
+	if (piFirstFrameAfterVM)
+	{
+		*piFirstFrameAfterVM = iFirstFrameAfterVM;
 	}
 }
 

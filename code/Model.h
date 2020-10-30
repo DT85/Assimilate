@@ -42,7 +42,7 @@ public:
 	int GetTotSequences();
 	int GetTotMasterSequences();
 	void ReOrderSequences();
-	void GetMasterEnumBoundaryFrameNumbers(int *piFirstFrameAfterBOTH, int *piFirstFrameAfterTORSO);
+	void GetMasterEnumBoundaryFrameNumbers(int *piFirstFrameAfterVM, int *piFirstFrameAfterFACE, int *piFirstFrameAfterBOTH, int *piFirstFrameAfterTORSO, int *piFirstFrameAfterLEGS);
 
 	LPCTSTR GetName();
 	void SetName(LPCTSTR name);

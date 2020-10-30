@@ -807,7 +807,7 @@ int XSI_LoadFile(const char *filename)
 
 	if (fn==2000)
 	{
-		printf("XSI import failed, Missing Keys\n",fn);
+		printf("XSI import failed, Missing Keys\n");
 		return 0;
 	}
 	if (fn)

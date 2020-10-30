@@ -62,15 +62,15 @@ void CAnimPicker::FillListBoxes()
 {
 	// fill in the enum list boxes...
 	//
-	CListBox* boxLegs = (CListBox*)GetDlgItem(IDC_LIST_LEGS);
-	CListBox* boxTorso= (CListBox*)GetDlgItem(IDC_LIST_TORSO);
-	CListBox* boxBoth = (CListBox*)GetDlgItem(IDC_LIST_BOTH);
 	CListBox* boxFace = (CListBox*)GetDlgItem(IDC_LIST_FACE);
+	CListBox* boxBoth = (CListBox*)GetDlgItem(IDC_LIST_BOTH);
+	CListBox* boxTorso = (CListBox*)GetDlgItem(IDC_LIST_TORSO);
+	CListBox* boxLegs = (CListBox*)GetDlgItem(IDC_LIST_LEGS);
 	CListBox* boxVM = (CListBox*)GetDlgItem(IDC_LIST_VM);
+	boxFace->ResetContent();
 	boxLegs->ResetContent();
 	boxTorso->ResetContent();
 	boxBoth->ResetContent();
-	boxFace->ResetContent();
 	boxVM->ResetContent();
 
 	CModel* theModel = ghAssimilateView->GetDocument()->GetCurrentUserSelectedModel();
@@ -101,11 +101,11 @@ void CAnimPicker::FillListBoxes()
 
 			CListBox* listBoxPtr = NULL;		
 			switch (GetEnumTypeFromString(p))	// note (p), *not* (string)
-			{			
+			{	
+				case ET_FACE:	listBoxPtr = boxFace;	break;
 				case ET_BOTH:	listBoxPtr = boxBoth;	break;
 				case ET_TORSO:	listBoxPtr = boxTorso;	break;
 				case ET_LEGS:	listBoxPtr = boxLegs;	break;
-				case ET_FACE:	listBoxPtr = boxFace;	break;
 				case ET_VM:		listBoxPtr = boxVM;		break;
 				default:		ASSERT(0);				break;	
 			}

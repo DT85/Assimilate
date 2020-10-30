@@ -103,7 +103,6 @@ void CSequence::ReadHeader()
 	SetFrameSpeedFromHeader( iFrameSpeed );	
 }
 
-
 void ReadXSIHeader(LPCSTR psFilename, int &iStartFrame, int &iFrameCount, int &iFrameSpeed)
 {
 	OutputDebugString(va("ReadXSIHeader(): %s\n",psFilename));
@@ -194,6 +193,10 @@ void ReadXSIHeader(LPCSTR psFilename, int &iStartFrame, int &iFrameCount, int &i
 	XSI_Cleanup();
 }
 
+void CSequence::ReadXSIHeader(LPCSTR psFilename, int &iStartFrame, int &iFrameCount, int &iFrameSpeed)
+{
+	::ReadXSIHeader(psFilename, iStartFrame, iFrameCount, iFrameSpeed);
+}
 
 bool gbSkipXSIRead_QuestionAsked = false;
 bool gbSkipXSIRead = false;
@@ -609,26 +612,27 @@ ENUMTYPE GetEnumTypeFromString(LPCSTR lpString)
 {
 	if (lpString)
 	{
-		if (!strnicmp(lpString,"BOTH_",5))
+		if (!strnicmp(lpString, "FACE_", 5))
+		{
+			return ET_FACE;
+		}
+
+		if (!strnicmp(lpString,"BOTH_", 5))
 		{
 			return ET_BOTH;
 		}
 			
-		if (!strnicmp(lpString,"TORSO_",6))
+		if (!strnicmp(lpString,"TORSO_", 6))
 		{
 			return ET_TORSO;
 		}
 
-		if (!strnicmp(lpString,"LEGS_",5))
+		if (!strnicmp(lpString,"LEGS_", 5))
 		{
 			return ET_LEGS;
 		}
 
-		if (!strnicmp(lpString,"FACE_",5))
-		{
-			return ET_FACE;
-		}
-		if (!strnicmp(lpString,"VM_",3))
+		if (!strnicmp(lpString, "VM_", 3))
 		{
 			return ET_VM;
 		}
@@ -735,12 +739,18 @@ int CSequence::GetDisplayIconForTree(CModel *pModel)
 
 	switch (GetEnumType())
 	{
-		case ET_INVALID:	return ObjID_ENUMINVALID;
-		case ET_BOTH:		return ObjID_ENUMBOTH;
-		case ET_TORSO:		return ObjID_ENUMTORSO;
-		case ET_LEGS:		return ObjID_ENUMLEGS;
-		case ET_FACE:		return ObjID_ENUMFACE;
-		case ET_VM:			return ObjID_ENUMVM;
+		case ET_FACE:		
+			return ObjID_ENUMFACE;
+		case ET_BOTH:		
+			return ObjID_ENUMBOTH;
+		case ET_TORSO:		
+			return ObjID_ENUMTORSO;
+		case ET_LEGS:		
+			return ObjID_ENUMLEGS;
+		case ET_VM:			
+			return ObjID_ENUMVM;
+		case ET_INVALID:
+			return ObjID_ENUMINVALID;
 	}
 
 	ASSERT(0);
