@@ -64,9 +64,9 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON                    "res\\Assimilate.ico"
+IDR_MAINFRAME           ICON                    "Assimilate.ico"
 
-IDR_ASSIMITYPE          ICON                    "res\\AssimilateDoc.ico"
+IDR_ASSIMITYPE          ICON                    "AssimilateDoc.ico"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -74,9 +74,9 @@ IDR_ASSIMITYPE          ICON                    "res\\AssimilateDoc.ico"
 // Bitmap
 //
 
-IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
+IDR_MAINFRAME           BITMAP                  "Toolbar.bmp"
 
-IDB_TREEIMAGES          BITMAP                  "res\\treeimag.bmp"
+IDB_TREEIMAGES          BITMAP                  "treeimag.bmp"
 
 
 /////////////////////////////////////////////////////////////////////////////

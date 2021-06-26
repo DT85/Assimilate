@@ -111,9 +111,9 @@ void ReadXSIHeader(LPCSTR psFilename, int &iStartFrame, int &iFrameCount, int &i
 
 	{
 		bool bGotInfo = false;
-#if (_MSC_VER == 1900)
+#if (_MSC_VER >= 1900) //vs2015+
 		FILE *fp = fopen(psFilename, "r");
-#elif (_MSC_VER == 1310)
+#elif (_MSC_VER == 1310) //vs2003
 		FILE *fp = fopen(psFilename, "ra");
 #endif
 		if (fp)

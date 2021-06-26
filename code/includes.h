@@ -1,6 +1,6 @@
 // includes.h
 
-#include "resource.h"       // main symbols
+#include "res\resource.h"       // main symbols
 
 #pragma warning( disable : 4786 )  // identifier was truncated 
 #include <list>

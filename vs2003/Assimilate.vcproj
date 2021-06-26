@@ -682,121 +682,115 @@
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl">
 			<File
-				RelativePath="AlertErrHandler.h">
+				RelativePath="..\code\AlertErrHandler.h">
 			</File>
 			<File
-				RelativePath="AnimPicker.h">
+				RelativePath="..\code\AnimPicker.h">
 			</File>
 			<File
-				RelativePath="ASEFile.h">
+				RelativePath="..\code\ASEFile.h">
 			</File>
 			<File
-				RelativePath="Assimilate.h">
+				RelativePath="..\code\Assimilate.h">
 			</File>
 			<File
-				RelativePath="AssimilateDoc.h">
+				RelativePath="..\code\AssimilateDoc.h">
 			</File>
 			<File
-				RelativePath="AssimilateView.h">
+				RelativePath="..\code\AssimilateView.h">
 			</File>
 			<File
-				RelativePath="BuildAll.h">
+				RelativePath="..\code\BuildAll.h">
 			</File>
 			<File
-				RelativePath="..\common\cmdlib.h">
+				RelativePath="..\code\common\cmdlib.h">
 			</File>
 			<File
-				RelativePath="Comment.h">
+				RelativePath="..\code\Comment.h">
 			</File>
 			<File
-				RelativePath="gla.h">
+				RelativePath="..\code\gla.h">
 			</File>
 			<File
-				RelativePath="includes.h">
+				RelativePath="..\code\includes.h">
 			</File>
 			<File
-				RelativePath="MainFrm.h">
+				RelativePath="..\code\MainFrm.h">
 			</File>
 			<File
-				RelativePath="matcomp.h">
+				RelativePath="..\code\matcomp.h">
 			</File>
 			<File
-				RelativePath="..\common\mathlib.h">
+				RelativePath="..\code\common\mathlib.h">
 			</File>
 			<File
-				RelativePath="matrix4.h">
+				RelativePath="..\code\matrix4.h">
 			</File>
 			<File
-				RelativePath="mdx_format.h">
+				RelativePath="..\code\mdx_format.h">
 			</File>
 			<File
-				RelativePath="Model.h">
+				RelativePath="..\code\Model.h">
 			</File>
 			<File
-				RelativePath="Module.h">
+				RelativePath="..\code\Module.h">
 			</File>
 			<File
-				RelativePath="oddbits.h">
+				RelativePath="..\code\oddbits.h">
 			</File>
 			<File
-				RelativePath="..\common\polyset.h">
+				RelativePath="..\code\common\polyset.h">
 			</File>
 			<File
-				RelativePath="Resource.h">
+				RelativePath="..\code\Resource.h">
 			</File>
 			<File
-				RelativePath="Sequences.h">
+				RelativePath="..\code\Sequences.h">
 			</File>
 			<File
-				RelativePath="ssauterr.h">
+				RelativePath="..\code\ssauterr.h">
 			</File>
 			<File
-				RelativePath="ssauto.h">
+				RelativePath="..\code\ssauto.h">
 			</File>
 			<File
-				RelativePath="StdAfx.h">
+				RelativePath="..\code\StdAfx.h">
 			</File>
 			<File
-				RelativePath="Tokenizer.h">
+				RelativePath="..\code\Tokenizer.h">
 			</File>
 			<File
-				RelativePath="TxtFile.h">
+				RelativePath="..\code\TxtFile.h">
 			</File>
 			<File
-				RelativePath="vect3.h">
+				RelativePath="..\code\vect3.h">
 			</File>
 			<File
-				RelativePath="xsiimp.h">
+				RelativePath="..\code\xsiimp.h">
 			</File>
 			<File
-				RelativePath="xsilib.h">
+				RelativePath="..\code\xsilib.h">
 			</File>
 			<File
-				RelativePath="YesNoYesAllNoAll.h">
+				RelativePath="..\code\YesNoYesAllNoAll.h">
 			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe">
 			<File
-				RelativePath="res\Assimilate.ico">
+				RelativePath="..\code\res\Assimilate.ico">
 			</File>
 			<File
-				RelativePath="res\AssimilateDoc.ico">
+				RelativePath="..\code\res\AssimilateDoc.ico">
 			</File>
 			<File
-				RelativePath="res\Toolbar.bmp">
+				RelativePath="..\code\res\Toolbar.bmp">
 			</File>
 			<File
-				RelativePath="res\treeimag.bmp">
+				RelativePath="..\code\res\treeimag.bmp">
 			</File>
 		</Filter>
-		<File
-			RelativePath="Assimilate.reg">
-		</File>
-		<File
-			RelativePath="ReadMe.txt">
-		</File>
 	</Files>
 	<Globals>
 		<Global
