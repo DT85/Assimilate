@@ -1213,10 +1213,12 @@ LPCTSTR CFloatToken::GetStringValue()
 		free(m_string);
 		m_string = NULL;
 	}
+
 	char temp[128];
 	sprintf(temp, "%g", m_value);
 	m_string = (char*)malloc(strlen(temp) + 1);
 	strcpy(m_string, temp);
+
 	return m_string;
 }
 
@@ -2301,7 +2303,7 @@ CToken* CTokenizer::TokenFromName(LPCTSTR name)
 		{
 			while (m_keywords[i].m_tokenvalue != TK_EOF)
 			{
-				if (stricmp(m_keywords[i].m_keyword, name) == 0)
+				if (_stricmp(m_keywords[i].m_keyword, name) == 0)
 				{
 					return CUserToken::Create(m_keywords[i].m_tokenvalue, name);
 				}
@@ -2850,7 +2852,6 @@ CToken* CTokenizer::HandleSymbol(byte theByte)
 
 CToken* CTokenizer::HandleDirective()
 {
-	int tokenValue = 0;
 	CToken* theToken = FetchToken();
 
 	if (theToken->GetType() == TK_EOF)

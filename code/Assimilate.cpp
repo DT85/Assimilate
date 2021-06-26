@@ -104,10 +104,12 @@ BOOL CAssimilateApp::InitInstance()
 	//  of your final executable, you should remove from the following
 	//  the specific initialization routines you do not need.
 
+#if _MSC_VER <= 1900
 #ifdef _AFXDLL
 	Enable3dControls();			// Call this when using MFC in a shared DLL
 #else
 	Enable3dControlsStatic();	// Call this when linking to MFC statically
+#endif
 #endif
 
 								// Change the registry key under which our settings are stored.
@@ -168,7 +170,7 @@ bool CAssimilateApp::ValidEnum(LPCTSTR name)
 {
 	for (EnumTable_t::iterator i = m_enumTable.begin(); i != m_enumTable.end(); ++i)
 	{
-		if (!stricmp((*i).first, name))
+		if (!_stricmp((*i).first, name))
 		{
 			return true;
 		}
@@ -183,7 +185,7 @@ LPCSTR CAssimilateApp::GetEnumComment(LPCSTR psEnum)
 {
 	for (EnumTable_t::iterator i = m_enumTable.begin(); i != m_enumTable.end(); ++i)
 	{
-		if (!stricmp((*i).first, psEnum))
+		if (!_stricmp((*i).first, psEnum))
 		{
 			LPCSTR p = (*i).second;
 
@@ -300,10 +302,6 @@ bool CAssimilateApp::SetBufferSize(DWORD buffersize)
 
 void CAssimilateApp::LoadEnumTable(LPCTSTR filename)
 {
-	int iIndex_Both = 0,
-		iIndex_Torso = 0,
-		iIndex_Legs = 0;
-
 	m_enumTable.clear();
 	CTokenizer* tokenizer = CTokenizer::Create();
 	tokenizer->AddParseFile(filename);

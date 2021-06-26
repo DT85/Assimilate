@@ -16,7 +16,6 @@ static char THIS_FILE[] = __FILE__;
 
 int giLODLevelOverride = 0;	// MUST default to 0
 
-void SS_DisposingOfCurrent(LPCSTR psFileName, bool bDirty);
 static bool FileUsesGLAReference(LPCSTR psFilename, LPCSTR psGLAReference);
 
 keywordArray_t CAssimilateDoc::s_Symbols[] =
@@ -169,8 +168,6 @@ CAssimilateDoc::~CAssimilateDoc()
 
 BOOL CAssimilateDoc::OnNewDocument()
 {
-	SS_DisposingOfCurrent(m_strPathName, !!IsModified());
-
 	if (!CDocument::OnNewDocument())
 		return FALSE;
 
@@ -216,7 +213,6 @@ CModel* CAssimilateDoc::AddModel()
 }
 
 //	remember to account for Mike's m_lastModel and move it down if necessary (until I can throw it away)...
-//
 void CAssimilateDoc::DeleteModel(CModel *deleteModel)
 {
 	// linklist is only 1-way, so we need to find the stage previous to this (if any)...
@@ -262,7 +258,6 @@ void CAssimilateDoc::EndModel()
 }
 
 // XSI or GLA anim grab...
-//
 void CAssimilateDoc::ParseGrab(CTokenizer* tokenizer, int iGrabType)
 {
 	if (m_curModel == NULL)
@@ -688,9 +683,7 @@ void CAssimilateDoc::ParseGrab(CTokenizer* tokenizer, int iGrabType)
 	}
 }
 
-
 // return = success.  if false ret, return from caller because of error
-
 bool Tokenizer_ReadPath(CString& path, CTokenizer* &tokenizer, CToken* &curToken)
 {
 	curToken = tokenizer->GetToken(NULL, TKF_NUMERICIDENTIFIERSTART | TKF_USES_EOL, 0);
@@ -932,16 +925,19 @@ void CAssimilateDoc::AddComment(LPCTSTR comment)
 {
 	// some code to stop those damn timestamps accumulating...
 
-	if (!strnicmp(comment, sSAVEINFOSTRINGCHECK, strlen(sSAVEINFOSTRINGCHECK)))
+	if (!_strnicmp(comment, sSAVEINFOSTRINGCHECK, strlen(sSAVEINFOSTRINGCHECK)))
 	{
 		return;
 	}
+
 	CComment* thisComment = CComment::Create(comment);
+
 	if (m_curModel != NULL)
 	{
 		m_curModel->AddComment(thisComment);
 		return;
 	}
+
 	if (m_comments == NULL)
 	{
 		m_comments = thisComment;
@@ -949,14 +945,15 @@ void CAssimilateDoc::AddComment(LPCTSTR comment)
 	else
 	{
 		CComment* curComment = m_comments;
+
 		while (curComment->GetNext() != NULL)
 		{
 			curComment = curComment->GetNext();
 		}
+
 		curComment->SetNext(thisComment);
 	}
 }
-
 
 #define	MAX_FOUND_FILES	0x1000
 #define MAX_OSPATH MAX_PATH
@@ -1001,7 +998,7 @@ char **Sys_ListFiles(const char *directory, const char *extension, int *numfiles
 			if (nfiles == MAX_FOUND_FILES - 1) {
 				break;
 			}
-			list[nfiles] = strdup(strlwr(findinfo.name));
+			list[nfiles] = _strdup(_strlwr(findinfo.name));
 			nfiles++;
 		}
 	} while (_findnext(findhandle, &findinfo) != -1);
@@ -1026,7 +1023,7 @@ char **Sys_ListFiles(const char *directory, const char *extension, int *numfiles
 	return listCopy;
 }
 
-void	Sys_FreeFileList(char **_list) {
+void Sys_FreeFileList(char **_list) {
 	int		i;
 
 	if (!_list) {
@@ -1039,7 +1036,6 @@ void	Sys_FreeFileList(char **_list) {
 
 	free(_list);
 }
-
 
 CString strSkippedFiles;
 CString strSkippedDirs;
@@ -1495,7 +1491,6 @@ void CAssimilateDoc::OnExternal()
 }
 
 // called both from the menu, and now from the Build() member...
-
 bool CAssimilateDoc::WriteCFGFiles(bool bPromptForNames, bool &bCFGWritten)
 {
 	bCFGWritten = false;
@@ -1561,9 +1556,7 @@ void CAssimilateDoc::OnUpdateViewFrameDetails(CCmdUI* pCmdUI)
 	pCmdUI->SetCheck(gbViewFrameDetails);
 }
 
-
 // 1) save qdt, 2) run qdata on it, 3) if success, save .cfg file...
-
 bool CAssimilateDoc::Build(bool bAllowedToShowSuccessBox, int iLODLevel, bool bSkipSave)	// damn this stupid Serialize() crap
 {
 	bool bSuccess = false;
@@ -1571,7 +1564,6 @@ bool CAssimilateDoc::Build(bool bAllowedToShowSuccessBox, int iLODLevel, bool bS
 	if (Validate())	// notepad will have been launched with a textfile of errors at this point if faulty
 	{
 		// seems valid, so save the QDT...
-
 		giLODLevelOverride = iLODLevel;
 
 		if (!bSkipSave)
@@ -1582,7 +1574,6 @@ bool CAssimilateDoc::Build(bool bAllowedToShowSuccessBox, int iLODLevel, bool bS
 		CString csQDataLocation = ((CAssimilateApp*)AfxGetApp())->GetQDataFilename();
 
 		// hack-city!!!!!!!!!!
-
 		CModel* curModel = ghAssimilateView->GetDocument()->GetCurrentUserSelectedModel();
 		if (curModel->GetPreQuat())
 		{
@@ -1695,7 +1686,6 @@ void CAssimilateDoc::OnBuildMultiLOD()
 
 	// to save time, I'll run all the validates first, and only if they're all ok will I go on to the build
 	//	(which incidentally does a harmless re-validate again)
-
 	for (int i = 0; i< 1 + EXTRA_LOD_LEVELS; i++)
 	{
 		iErrors += Validate(false, i) ? 0 : 1;
@@ -1705,7 +1695,6 @@ void CAssimilateDoc::OnBuildMultiLOD()
 	//
 	// (I'll write them in reverse-LOD order so the last one written is the standard one. This should hopefully avoid
 	//	any problems with the current document potentially becoming "(name)_3.qdt" from then on to MFC)
-
 	if (!iErrors)
 	{
 		for (int i = EXTRA_LOD_LEVELS; i >= 0; i--)
@@ -1718,10 +1707,7 @@ void CAssimilateDoc::OnBuildMultiLOD()
 	}
 }
 
-
-
 // 1) save qdt, 2) run qdata on it, 3) if success, save .cfg file...
-
 void CAssimilateDoc::OnBuild()
 {
 	Build(true,	// bool bAllowedToShowSuccessBox, 
@@ -1729,7 +1715,6 @@ void CAssimilateDoc::OnBuild()
 		false	// bool bSkipSave
 	);
 }
-
 
 void CAssimilateDoc::ClearModelUserSelectionBools()
 {
@@ -1743,7 +1728,6 @@ void CAssimilateDoc::ClearModelUserSelectionBools()
 }
 
 // if there's only one model loaded, return that, if none, return NULL, else if >1, return selected one, else NULL
-
 CModel* CAssimilateDoc::GetCurrentUserSelectedModel()
 {
 	CModel *curModel = m_modelList;
@@ -1768,7 +1752,6 @@ CModel* CAssimilateDoc::GetCurrentUserSelectedModel()
 	return NULL;	// multiple loaded, but none selected
 }
 
-
 static bool FileUsesGLAReference(LPCSTR psFilename, LPCSTR psGLAReference)
 {
 	bool bReturn = false;
@@ -1785,7 +1768,7 @@ static bool FileUsesGLAReference(LPCSTR psFilename, LPCSTR psGLAReference)
 				fread(psText, 1, iLen, fHandle);
 				psText[iLen] = '\0';
 
-				strlwr(psText);
+				_strlwr(psText);
 
 				// this is a simple test that could be made more precise, but for now...
 				//
@@ -1806,8 +1789,6 @@ static bool FileUsesGLAReference(LPCSTR psFilename, LPCSTR psGLAReference)
 	return bReturn;
 }
 
-
-
 #define sASSUMEPATH "w:\\game\\base"
 bool gbCarWash_YesToXSIScan;
 bool gbCarWash_DoingScan = false;	// MUST default to this
@@ -1816,6 +1797,7 @@ LPCSTR gpsCARWashDirOverride = NULL;// MUST default to this
 CString strCarWashErrors;
 bool gbCarwashErrorsOccured;
 CString strMustContainThisGLA;	// MUST be blank, else name of GLA to be present to be considered
+
 void CAssimilateDoc::OnCarWashActual()
 {
 	gbCarwashErrorsOccured = false;
@@ -1934,7 +1916,6 @@ void CAssimilateDoc::OnCarWashActual()
 		gbCarWash_DoingScan = false;
 		//----------------
 
-
 		OnNewDocument();	// trash whatever was loaded last
 
 		strReport += "\n\nSkipped Dirs:\n\n";
@@ -1973,9 +1954,7 @@ void CAssimilateDoc::OnCarWash()
 	OnCarWashActual();
 }
 
-
 // creates as temp file, then spawns notepad with it...
-
 bool SendToNotePad(LPCSTR psWhatever, LPCSTR psLocalFileName)
 {
 	bool bReturn = false;
@@ -1999,7 +1978,6 @@ bool SendToNotePad(LPCSTR psWhatever, LPCSTR psLocalFileName)
 			)
 		{
 			// ok...
-
 			bReturn = true;
 		}
 		else
@@ -2015,9 +1993,7 @@ bool SendToNotePad(LPCSTR psWhatever, LPCSTR psLocalFileName)
 	return bReturn;
 }
 
-
 // AFX OnXxxx calls need to be void return, but the validate needs to ret a bool for elsewhere, so...
-
 void CAssimilateDoc::OnValidate()
 {
 	Validate(!gbCarWash_DoingScan);
@@ -2037,10 +2013,8 @@ void CAssimilateDoc::OnValidateMultiLOD()
 	}
 }
 
-
 // checks for things that would stop the build process, such as missing ASE files, invalid loopframes, bad anim enums, etc,
 //	and writes all the faults to a text file that it displays via launching notepad
-
 bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 {
 	OnResequence();
@@ -2071,7 +2045,6 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 				else
 				{
 					// >1 models, 1 selected, ask if we should do all...
-
 					bValidateAll = GetYesNo(va("Validate ALL models?\n\n( NO = model \"%s\" only )", curModel->GetName()));
 				}
 			}
@@ -2100,7 +2073,6 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 				else
 				{
 					// this is an error, UNLESS you have a GLA sequence...
-
 					if (!curModel->HasGLA())
 					{
 						fprintf(hFile, "Model must have a 'makeskel' path\n    ( Double-click on the top tree item's name (should be a folder), then click \"Makes it's own skeleton\" in the dialog )\n");
@@ -2109,14 +2081,12 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 				}
 
 				// validate all sequences within this model...
-
 				int iGLACount = 0;
 				int iXSICount = 0;
 				CSequence* curSequence = curModel->GetFirstSequence();
 				while (curSequence)
 				{
 					// we'll need to check these counts after checking all sequences...
-
 					if (curSequence->IsGLA())
 					{
 						iGLACount++;
@@ -2129,7 +2099,6 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 #define SEQREPORT CString temp;temp.Format("Sequence \"%s\":",curSequence->GetName());while (temp.GetLength()<35)temp+=" ";
 
 					// check 1, does the ASE file exist? (actually this is talking about XSIs/GLAs, but WTF...
-
 					CString nameASE = ((CAssimilateApp*)AfxGetApp())->GetQuakeDir();
 					nameASE += curSequence->GetPath();
 
@@ -2149,16 +2118,13 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 					}
 
 					// new check, if this is an LOD ASE it must have the same framecount as the base (non-LOD) version...
-
 					if (iLODLevel)
 					{
 						// read this file's framecount...
-
 						int iStartFrame, iFrameCount, iFrameSpeed;
 						curSequence->ReadASEHeader(nameASE, iStartFrame, iFrameCount, iFrameSpeed);
 
 						// read basefile's framecount...
-
 						CString baseASEname = ((CAssimilateApp*)AfxGetApp())->GetQuakeDir();
 						baseASEname += curSequence->GetPath();
 
@@ -2166,7 +2132,6 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 						curSequence->ReadASEHeader(baseASEname, iStartFrameBASE, iFrameCountBASE, iFrameSpeedBASE);
 
 						// same?...
-
 						if (iFrameCount != iFrameCountBASE)
 						{
 							SEQREPORT;
@@ -2177,7 +2142,6 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 					}
 
 					// check 2, is the loopframe higher than the framecount of that sequence?...
-
 					if (curSequence->GetLoopFrame() >= curSequence->GetFrameCount())
 					{
 						SEQREPORT;
@@ -2189,7 +2153,6 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 					if (!curModel->IsGhoul2())
 					{
 						// check 3, is the enum valid?...
-
 						if (curSequence->GetEnumType() == ET_INVALID)
 						{
 							SEQREPORT;
@@ -2209,7 +2172,6 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 					}
 
 					// a whole bunch of checks for the additional sequences...
-
 					if (!curSequence->IsGLA())
 					{
 						for (int i = 0; i<MAX_ADDITIONAL_SEQUENCES; i++)
@@ -2221,8 +2183,8 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 							if (additionalSeq->AdditionalSequenceIsValid())
 							{
 								// check for duplicate enum names...
-
 								int iEnumUsageCount = curModel->AnimEnumInUse(additionalSeq->GetEnum());
+
 								if (iEnumUsageCount>1)
 								{
 									ADDITIONALSEQREPORT;
@@ -2232,7 +2194,6 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 								}
 
 								// additional sequences must actually have some frames...
-
 								if (additionalSeq->GetFrameCount() <= 0)
 								{
 									ADDITIONALSEQREPORT;
@@ -2243,7 +2204,6 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 								else
 								{
 									// the start/count range of this additional seq can't exceed it's master...
-
 									if (additionalSeq->GetStartFrame() + additionalSeq->GetFrameCount() > curSequence->GetFrameCount())
 									{
 										ADDITIONALSEQREPORT;
@@ -2253,13 +2213,13 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 											curSequence->GetStartFrame(),
 											curSequence->GetStartFrame() + curSequence->GetFrameCount()
 										);
+
 										fprintf(hFile, temp);
 										iFaults++;
 									}
 									else
 									{
 										// loopframe of an additional seq must be within its own seq framecount...
-
 										if (additionalSeq->GetLoopFrame() >= additionalSeq->GetFrameCount())
 										{
 											ADDITIONALSEQREPORT;
@@ -2273,11 +2233,9 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 							else
 							{
 								// is this additional sequence invalid because of being just empty or being bad?...
-
 								if (strlen(additionalSeq->GetEnum()))
 								{
 									// it's a bad sequence (probably because of its enum being deleted from anims.h since it was saved)
-
 									ADDITIONALSEQREPORT;
 									temp += va(" this animation enum no longer exists in \"%s\"\n", sDEFAULT_ENUM_FILENAME);
 									fprintf(hFile, temp);
@@ -2290,7 +2248,6 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 				}
 
 				// special GLA/XSI checks...
-
 				{
 					if (iGLACount>1)
 					{
@@ -2331,7 +2288,6 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 			if (iFaults)
 			{
 				// now run notepad.exe on the file we've just created...
-
 				CString sExecString;
 
 				sExecString.Format("notepad %s", sOutputTextFile);
@@ -2361,15 +2317,11 @@ bool CAssimilateDoc::Validate(bool bInfoBoxAllowed, int iLODLevel)
 		{
 			ErrorBox(va("Arrgh! Unable to create file '%s'!\n\n(let me know about this -Ste)", sOutputTextFile));
 		}
-
 	}
-
 	EndWait();
 
 	return !iFaults;
-
 }
-
 
 void CAssimilateDoc::OnUpdateResequence(CCmdUI* pCmdUI)
 {
@@ -2400,8 +2352,6 @@ void CAssimilateDoc::OnUpdateBuild(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable(!!GetNumModels());
 }
-
-
 
 BOOL CAssimilateDoc::DoFileSave()
 {
@@ -2434,9 +2384,6 @@ BOOL CAssimilateDoc::DoFileSave()
 
 	if (b == TRUE)
 	{
-		// sourcesafe
-		LPCSTR filename = (LPCSTR)m_strPathName;
-
 #define Sys_Printf(blah) StatusText(blah)
 	}
 
@@ -2448,15 +2395,11 @@ BOOL CAssimilateDoc::DoFileSave()
 BOOL CAssimilateDoc::OnSaveDocument(LPCTSTR lpszPathName)
 {
 	CString strFileName = lpszPathName;
-
 	Filename_AccountForLOD(strFileName, giLODLevelOverride);	// this is actually junk now, should lose all this LODoverride stuff
-
 	return CDocument::OnSaveDocument(strFileName);
 }
 
-
 // remember these two from session to session, maybe write to registry sometime?...
-
 bool	gbPreValidate = true;
 CString strInitialBuildPath = "models/players";
 void CAssimilateDoc::OnEditBuildDependant()
@@ -2469,7 +2412,6 @@ void CAssimilateDoc::OnEditBuildDependant()
 		if (!strStartDir.GetLength())
 		{
 			// should never happen...
-
 			ErrorBox("Base path not known at this point. Check preferences are set correctly.");
 			return;
 		}
@@ -2517,13 +2459,11 @@ void CAssimilateDoc::OnEditBuildDependant()
 				strSkippedFiles.Empty();
 
 				// build up a list...
-
 				R_CheckCARs(strStartDir, 0, strMustContainThisGLA);	//bool bBuildListOnly
 				AlphaSortCARs();	// important to do them in alpha-order during build, because of "_humanoid" - type dirs.
 				((CMainFrame*)AfxGetMainWnd())->StatusMessage("Ready");
 
 				// ok, now ready to begin pass 2...
-
 				CString strReport;
 				if (!iCARsFound)
 				{
@@ -2567,7 +2507,7 @@ void CAssimilateDoc::OnEditBuildDependant()
 							if (1)
 							{
 								OnNewDocument();
-								if (OnOpenDocument_Actual(strThisFile, false))
+								if (OnOpenDocument_Actual(strThisFile))
 								{
 									if (gbParseError)
 									{
@@ -2617,7 +2557,6 @@ void CAssimilateDoc::OnEditBuildDependant()
 					gbCarWash_DoingScan = false;
 					//----------------
 
-
 					OnNewDocument();	// trash whatever was loaded last
 
 					strReport += "\n\nSkipped Dirs:\n\n";
@@ -2659,7 +2598,6 @@ void CAssimilateDoc::OnEditBuildDependant()
 void CAssimilateDoc::OnEditBuildall()
 {
 	// validity-check...
-
 	CString strStartDir = ((CAssimilateApp*)AfxGetApp())->GetQuakeDir();
 
 	if (!strStartDir.GetLength())
@@ -2703,13 +2641,11 @@ void CAssimilateDoc::OnEditBuildall()
 		strSkippedFiles.Empty();
 
 		// build up a list...
-
 		R_CheckCARs(strStartDir, 0, "");	//bool bBuildListOnly
 		AlphaSortCARs();	// important to do them in alpha-order during build, because of "_humanoid" - type dirs.
 		((CMainFrame*)AfxGetMainWnd())->StatusMessage("Ready");
 
 		// ok, now ready to begin pass 2...
-
 		CString strReport;
 		if (!iCARsFound)
 		{
@@ -2751,7 +2687,7 @@ void CAssimilateDoc::OnEditBuildall()
 					((CMainFrame*)AfxGetMainWnd())->StatusMessage(va("Scanning File %d/%d: %s", i + 1, iCARsFound, (LPCSTR)strThisFile));
 
 					OnNewDocument();
-					if (OnOpenDocument_Actual(strThisFile, false))
+					if (OnOpenDocument_Actual(strThisFile))
 					{
 						if (gbParseError)
 						{
@@ -2794,7 +2730,6 @@ void CAssimilateDoc::OnEditBuildall()
 
 			gbCarWash_DoingScan = false;
 
-
 			OnNewDocument();	// trash whatever was loaded last
 
 			strReport += "\n\nSkipped Dirs:\n\n";
@@ -2823,47 +2758,21 @@ void CAssimilateDoc::OnEditBuildall()
 	((CMainFrame*)AfxGetMainWnd())->StatusMessage("Ready");
 }
 
-
-
-void SS_DisposingOfCurrent(LPCSTR psFileName, bool bDirty)
+BOOL CAssimilateDoc::OnOpenDocument_Actual(LPCTSTR lpszPathName)
 {
-	if (psFileName[0])
-	{
-		LPCSTR filename = psFileName;	// compile laziness
-
-#undef Sys_Printf
-#define Sys_Printf(blah)
-	}
-}
-
-
-
-BOOL CAssimilateDoc::OnOpenDocument_Actual(LPCTSTR lpszPathName, bool bCheckOut)
-{
-	SS_DisposingOfCurrent(m_strPathName, !!IsModified());
-
-	if (bCheckOut)
-	{
-		// checkout the new file?
-		LPCSTR filename = lpszPathName;	// compile-laziness :-)
-	}
-
 	if (!CDocument::OnOpenDocument(lpszPathName))
 		return FALSE;
 
 	return TRUE;
 }
 
-
 BOOL CAssimilateDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
-	return OnOpenDocument_Actual(lpszPathName, true);
+	return OnOpenDocument_Actual(lpszPathName);
 }
 
 void CAssimilateDoc::OnCloseDocument()
 {
-	SS_DisposingOfCurrent(m_strPathName, !!IsModified());
-
 	CDocument::OnCloseDocument();
 }
 
@@ -2882,8 +2791,6 @@ void CAssimilateDoc::OnUpdateEditBuilddependant(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable(!!GetNumModels());
 }
-
-
 
 bool RunApp(LPCSTR psAppCommand)
 {
@@ -2919,7 +2826,6 @@ bool RunApp(LPCSTR psAppCommand)
 
 	return !!ret;
 }
-
 
 void CAssimilateDoc::OnEditLaunchmodviewoncurrent()
 {

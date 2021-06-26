@@ -108,7 +108,6 @@ void ReadXSIHeader(LPCSTR psFilename, int &iStartFrame, int &iFrameCount, int &i
 	OutputDebugString(va("ReadXSIHeader(): %s\n",psFilename));
 
 	// let's try the fast way of reading first, by scanning directly for the header value if it's a 3.0 file...
-
 	{
 		bool bGotInfo = false;
 #if (_MSC_VER >= 1900) //vs2015+
@@ -120,16 +119,18 @@ void ReadXSIHeader(LPCSTR psFilename, int &iStartFrame, int &iFrameCount, int &i
 		{
 			fseek(fp,0,SEEK_END);
 			int iLen = ftell(fp);
+
 			if (iLen>1024)
 				iLen=1024;	// findmeste
+
 			char *psFileBin = new char[iLen+1];
 			assert(psFileBin);
 			psFileBin[iLen]='\0';
 			fseek(fp,0,SEEK_SET);
-			if (fread(psFileBin,1,iLen,fp) == (size_t)iLen)
+
+			if (fread(psFileBin, 1, iLen, fp) == (size_t)iLen)
 			{
 				// I'm not sure how to tie this in with Gil's rather-complex XSI reader, so do this seperately...
-
 				{
 					char *psSearch = strstr(psFileBin,"SI_Scene");
 
@@ -158,10 +159,9 @@ void ReadXSIHeader(LPCSTR psFilename, int &iStartFrame, int &iFrameCount, int &i
 
 							int iFieldsRead = sscanf(sScanBuffer,"%6s, %f, %f, %f",&sTemp,&fOneBased,&fFrames,&fFPS);
 
-							if (iFieldsRead==4 && !strcmp(sTemp,"FRAMES"))
+							if (iFieldsRead == 4 && !strcmp(sTemp,"FRAMES"))
 							{
 								// success...
-
 								iStartFrame = 0;
 								iFrameCount = ((int) fFrames - (int) fOneBased)+1;
 								iFrameSpeed = (int) fFPS;

@@ -91,7 +91,7 @@ public:
 	virtual BOOL DoFileSave();
 	virtual BOOL OnSaveDocument(LPCTSTR lpszPathName);
 	virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
-	virtual BOOL OnOpenDocument_Actual(LPCTSTR lpszPathName, bool bCheckOut) ;
+	virtual BOOL OnOpenDocument_Actual(LPCTSTR lpszPathName) ;
 	virtual void OnCloseDocument();
 	//}}AFX_VIRTUAL
 
