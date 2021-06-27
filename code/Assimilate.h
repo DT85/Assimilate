@@ -41,13 +41,11 @@ public:
 	LPCSTR GetEnumComment(LPCSTR psEnum);
 	bool ValidEnum(LPCTSTR name);
 
-	bool GetMultiPlayerMode();
 	LPCTSTR GetEnumFilename();
 	LPCTSTR GetQDataFilename();
 	DWORD GetBufferSize();
 	LPCTSTR GetQuakeDir();
 
-	bool SetMultiPlayerMode(bool bMultiPlayerMode);
 	bool SetEnumFilename(LPCTSTR filename);
 	bool SetQDataFilename(LPCTSTR filename);
 	bool SetBufferSize(DWORD buffersize);
@@ -65,7 +63,6 @@ protected:
 	static keywordArray_t	s_Symbols[];
 	static keywordArray_t	s_Keywords[];
 
-	bool					m_bMultiPlayerMode;
 	CString					m_enumFilename;
 	DWORD					m_buffersize;
 	CString					m_QDataFilename;
@@ -117,7 +114,6 @@ public:
 	CString	m_enumfilename;
 	CString	m_qdata;
 	CString	m_csQuakeDir;
-	BOOL	m_bMultiPlayer;
 	//}}AFX_DATA
 
 

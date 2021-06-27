@@ -40,7 +40,7 @@ public:
 	static CSequence* CreateFromFile(LPCTSTR path, CComment* comments);
 
 	void Write(CTxtFile* file, bool bPreQuat);
-	void WriteExternal(CModel *pModel, CTxtFile* file, bool bMultiPlayerFormat);
+	void WriteExternal(CModel *pModel, CTxtFile* file);
 	void ReadHeader();
 	void ReadASEHeader(LPCSTR psFilename, int &iStartFrame, int &iFrameCount, int &iFrameSpeed, bool bCanSkipXSIRead = false);
 	void ReadXSIHeader(LPCSTR psFilename, int &iStartFrame, int &iFrameCount, int &iFrameSpeed);

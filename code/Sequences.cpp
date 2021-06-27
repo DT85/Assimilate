@@ -1116,7 +1116,7 @@ void CSequence::Write(CTxtFile* file, bool bPreQuat)
 
 // this writes the CFG file... (it's also now recursive, albeit with changing 'this' ptrs, so be aware of that)
 
-void CSequence::WriteExternal(CModel *pModel, CTxtFile* file, bool bMultiPlayerFormat)
+void CSequence::WriteExternal(CModel *pModel, CTxtFile* file)
 {
 	// this now keeps the spacing nicer for cutting and pasting into source...
 
@@ -1126,81 +1126,55 @@ void CSequence::WriteExternal(CModel *pModel, CTxtFile* file, bool bMultiPlayerF
 		sOutputEnum = "???";
 	}
 
-	if (bMultiPlayerFormat)
+	while(sOutputEnum.GetLength()<20) sOutputEnum+=" ";
+
+	file->Write(sOutputEnum, "\t");	
+
+	// special code, if this is a LEGS type enum then we need to adjust the target frame to 'lose' the chunk
+	//	of frames occupied by the TORSO types...
+
+	int iTargetFrame = m_targetFrame;
+	file->Write(iTargetFrame);
+	file->Write("\t");
+	file->Write(m_frameCount);
+	file->Write("\t");
+	file->Write(m_loopFrame);
+	file->Write("\t");
+	file->Write(m_frameSpeed);
+
+	if (!m_validEnum && !pModel->IsGhoul2())
 	{
-		// Format:  targetFrame, frameCount, loopFrame, frameSpeed
-		//0	47	0	10	//BOTH_DEATH1
-
-		file->Write(m_targetFrame);
-		file->Write("\t");
-		file->Write(m_frameCount);
-		file->Write("\t");
-		if (m_loopFrame == -1)		
-			file->Write(0);
-		else
-			file->Write(m_frameCount-m_loopFrame);
-		file->Write("\t");
-		file->Write(m_frameSpeed);
-		file->Write("\t");
-
-		if (!m_validEnum)
-		{
-			file->Write("// fix me - invalid enum -");
-		}
-		else
-		{
-			file->Write("//");
-			file->Write(sOutputEnum);
-			file->Writeln();
-		}
+		file->Write("\t// fix me - invalid enum -");
 	}
-	else
+
+	if (m_sound != NULL)
 	{
-		while(sOutputEnum.GetLength()<20) sOutputEnum+=" ";
-
-		file->Write(sOutputEnum, "\t");	
-
-		// special code, if this is a LEGS type enum then we need to adjust the target frame to 'lose' the chunk
-		//	of frames occupied by the TORSO types...
-
-		int iTargetFrame = m_targetFrame;
-		file->Write(iTargetFrame);
-		file->Write("\t");
-		file->Write(m_frameCount);
-		file->Write("\t");
-		file->Write(m_loopFrame);
-		file->Write("\t");
-		file->Write(m_frameSpeed);
-		if (!m_validEnum && !pModel->IsGhoul2())
-		{
-			file->Write("\t// fix me - invalid enum -");
-		}
-		if (m_sound != NULL)
-		{
-			file->Write("\t// sound - ");
-		}
-		if (m_action != NULL)
-		{
-			file->Write ("\t// action - ");
-		}
-		if (m_fill > -1)
-		{
-			file->Write("\t// fill = ");
-			file->Write(m_fill);
-		}
-		file->Writeln();
+		file->Write("\t// sound - ");
 	}
+
+	if (m_action != NULL)
+	{
+		file->Write ("\t// action - ");
+	}
+
+	if (m_fill > -1)
+	{
+		file->Write("\t// fill = ");
+		file->Write(m_fill);
+	}
+
+	file->Writeln();
 
 	// now for a bit of recursion, write out any additional sequences that this sequence owns...
-
 	for (int i=0; i<MAX_ADDITIONAL_SEQUENCES; i++)
 	{
 		CSequence *seq = AdditionalSeqs[i];
+
 		if (seq)
 		{
 			if (seq->AdditionalSequenceIsValid())
 			{
-				seq->WriteExternal(pModel, file, bMultiPlayerFormat);
+				seq->WriteExternal(pModel, file);
 			}
 		}
 	}

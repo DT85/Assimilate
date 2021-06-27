@@ -1043,68 +1043,26 @@ bool CModel::WriteExternal(bool bPromptForNames, bool& bCFGWritten)
 	strQ3FormatCheckName += sANIMATION_PRE_NAME;
 	strQ3FormatCheckName.Replace("/", "\\");
 
-	bool bExportFormatIsQuake3Multiplayer = //FileExists(strQ3FormatCheckName);
-		((CAssimilateApp*)AfxGetApp())->GetMultiPlayerMode();
-
 	CString strPrePend;
-	if (bExportFormatIsQuake3Multiplayer)
-	{
-		// multi-player format, check for optional animation.pre file...
 
-		FILE *fhPRE = fopen(strQ3FormatCheckName, "rt");
+	// single-player format...
+	CString commentLine;
+	CTime time = CTime::GetCurrentTime();
+	commentLine.Format("// %s %d frames; %d sequences; updated %s", filename, m_totFrames, GetTotSequences(), time.Format("%H:%M %A, %B %d, %Y"));
+	file->Writeln(commentLine);
 
-		if (fhPRE)
-		{
-			// read all the lines in this file and just write them straight to the output file...
+	// the Writeln functions I have to call don't handle "\n" chars properly because of being opened in binary mode
+	//	(sigh), so I have to explicitly call the Writeln() functions to output CRs... :-(
 
-			char sLine[16384];
-			char *psLine;
-			CString strTrimmed;
-
-			while ((psLine = fgets(sLine, sizeof(sLine), fhPRE)) != NULL)
-			{
-				strTrimmed = psLine;
-				strTrimmed.Replace("\n", "");
-				strTrimmed.TrimRight();
-				strTrimmed.TrimLeft();
-
-				file->Writeln(strTrimmed);
-			}
-
-			if (ferror(fhPRE))
-			{
-				ErrorBox(va("Error during reading of file \"%s\"!\n\n( this shouldn't happen )", (LPCSTR)strQ3FormatCheckName));
-			}
-
-			fclose(fhPRE);
-		}
-
-		file->Writeln("");
-		file->Writeln("//");
-		file->Writeln("// Format:  targetFrame, frameCount, loopFrame, frameSpeed");
-		file->Writeln("//");
-	}
-	else
-	{
-		// single-player format...
-
-		CString commentLine;
-		CTime time = CTime::GetCurrentTime();
-		commentLine.Format("// %s %d frames; %d sequences; updated %s", filename, m_totFrames, GetTotSequences(), time.Format("%H:%M %A, %B %d, %Y"));
-		file->Writeln(commentLine);
-
-		// the Writeln functions I have to call don't handle "\n" chars properly because of being opened in binary mode
-		//	(sigh), so I have to explicitly call the Writeln() functions to output CRs... :-(
-
-		file->Writeln("//");
-		file->Writeln("// Format:  enum, targetFrame, frameCount, loopFrame, frameSpeed");
-		file->Writeln("//");
-	}
+	file->Writeln("//");
+	file->Writeln("// Format:  enum, targetFrame, frameCount, loopFrame, frameSpeed");
+	file->Writeln("//");
 
 	CSequence* curSequence = m_sequences;
+
 	while (curSequence != NULL)
 	{
-		curSequence->WriteExternal(this, file, bExportFormatIsQuake3Multiplayer);
+		curSequence->WriteExternal(this, file);
 		curSequence = curSequence->GetNext();
 	}
 	file->Delete();

@@ -1472,18 +1472,11 @@ void CAssimilateDoc::OnExternal()
 
 		if (bCFGWritten)
 		{
-			if (((CAssimilateApp*)AfxGetApp())->GetMultiPlayerMode())
-			{
-				strReport = "\n\n( CFG file written for MULTI-PLAYER format )";
-			}
-			else
-			{
-				strReport = "\n\n( CFG file written for SINGLE-PLAYER format )";
-			}
+			strReport = "\n\n( .cfg file written )";
 		}
 		else
 		{
-			strReport = "\n\n( CFG not needed, not written )";
+			strReport = "\n\n( .cfg not needed, not written )";
 		}
 
 		InfoBox(strReport);
@@ -1644,20 +1637,13 @@ bool CAssimilateDoc::Build(bool bAllowedToShowSuccessBox, int iLODLevel, bool bS
 
 							if (bCFGWritten)
 							{
-								strReport += " and CFG files written";
-								if (((CAssimilateApp*)AfxGetApp())->GetMultiPlayerMode())
-								{
-									strReport += "\n\n\n\n( CFG file written for MULTI-PLAYER format )";
-								}
-								else
-								{
-									strReport += "\n\n\n\n( CFG file written for SINGLE-PLAYER format )";
-								}
+								strReport += " and .cfg files written";
+								strReport += "\n\n\n\n( .cfg file written )";
 							}
 							else
 							{
 								strReport += " file written";
-								strReport += "\n\n\n\n( CFG file not written for GLA-referencing model )";
+								strReport += "\n\n\n\n( .cfg file not written for GLA-referencing model )";
 							}
 
 							InfoBox(strReport);

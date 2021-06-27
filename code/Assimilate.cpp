@@ -63,7 +63,6 @@ const TCHAR CAssimilateApp::c_QuakeDir[] = "Quake Dir";
 
 void CAssimilateApp::LoadRegistry()
 {
-	m_bMultiPlayerMode = !!GetProfileInt(c_prefSection, "m_bMultiPlayerMode", m_bMultiPlayerMode);
 	m_enumFilename = GetProfileString(c_prefSection, c_enumFilename, m_enumFilename);
 	m_buffersize = GetProfileInt(c_prefSection, c_buffersize, m_buffersize);
 	m_QDataFilename = GetProfileString(c_prefSection, c_QDataFilename, m_QDataFilename);
@@ -76,7 +75,6 @@ void CAssimilateApp::LoadRegistry()
 
 void CAssimilateApp::SaveRegistry()
 {
-	WriteProfileInt(c_prefSection, "m_bMultiPlayerMode", m_bMultiPlayerMode);
 	WriteProfileString(c_prefSection, c_enumFilename, m_enumFilename);
 	WriteProfileInt(c_prefSection, c_buffersize, m_buffersize);
 	WriteProfileString(c_prefSection, c_QDataFilename, m_QDataFilename);
@@ -91,7 +89,6 @@ void CAssimilateApp::SaveRegistry()
 
 BOOL CAssimilateApp::InitInstance()
 {
-	m_bMultiPlayerMode = bDEFAULT_MULTIPLAYER_MODE;
 	m_enumFilename = sDEFAULT_ENUM_FILENAME;
 	m_buffersize = dwDEFAULT_BUFFERSIZE;
 	m_QDataFilename = sDEFAULT_QDATA_LOCATION;
@@ -198,11 +195,6 @@ LPCSTR CAssimilateApp::GetEnumComment(LPCSTR psEnum)
 	return NULL;
 }
 
-bool CAssimilateApp::GetMultiPlayerMode()
-{
-	return m_bMultiPlayerMode;
-}
-
 LPCTSTR CAssimilateApp::GetEnumFilename()
 {
 	return m_enumFilename;
@@ -238,16 +230,6 @@ LPCSTR CAssimilateApp::GetEnumEntry(int iIndex)
 	}
 
 	return NULL;
-}
-
-bool CAssimilateApp::SetMultiPlayerMode(bool bMultiPlayerMode)
-{
-	if (bMultiPlayerMode != m_bMultiPlayerMode)
-	{
-		m_bMultiPlayerMode = bMultiPlayerMode;
-		return true;
-	}
-	return false;
 }
 
 bool CAssimilateApp::SetEnumFilename(LPCTSTR filename)
@@ -555,7 +537,6 @@ CAssimilatePropPage::CAssimilatePropPage() : CPropertyPage(CAssimilatePropPage::
 	m_enumfilename = _T("");
 	m_qdata = _T("");
 	m_csQuakeDir = _T("");
-	m_bMultiPlayer = FALSE;
 	//}}AFX_DATA_INIT
 }
 
@@ -571,7 +552,6 @@ void CAssimilatePropPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_ENUM, m_enumfilename);
 	DDX_Text(pDX, IDC_QDATA, m_qdata);
 	DDX_Text(pDX, IDC_QUAKEDIR, m_csQuakeDir);
-	DDX_Check(pDX, IDC_CHECK_MULTIPLAYER, m_bMultiPlayer);
 	//}}AFX_DATA_MAP
 }
 
@@ -641,8 +621,7 @@ void CAssimilatePropPage::OnOK()
 			app->SetEnumFilename(m_enumfilename) |	// note single OR rather than double, else not all execute
 			app->SetQDataFilename(m_qdata) |
 			app->SetBufferSize(m_buffsize) |
-			app->SetQuakeDir(m_csQuakeDir) |
-			app->SetMultiPlayerMode(!!m_bMultiPlayer)
+			app->SetQuakeDir(m_csQuakeDir)
 			);
 
 	CPropertyPage::OnOK();
@@ -654,7 +633,6 @@ BOOL CAssimilatePropPage::OnInitDialog()
 
 	// TODO: Add extra initialization here
 	CAssimilateApp* app = (CAssimilateApp*)AfxGetApp();
-	m_bMultiPlayer = app->GetMultiPlayerMode();
 	m_enumfilename = app->GetEnumFilename();
 	m_qdata = app->GetQDataFilename();
 	m_buffsize = app->GetBufferSize();
