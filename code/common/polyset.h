@@ -4,8 +4,11 @@
 #define POLYSET_MAXTRIANGLES	4096
 #define POLYSET_MAXPOLYSETS		64
 
-typedef float st_t[2];
+
 typedef float rgb_t[3];
+typedef float st_t[2];
+typedef float vec_t;
+typedef vec_t vec3_t[3];
 
 typedef struct {
 	vec3_t	verts[3];
