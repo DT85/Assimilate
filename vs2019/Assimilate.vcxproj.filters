@@ -13,6 +13,12 @@
       <UniqueIdentifier>{6de77168-cba9-4427-ad67-6fde6cbdc65a}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
+    <Filter Include="Source Files\Common">
+      <UniqueIdentifier>{4916d4f2-d951-4e4d-97f8-a8b7b2a9ace3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Common">
+      <UniqueIdentifier>{fa58ece8-c0c5-447b-ac8a-b94cd6f5295a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\code\AlertErrHandler.cpp">
@@ -37,12 +43,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\code\Comment.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\code\Common\cmdlib.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\code\Common\mathlib.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\code\gla.cpp">
@@ -90,17 +90,14 @@
     <ClCompile Include="..\code\YesNoYesAllNoAll.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\code\Common\cmdlib.c">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\code\Common\mathlib.c">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\code\common\cmdlib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\code\common\mathlib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\code\common\polyset.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\code\AlertErrHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -185,6 +182,15 @@
     <ClInclude Include="..\code\YesNoYesAllNoAll.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\code\common\cmdlib.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\code\common\mathlib.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\code\common\polyset.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\code\res\Assimilate.ico">
@@ -202,7 +208,7 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\code\res\Assimilate.rc">
-      <Filter>Source Files</Filter>
+      <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
 </Project>
