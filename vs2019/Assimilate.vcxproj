@@ -20,7 +20,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v140_xp</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <UseOfMfc>Static</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -113,6 +113,7 @@
       <BrowseInformation>true</BrowseInformation>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <OutputFile>.\Build\Assimilate.exe</OutputFile>
@@ -385,7 +386,7 @@
     <ClInclude Include="..\code\Model.h" />
     <ClInclude Include="..\code\Module.h" />
     <ClInclude Include="..\code\oddbits.h" />
-	<ClInclude Include="..\code\res\Resource.h" />
+    <ClInclude Include="..\code\res\Resource.h" />
     <ClInclude Include="..\code\Sequences.h" />
     <ClInclude Include="..\code\ssauterr.h" />
     <ClInclude Include="..\code\ssauto.h" />
