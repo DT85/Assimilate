@@ -385,7 +385,7 @@ static void ASE_KeyMAP_DIFFUSE( const char *token )
 			i++;
 		}
 
-		strlwr(buffer);
+		_strlwr(buffer);
 		if ( strstr( buffer, gamedir + 2 ) )
 		{
 			strcpy( ase.materials[ase.numMaterials].name, strstr( buffer, gamedir + 2 ) + strlen( gamedir ) - 2 );
@@ -663,7 +663,7 @@ static void ASE_KeyMESH_BONE_LIST( const char *token )
 			*strchr( buffer, '"' ) = 0;
 		for (i=0;i<ase.numBones;i++)
 		{
-			if (!strcmpi(buffer,ase.bones[i].name))
+			if (!_strcmpi(buffer,ase.bones[i].name))
 				break;
 		}
 		if (i>=ase.numBones)
@@ -854,7 +854,7 @@ static void ASE_Process( int type )
 			{
 				printf( "WARNING: ASE_Process no triangles grabbed for %s!\n", ase.objects[ase.currentObject].name);
 			}
-			strlwr(ase.objects[ase.currentObject].name);
+			_strlwr(ase.objects[ase.currentObject].name);
 			if ( strstr( ase.objects[ase.currentObject].name, "Bip" ) ||
 				 strstr( ase.objects[ase.currentObject].name, "ignore_" ) )
 			{

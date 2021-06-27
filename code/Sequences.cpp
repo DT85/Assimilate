@@ -612,27 +612,27 @@ ENUMTYPE GetEnumTypeFromString(LPCSTR lpString)
 {
 	if (lpString)
 	{
-		if (!strnicmp(lpString, "FACE_", 5))
+		if (!_strnicmp(lpString, "FACE_", 5))
 		{
 			return ET_FACE;
 		}
 
-		if (!strnicmp(lpString,"BOTH_", 5))
+		if (!_strnicmp(lpString,"BOTH_", 5))
 		{
 			return ET_BOTH;
 		}
 			
-		if (!strnicmp(lpString,"TORSO_", 6))
+		if (!_strnicmp(lpString,"TORSO_", 6))
 		{
 			return ET_TORSO;
 		}
 
-		if (!strnicmp(lpString,"LEGS_", 5))
+		if (!_strnicmp(lpString,"LEGS_", 5))
 		{
 			return ET_LEGS;
 		}
 
-		if (!strnicmp(lpString, "VM_", 3))
+		if (!_strnicmp(lpString, "VM_", 3))
 		{
 			return ET_VM;
 		}

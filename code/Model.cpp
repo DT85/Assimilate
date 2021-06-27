@@ -122,7 +122,7 @@ bool CModel::ContainsFile(LPCSTR psFilename)
 		CSequence* curSequence = m_sequences;
 		while (curSequence)
 		{
-			if (stricmp(curSequence->GetPath(), psFilename) == 0)
+			if (_stricmp(curSequence->GetPath(), psFilename) == 0)
 				return true;
 			curSequence = curSequence->GetNext();
 		}
@@ -502,7 +502,7 @@ void CModel::Resequence(bool bReScanASEFiles /* = false */)
 
 					// does this enum match the one we've built?
 
-					if (!stricmp(stringEnum, stringEnumDEAD))
+					if (!_stricmp(stringEnum, stringEnumDEAD))
 					{
 						bEnumFound = true;
 					}
@@ -867,7 +867,7 @@ void CModel::SetRefGLAPath(LPCSTR psRefGLAPath)
 	{
 		m_psRefGLAPath = (char*)malloc(strlen(psRefGLAPath) + 1);
 		strcpy(m_psRefGLAPath, psRefGLAPath);
-		strlwr(m_psRefGLAPath);
+		_strlwr(m_psRefGLAPath);
 	}
 }
 
@@ -923,7 +923,7 @@ void CModel::SetMakeSkelPath(LPCSTR psPath)
 	{
 		m_psMakeSkelPath = (char*)malloc(strlen(psPath) + 1);
 		strcpy(m_psMakeSkelPath, psPath);
-		strlwr(m_psMakeSkelPath);
+		_strlwr(m_psMakeSkelPath);
 	}
 }
 
@@ -1111,7 +1111,7 @@ bool CModel::WriteExternal(bool bPromptForNames, bool& bCFGWritten)
 
 	if (HasGLA())
 	{
-		unlink(filename);	// zap it, since it's meaningless here (only has one seq/enum: the whole GLA)
+		_unlink(filename);	// zap it, since it's meaningless here (only has one seq/enum: the whole GLA)
 	}
 	else
 	{

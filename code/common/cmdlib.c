@@ -200,7 +200,7 @@ static qboolean SetQdirFromPath2( const char *path, const char *psBaseDir )
 	}
 
 	
-	strlwr((char*)path);
+	_strlwr((char*)path);
 	
 	// search for "base" in path from the RIGHT hand side (and must have a [back]slash just before it)
 	
@@ -209,7 +209,7 @@ static qboolean SetQdirFromPath2( const char *path, const char *psBaseDir )
 	{
 		int i;
 		
-		if (!strnicmp (c, psBaseDir, len)
+		if (!_strnicmp (c, psBaseDir, len)
 			&& 
 			(*(c-1) == '/' || *(c-1) == '\\')	// would be more efficient to do this first, but only checking after a strncasecmp ok ensures no invalid pointer-1 access
 			)
