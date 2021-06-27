@@ -5,12 +5,10 @@
 *.ipch
 *.db-shm
 *.db-wal
+*.vcxproj.user
 vs2003/debug/*.*
 vs2003/release/*.*
 vs2003/build/*.*
-vs2015/debug/*.*
-vs2015/release/*.*
-vs2015/build/*.*
 vs2019/debug/*.*
 vs2019/release/*.*
 vs2019/build/*.*
