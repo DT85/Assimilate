@@ -327,7 +327,7 @@ char *ExpandPathAndArchive (const char *path)
 char *copystring(const char *s)
 {
 	char	*b;
-	b = malloc(strlen(s)+1);
+	b = (char *)malloc(strlen(s)+1);
 	strcpy (b, s);
 	return b;
 }
