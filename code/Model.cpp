@@ -1237,7 +1237,7 @@ void CModel::Write(CTxtFile* file)
 			file->Writeln(CAssimilateDoc::GetKeyword(TK_AS_KEEPMOTION, TABLE_QDT));
 		}
 
-		if (GetRefGLAPath())
+		if (GetRefGLAPath() && strlen(GetRefGLAPath()))
 		{
 			file->Write("$");
 			file->Write(CAssimilateDoc::GetKeyword(TK_AS_REF_GLA, TABLE_QDT), " ");
