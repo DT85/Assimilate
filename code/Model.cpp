@@ -1069,7 +1069,13 @@ bool CModel::WriteExternal(bool bPromptForNames, bool& bCFGWritten)
 
 	if (HasGLA())
 	{
-		_unlink(filename);	// zap it, since it's meaningless here (only has one seq/enum: the whole GLA)
+		// Allow CFGs written for GLA sequences. Idea behind this is so Blender users can export each sequence to GLA
+		// and then use assimilate to generate a CFG.
+		//
+		//_unlink(filename);	// zap it, since it's meaningless here (only has one seq/enum: the whole GLA)
+		bCFGWritten = true;
+		CString strReport;
+		strReport = "\n\n( .cfg file written )";
 	}
 	else
 	{

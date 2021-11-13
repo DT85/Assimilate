@@ -1,6 +1,6 @@
 // Sequences.h
 
-#define MAX_ADDITIONAL_SEQUENCES 5
+#define MAX_ADDITIONAL_SEQUENCES 10
 #define iDEFAULTSEQFRAMESPEED 20
 
 class CModel;
@@ -78,8 +78,11 @@ public:
 	int GetDisplayIconForTree(CModel* pModel);
 	LPCSTR GetDisplayNameForTree(CModel* pModel, bool bIncludeAnimEnum, bool bIncludeFrameDetails, bool bViewFrameDetails_Additional, CDC* pDC);
 	LPCTSTR GetName();
+	LPCTSTR GetNameExt();
 	void SetName(LPCTSTR name);
+	void SetNameExt(LPCTSTR name);
 	void DeriveName();
+	void DeriveNameExt();
 
 	int GetFill();
 	void SetFill(int value);
@@ -111,6 +114,7 @@ protected:
 	CComment*				m_comments;
 	char*					m_path;
 	char*					m_name;
+	char*					m_nameExt;
 	CString					m_enum;
 	char*					m_sound;
 	char*					m_action;
@@ -150,37 +154,68 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CSequencePropPage)
 	enum { IDD = IDD_PP_SEQUENCE };
-	int		m_frameCount;
-	int		m_frameSpeed;
 	CString	m_path;
-	int		m_startFrame;
-	int		m_iLoopFrame;
+	//
 	CString	m_AnimationEnum;
+	CString	m_AnimationEnum11;
 	CString	m_AnimationEnum2;
 	CString	m_AnimationEnum3;
 	CString	m_AnimationEnum4;
 	CString	m_AnimationEnum5;
 	CString	m_AnimationEnum6;
+	CString	m_AnimationEnum7;
+	CString	m_AnimationEnum8;
+	CString	m_AnimationEnum9;
+	CString	m_AnimationEnum10;
+	//
+	int		m_frameCount;
+	int		m_frameCount11;
 	int		m_frameCount2;
 	int		m_frameCount3;
 	int		m_frameCount4;
 	int		m_frameCount5;
 	int		m_frameCount6;
+	int		m_frameCount7;
+	int		m_frameCount8;
+	int		m_frameCount9;
+	int		m_frameCount10;
+	//
+	int		m_frameSpeed;
+	int		m_frameSpeed11;
 	int		m_frameSpeed2;
 	int		m_frameSpeed3;
 	int		m_frameSpeed4;
 	int		m_frameSpeed5;
 	int		m_frameSpeed6;
+	int		m_frameSpeed7;
+	int		m_frameSpeed8;
+	int		m_frameSpeed9;
+	int		m_frameSpeed10;
+	//
+	int		m_iLoopFrame;
+	int		m_iLoopFrame11;
 	int		m_iLoopFrame2;
 	int		m_iLoopFrame3;
 	int		m_iLoopFrame4;
 	int		m_iLoopFrame5;
 	int		m_iLoopFrame6;
+	int		m_iLoopFrame7;
+	int		m_iLoopFrame8;
+	int		m_iLoopFrame9;
+	int		m_iLoopFrame10;
+	//
+	int		m_startFrame;
+	int		m_startFrame11;
 	int		m_startFrame2;
 	int		m_startFrame3;
 	int		m_startFrame4;
 	int		m_startFrame5;
 	int		m_startFrame6;
+	int		m_startFrame7;
+	int		m_startFrame8;
+	int		m_startFrame9;
+	int		m_startFrame10;
+	//
 	BOOL	m_bGenLoopFrame;
 	//}}AFX_DATA
 
@@ -204,48 +239,90 @@ protected:
 	// Generated message map functions
 	//{{AFX_MSG(CSequencePropPage)
 	virtual BOOL OnInitDialog();
+	//
 	afx_msg void OnButtonChooseanimationenum();
+	afx_msg void OnButtonChooseanimationenum11();
 	afx_msg void OnButtonChooseanimationenum2();
 	afx_msg void OnButtonChooseanimationenum3();
 	afx_msg void OnButtonChooseanimationenum4();
 	afx_msg void OnButtonChooseanimationenum5();
 	afx_msg void OnButtonChooseanimationenum6();
+	afx_msg void OnButtonChooseanimationenum7();
+	afx_msg void OnButtonChooseanimationenum8();
+	afx_msg void OnButtonChooseanimationenum9();
+	afx_msg void OnButtonChooseanimationenum10();
+	//
 	afx_msg void OnButtonClearanimationenum();
+	afx_msg void OnButtonClearanimationenum11();
 	afx_msg void OnButtonClearanimationenum2();
 	afx_msg void OnButtonClearanimationenum3();
 	afx_msg void OnButtonClearanimationenum4();
 	afx_msg void OnButtonClearanimationenum5();
 	afx_msg void OnButtonClearanimationenum6();
+	afx_msg void OnButtonClearanimationenum7();
+	afx_msg void OnButtonClearanimationenum8();
+	afx_msg void OnButtonClearanimationenum9();
+	afx_msg void OnButtonClearanimationenum10();
+	//
 	afx_msg void OnKillfocusStartframe();
+	afx_msg void OnKillfocusStartframe11();
 	afx_msg void OnKillfocusStartframe2();
 	afx_msg void OnKillfocusStartframe3();
 	afx_msg void OnKillfocusStartframe4();
 	afx_msg void OnKillfocusStartframe5();
 	afx_msg void OnKillfocusStartframe6();
+	afx_msg void OnKillfocusStartframe7();
+	afx_msg void OnKillfocusStartframe8();
+	afx_msg void OnKillfocusStartframe9();
+	afx_msg void OnKillfocusStartframe10();
+	//
 	afx_msg void OnKillfocusLoopframe();
+	afx_msg void OnKillfocusLoopframe11();
 	afx_msg void OnKillfocusLoopframe2();
 	afx_msg void OnKillfocusLoopframe3();
 	afx_msg void OnKillfocusLoopframe4();
 	afx_msg void OnKillfocusLoopframe5();
 	afx_msg void OnKillfocusLoopframe6();
-	afx_msg void OnKillfocusFramespeed6();
-	afx_msg void OnKillfocusFramespeed5();
-	afx_msg void OnKillfocusFramespeed4();
-	afx_msg void OnKillfocusFramespeed3();
-	afx_msg void OnKillfocusFramespeed2();
+	afx_msg void OnKillfocusLoopframe7();
+	afx_msg void OnKillfocusLoopframe8();
+	afx_msg void OnKillfocusLoopframe9();
+	afx_msg void OnKillfocusLoopframe10();
+	//
 	afx_msg void OnKillfocusFramespeed();
-	afx_msg void OnKillfocusFramecount6();
-	afx_msg void OnKillfocusFramecount5();
-	afx_msg void OnKillfocusFramecount4();
-	afx_msg void OnKillfocusFramecount3();
-	afx_msg void OnKillfocusFramecount2();
+	afx_msg void OnKillfocusFramespeed11();
+	afx_msg void OnKillfocusFramespeed2();
+	afx_msg void OnKillfocusFramespeed3();
+	afx_msg void OnKillfocusFramespeed4();
+	afx_msg void OnKillfocusFramespeed5();
+	afx_msg void OnKillfocusFramespeed6();
+	afx_msg void OnKillfocusFramespeed7();
+	afx_msg void OnKillfocusFramespeed8();
+	afx_msg void OnKillfocusFramespeed9();
+	afx_msg void OnKillfocusFramespeed10();
+	//
 	afx_msg void OnKillfocusFramecount();
-	afx_msg void OnKillfocusEditAnimationenum6();
-	afx_msg void OnKillfocusEditAnimationenum5();
-	afx_msg void OnKillfocusEditAnimationenum4();
-	afx_msg void OnKillfocusEditAnimationenum3();
-	afx_msg void OnKillfocusEditAnimationenum2();
+	afx_msg void OnKillfocusFramecount11();
+	afx_msg void OnKillfocusFramecount2();
+	afx_msg void OnKillfocusFramecount3();
+	afx_msg void OnKillfocusFramecount4();
+	afx_msg void OnKillfocusFramecount5();
+	afx_msg void OnKillfocusFramecount6();
+	afx_msg void OnKillfocusFramecount7();
+	afx_msg void OnKillfocusFramecount8();
+	afx_msg void OnKillfocusFramecount9();
+	afx_msg void OnKillfocusFramecount10();
+	//
 	afx_msg void OnKillfocusEditAnimationenum();
+	afx_msg void OnKillfocusEditAnimationenum11();
+	afx_msg void OnKillfocusEditAnimationenum2();
+	afx_msg void OnKillfocusEditAnimationenum3();
+	afx_msg void OnKillfocusEditAnimationenum4();
+	afx_msg void OnKillfocusEditAnimationenum5();
+	afx_msg void OnKillfocusEditAnimationenum6();
+	afx_msg void OnKillfocusEditAnimationenum7();
+	afx_msg void OnKillfocusEditAnimationenum8();
+	afx_msg void OnKillfocusEditAnimationenum9();
+	afx_msg void OnKillfocusEditAnimationenum10();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 

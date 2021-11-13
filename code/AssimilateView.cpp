@@ -435,9 +435,12 @@ void CAssimilateView::OnInitialUpdate()
 	CTreeView::OnInitialUpdate();
 
 	// TODO: Add your specialized code here and/or call the base class
-	CImageList *pimagelist;
-	pimagelist = new CImageList();
-	pimagelist->Create(IDB_TREEIMAGES, 16, FALSE, 0x00ffffff);
+	CImageList *pImageList;
+	pImageList = new CImageList();
+	CBitmap bitmap;	
+	bitmap.LoadBitmap(IDB_TREEIMAGES);
+	pImageList->Create(16, 16, ILC_COLOR32, 1, FALSE);
+	pImageList->Add(&bitmap, RGB(0, 0, 0));
 	CTreeCtrl& theTree = GetTreeCtrl();
 	CImageList* oldImageList;
 	oldImageList = theTree.GetImageList(TVSIL_NORMAL);
@@ -445,7 +448,7 @@ void CAssimilateView::OnInitialUpdate()
 	if (oldImageList != NULL)
 		delete(oldImageList);
 
-	theTree.SetImageList(pimagelist, TVSIL_NORMAL);
+	theTree.SetImageList(pImageList, TVSIL_NORMAL);
 }
 
 void CAssimilateView::OnDestroy()

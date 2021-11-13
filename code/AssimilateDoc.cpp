@@ -658,6 +658,7 @@ void CAssimilateDoc::ParseGrab(CTokenizer* tokenizer, int iGrabType)
 	m_curModel->AddSequence(sequence);
 	sequence->AddComment(m_curModel->ExtractComments());
 	sequence->DeriveName();
+	sequence->DeriveNameExt();
 	if (enumname.IsEmpty())
 	{
 		sequence->SetEnum(sequence->GetName());
@@ -1469,10 +1470,11 @@ void CAssimilateDoc::OnExternal()
 	if (WriteCFGFiles(true, bCFGWritten))
 	{
 		CString strReport;
+		CModel* curModel = GetCurrentUserSelectedModel();
 
 		if (bCFGWritten)
 		{
-			strReport = "\n\n( .cfg file written )";
+			strReport = "\n\n( .cfg file written)";
 		}
 		else
 		{

@@ -8,23 +8,18 @@
 enum
 {
 	ObjID_Folder,
-	ObjID_Unused1,
-	ObjID_Unused2,
-	ObjID_Unused3,
-	ObjID_Unused4,
 	ObjID_Sequence,
 	ObjID_ENUMINVALID,
 	ObjID_OpenFolder,
-	ObjID_Unused6,
+	ObjID_ENUMFACE,
 	ObjID_ENUMBOTH,
 	ObjID_ENUMTORSO,
 	ObjID_ENUMLEGS,
-	ObjID_ENUMFACE,
-	ObjID_ENUMVM,
 	ObjID_ENUMG2,
 	ObjID_ENUMG2INVALID,
 	ObjID_ENUMG2GLA,
-	ObjID_ENUMG2GLAINVALID
+	ObjID_ENUMG2GLAINVALID,
+	ObjID_ENUMVM
 };
 
 typedef enum
