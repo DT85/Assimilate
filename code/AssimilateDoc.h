@@ -163,6 +163,8 @@ protected:
 	afx_msg void OnUpdateEditBuilddependant(CCmdUI* pCmdUI);
 	afx_msg void OnEditLaunchmodviewoncurrent();
 	afx_msg void OnUpdateEditLaunchmodviewoncurrent(CCmdUI* pCmdUI);
+	afx_msg void OnResort();
+	afx_msg void OnUpdateResort(CCmdUI* pCmdUI);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

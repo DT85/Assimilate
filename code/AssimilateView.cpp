@@ -129,7 +129,8 @@ void CAssimilateView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 // in practise, the Assimilate app will only ever use one sort type, but wtf...
 typedef enum
 {
-	TS_BY_ENUMTYPE = 0,
+	TS_BY_ENUMTYPE = 0,			// sort enums by type
+	TS_BY_ENUMTYPENAME = 1,		// sort enums by type & name
 } TREESORTTYPE;
 
 // tree item compare callback,
@@ -149,7 +150,22 @@ int CALLBACK TreeCompareFunc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 		case TS_BY_ENUMTYPE:
 		{
 			// enumtypes are enum'd lower-numbers-more-important...
+			if (seq1->GetEnumType() < seq2->GetEnumType())
+			{
+				return ITEM1_BEFORE_ITEM2;
+			}
 
+			if (seq1->GetEnumType() > seq2->GetEnumType())
+			{
+				return ITEM1_AFTER_ITEM2;
+			}
+
+			return ITEM1_MATCHES_ITEM2;
+		}
+
+		case TS_BY_ENUMTYPENAME:
+		{
+			// enumtypes are enum'd lower-numbers-more-important...
 			if (seq1->GetEnumType() < seq2->GetEnumType())
 			{
 				return ITEM1_BEFORE_ITEM2;
@@ -259,7 +275,11 @@ bool CAssimilateView::DeleteCurrentItem(bool bNoQueryForSequenceDelete)
 // also re-orders model(s) sequences to match tree order...
 void CAssimilateView::SortTree()
 {
-	TreeSort(GetTreeCtrl(), TS_BY_ENUMTYPE);
+	// Whether to sort anim enums alphabetically...
+	if (gbReSortAnimList)
+		TreeSort(GetTreeCtrl(), TS_BY_ENUMTYPENAME);
+	else
+		TreeSort(GetTreeCtrl(), TS_BY_ENUMTYPE);
 
 	// now update models to reflect their positions within the tree struct...
 	HTREEITEM hTreeItem_Model = GetTreeCtrl().GetRootItem();

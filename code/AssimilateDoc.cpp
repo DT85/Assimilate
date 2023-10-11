@@ -150,6 +150,8 @@ BEGIN_MESSAGE_MAP(CAssimilateDoc, CDocument)
 	ON_UPDATE_COMMAND_UI(IDM_EDIT_BUILDDEPENDANT, OnUpdateEditBuilddependant)
 	ON_COMMAND(ID_EDIT_LAUNCHMODVIEWONCURRENT, OnEditLaunchmodviewoncurrent)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_LAUNCHMODVIEWONCURRENT, OnUpdateEditLaunchmodviewoncurrent)
+	ON_COMMAND(IDM_RESORT, OnResort)
+	ON_UPDATE_COMMAND_UI(IDM_RESORT, OnUpdateResort)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -1529,6 +1531,18 @@ void CAssimilateDoc::OnResequence()
 	Resequence();
 }
 
+void CAssimilateDoc::OnResort()
+{
+	extern bool gbReSortAnimList;
+	gbReSortAnimList = GetYesNo(va("Do you want to sort all animations alphabetically?"));
+
+	if (gbReSortAnimList)
+	{
+		SetModifiedFlag();
+		UpdateAllViews(NULL, AS_FILESUPDATED, NULL);
+	}
+}
+
 void CAssimilateDoc::OnViewAnimEnums()
 {
 	gbViewAnimEnums = !gbViewAnimEnums;
@@ -2833,6 +2847,11 @@ void CAssimilateDoc::OnEditLaunchmodviewoncurrent()
 }
 
 void CAssimilateDoc::OnUpdateEditLaunchmodviewoncurrent(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable(!!GetNumModels());
+}
+
+void CAssimilateDoc::OnUpdateResort(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable(!!GetNumModels());
 }

@@ -10,6 +10,7 @@ static char THIS_FILE[] = __FILE__;
 bool gbViewAnimEnums = false;
 bool gbViewFrameDetails = false;
 bool gbViewFrameDetails_Additional = false;
+bool gbReSortAnimList = false;
 
 /////////////////////////////////////////////////////////////////////////////
 // CAssimilateApp

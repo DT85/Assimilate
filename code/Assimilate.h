@@ -12,6 +12,7 @@
 // not incredibly important, just used for guessing string lengths for display/output neatness...
 
 #define APPROX_LONGEST_ASE_NAME 20
+extern bool gbReSortAnimList;
 extern bool gbViewAnimEnums;
 extern bool gbViewFrameDetails;
 extern bool gbViewFrameDetails_Additional;
