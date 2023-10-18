@@ -402,7 +402,7 @@
     <Image Include="..\code\res\Assimilate.ico" />
     <Image Include="..\code\res\AssimilateDoc.ico" />
     <Image Include="..\code\res\Toolbar.bmp" />
-    <Image Include="..\code\res\treeimag.bmp" />
+    <Image Include="..\code\res\treeimage.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

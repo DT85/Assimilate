@@ -202,7 +202,7 @@
     <Image Include="..\code\res\Toolbar.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="..\code\res\treeimag.bmp">
+    <Image Include="..\code\res\treeimage.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
