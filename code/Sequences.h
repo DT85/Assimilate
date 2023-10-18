@@ -1,6 +1,6 @@
 // Sequences.h
 
-#define MAX_ADDITIONAL_SEQUENCES 10
+#define MAX_ADDITIONAL_SEQUENCES 15
 #define iDEFAULTSEQFRAMESPEED 20
 
 class CModel;
@@ -157,7 +157,6 @@ public:
 	CString	m_path;
 	//
 	CString	m_AnimationEnum;
-	CString	m_AnimationEnum11;
 	CString	m_AnimationEnum2;
 	CString	m_AnimationEnum3;
 	CString	m_AnimationEnum4;
@@ -167,9 +166,14 @@ public:
 	CString	m_AnimationEnum8;
 	CString	m_AnimationEnum9;
 	CString	m_AnimationEnum10;
+	CString	m_AnimationEnum11;
+	CString	m_AnimationEnum12;
+	CString	m_AnimationEnum13;
+	CString	m_AnimationEnum14;
+	CString	m_AnimationEnum15;
+	CString	m_AnimationEnum16;
 	//
 	int		m_frameCount;
-	int		m_frameCount11;
 	int		m_frameCount2;
 	int		m_frameCount3;
 	int		m_frameCount4;
@@ -179,9 +183,14 @@ public:
 	int		m_frameCount8;
 	int		m_frameCount9;
 	int		m_frameCount10;
+	int		m_frameCount11;
+	int		m_frameCount12;
+	int		m_frameCount13;
+	int		m_frameCount14;
+	int		m_frameCount15;
+	int		m_frameCount16;
 	//
 	int		m_frameSpeed;
-	int		m_frameSpeed11;
 	int		m_frameSpeed2;
 	int		m_frameSpeed3;
 	int		m_frameSpeed4;
@@ -191,9 +200,14 @@ public:
 	int		m_frameSpeed8;
 	int		m_frameSpeed9;
 	int		m_frameSpeed10;
+	int		m_frameSpeed11;
+	int		m_frameSpeed12;
+	int		m_frameSpeed13;
+	int		m_frameSpeed14;
+	int		m_frameSpeed15;
+	int		m_frameSpeed16;
 	//
 	int		m_iLoopFrame;
-	int		m_iLoopFrame11;
 	int		m_iLoopFrame2;
 	int		m_iLoopFrame3;
 	int		m_iLoopFrame4;
@@ -203,9 +217,14 @@ public:
 	int		m_iLoopFrame8;
 	int		m_iLoopFrame9;
 	int		m_iLoopFrame10;
+	int		m_iLoopFrame11;
+	int		m_iLoopFrame12;
+	int		m_iLoopFrame13;
+	int		m_iLoopFrame14;
+	int		m_iLoopFrame15;
+	int		m_iLoopFrame16;
 	//
 	int		m_startFrame;
-	int		m_startFrame11;
 	int		m_startFrame2;
 	int		m_startFrame3;
 	int		m_startFrame4;
@@ -215,6 +234,12 @@ public:
 	int		m_startFrame8;
 	int		m_startFrame9;
 	int		m_startFrame10;
+	int		m_startFrame11;
+	int		m_startFrame12;
+	int		m_startFrame13;
+	int		m_startFrame14;
+	int		m_startFrame15;
+	int		m_startFrame16;
 	//
 	BOOL	m_bGenLoopFrame;
 	//}}AFX_DATA
@@ -241,7 +266,6 @@ protected:
 	virtual BOOL OnInitDialog();
 	//
 	afx_msg void OnButtonChooseanimationenum();
-	afx_msg void OnButtonChooseanimationenum11();
 	afx_msg void OnButtonChooseanimationenum2();
 	afx_msg void OnButtonChooseanimationenum3();
 	afx_msg void OnButtonChooseanimationenum4();
@@ -251,9 +275,14 @@ protected:
 	afx_msg void OnButtonChooseanimationenum8();
 	afx_msg void OnButtonChooseanimationenum9();
 	afx_msg void OnButtonChooseanimationenum10();
+	afx_msg void OnButtonChooseanimationenum11();
+	afx_msg void OnButtonChooseanimationenum12();
+	afx_msg void OnButtonChooseanimationenum13();
+	afx_msg void OnButtonChooseanimationenum14();
+	afx_msg void OnButtonChooseanimationenum15();
+	afx_msg void OnButtonChooseanimationenum16();
 	//
 	afx_msg void OnButtonClearanimationenum();
-	afx_msg void OnButtonClearanimationenum11();
 	afx_msg void OnButtonClearanimationenum2();
 	afx_msg void OnButtonClearanimationenum3();
 	afx_msg void OnButtonClearanimationenum4();
@@ -263,9 +292,14 @@ protected:
 	afx_msg void OnButtonClearanimationenum8();
 	afx_msg void OnButtonClearanimationenum9();
 	afx_msg void OnButtonClearanimationenum10();
+	afx_msg void OnButtonClearanimationenum11();
+	afx_msg void OnButtonClearanimationenum12();
+	afx_msg void OnButtonClearanimationenum13();
+	afx_msg void OnButtonClearanimationenum14();
+	afx_msg void OnButtonClearanimationenum15();
+	afx_msg void OnButtonClearanimationenum16();
 	//
 	afx_msg void OnKillfocusStartframe();
-	afx_msg void OnKillfocusStartframe11();
 	afx_msg void OnKillfocusStartframe2();
 	afx_msg void OnKillfocusStartframe3();
 	afx_msg void OnKillfocusStartframe4();
@@ -275,9 +309,14 @@ protected:
 	afx_msg void OnKillfocusStartframe8();
 	afx_msg void OnKillfocusStartframe9();
 	afx_msg void OnKillfocusStartframe10();
+	afx_msg void OnKillfocusStartframe11();
+	afx_msg void OnKillfocusStartframe12();
+	afx_msg void OnKillfocusStartframe13();
+	afx_msg void OnKillfocusStartframe14();
+	afx_msg void OnKillfocusStartframe15();
+	afx_msg void OnKillfocusStartframe16();
 	//
 	afx_msg void OnKillfocusLoopframe();
-	afx_msg void OnKillfocusLoopframe11();
 	afx_msg void OnKillfocusLoopframe2();
 	afx_msg void OnKillfocusLoopframe3();
 	afx_msg void OnKillfocusLoopframe4();
@@ -287,9 +326,14 @@ protected:
 	afx_msg void OnKillfocusLoopframe8();
 	afx_msg void OnKillfocusLoopframe9();
 	afx_msg void OnKillfocusLoopframe10();
+	afx_msg void OnKillfocusLoopframe11();
+	afx_msg void OnKillfocusLoopframe12();
+	afx_msg void OnKillfocusLoopframe13();
+	afx_msg void OnKillfocusLoopframe14();
+	afx_msg void OnKillfocusLoopframe15();
+	afx_msg void OnKillfocusLoopframe16();
 	//
 	afx_msg void OnKillfocusFramespeed();
-	afx_msg void OnKillfocusFramespeed11();
 	afx_msg void OnKillfocusFramespeed2();
 	afx_msg void OnKillfocusFramespeed3();
 	afx_msg void OnKillfocusFramespeed4();
@@ -299,9 +343,14 @@ protected:
 	afx_msg void OnKillfocusFramespeed8();
 	afx_msg void OnKillfocusFramespeed9();
 	afx_msg void OnKillfocusFramespeed10();
+	afx_msg void OnKillfocusFramespeed11();
+	afx_msg void OnKillfocusFramespeed12();
+	afx_msg void OnKillfocusFramespeed13();
+	afx_msg void OnKillfocusFramespeed14();
+	afx_msg void OnKillfocusFramespeed15();
+	afx_msg void OnKillfocusFramespeed16();
 	//
 	afx_msg void OnKillfocusFramecount();
-	afx_msg void OnKillfocusFramecount11();
 	afx_msg void OnKillfocusFramecount2();
 	afx_msg void OnKillfocusFramecount3();
 	afx_msg void OnKillfocusFramecount4();
@@ -311,9 +360,14 @@ protected:
 	afx_msg void OnKillfocusFramecount8();
 	afx_msg void OnKillfocusFramecount9();
 	afx_msg void OnKillfocusFramecount10();
+	afx_msg void OnKillfocusFramecount11();
+	afx_msg void OnKillfocusFramecount12();
+	afx_msg void OnKillfocusFramecount13();
+	afx_msg void OnKillfocusFramecount14();
+	afx_msg void OnKillfocusFramecount15();
+	afx_msg void OnKillfocusFramecount16();
 	//
 	afx_msg void OnKillfocusEditAnimationenum();
-	afx_msg void OnKillfocusEditAnimationenum11();
 	afx_msg void OnKillfocusEditAnimationenum2();
 	afx_msg void OnKillfocusEditAnimationenum3();
 	afx_msg void OnKillfocusEditAnimationenum4();
@@ -323,6 +377,12 @@ protected:
 	afx_msg void OnKillfocusEditAnimationenum8();
 	afx_msg void OnKillfocusEditAnimationenum9();
 	afx_msg void OnKillfocusEditAnimationenum10();
+	afx_msg void OnKillfocusEditAnimationenum11();
+	afx_msg void OnKillfocusEditAnimationenum12();
+	afx_msg void OnKillfocusEditAnimationenum13();
+	afx_msg void OnKillfocusEditAnimationenum14();
+	afx_msg void OnKillfocusEditAnimationenum15();
+	afx_msg void OnKillfocusEditAnimationenum16();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 

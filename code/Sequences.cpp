@@ -1241,6 +1241,11 @@ CSequencePropPage::CSequencePropPage() : CPropertyPage(CSequencePropPage::IDD)
 	m_AnimationEnum9 = _T("");
 	m_AnimationEnum10 = _T("");
 	m_AnimationEnum11 = _T("");
+	m_AnimationEnum12 = _T("");
+	m_AnimationEnum13 = _T("");
+	m_AnimationEnum14 = _T("");
+	m_AnimationEnum15 = _T("");
+	m_AnimationEnum16 = _T("");
 	//
 	m_frameCount = 0;
 	m_frameCount2 = 0;
@@ -1253,6 +1258,11 @@ CSequencePropPage::CSequencePropPage() : CPropertyPage(CSequencePropPage::IDD)
 	m_frameCount9 = 0;
 	m_frameCount10 = 0;
 	m_frameCount11 = 0;
+	m_frameCount12 = 0;
+	m_frameCount13 = 0;
+	m_frameCount14 = 0;
+	m_frameCount15 = 0;
+	m_frameCount16 = 0;
 	//
 	m_frameSpeed = 0;
 	m_frameSpeed2 = 0;
@@ -1265,6 +1275,11 @@ CSequencePropPage::CSequencePropPage() : CPropertyPage(CSequencePropPage::IDD)
 	m_frameSpeed9 = 0;
 	m_frameSpeed10 = 0;
 	m_frameSpeed11 = 0;
+	m_frameSpeed12 = 0;
+	m_frameSpeed13 = 0;
+	m_frameSpeed14 = 0;
+	m_frameSpeed15 = 0;
+	m_frameSpeed16 = 0;
 	//
 	m_iLoopFrame = 0;
 	m_iLoopFrame2 = 0;
@@ -1277,6 +1292,11 @@ CSequencePropPage::CSequencePropPage() : CPropertyPage(CSequencePropPage::IDD)
 	m_iLoopFrame9 = 0;
 	m_iLoopFrame10 = 0;
 	m_iLoopFrame11 = 0;
+	m_iLoopFrame12 = 0;
+	m_iLoopFrame13 = 0;
+	m_iLoopFrame14 = 0;
+	m_iLoopFrame15 = 0;
+	m_iLoopFrame16 = 0;
 	//
 	m_startFrame = 0;
 	m_startFrame2 = 0;
@@ -1289,6 +1309,11 @@ CSequencePropPage::CSequencePropPage() : CPropertyPage(CSequencePropPage::IDD)
 	m_startFrame9 = 0;
 	m_startFrame10 = 0;
 	m_startFrame11 = 0;
+	m_startFrame12 = 0;
+	m_startFrame13 = 0;
+	m_startFrame14 = 0;
+	m_startFrame15 = 0;
+	m_startFrame16 = 0;
 	//
 	m_bGenLoopFrame = FALSE;
 	//}}AFX_DATA_INIT
@@ -1315,6 +1340,11 @@ void CSequencePropPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT_ANIMATIONENUM9, m_AnimationEnum9);
 	DDX_Text(pDX, IDC_EDIT_ANIMATIONENUM10, m_AnimationEnum10);
 	DDX_Text(pDX, IDC_EDIT_ANIMATIONENUM11, m_AnimationEnum11);
+	DDX_Text(pDX, IDC_EDIT_ANIMATIONENUM12, m_AnimationEnum12);
+	DDX_Text(pDX, IDC_EDIT_ANIMATIONENUM13, m_AnimationEnum13);
+	DDX_Text(pDX, IDC_EDIT_ANIMATIONENUM14, m_AnimationEnum14);
+	DDX_Text(pDX, IDC_EDIT_ANIMATIONENUM15, m_AnimationEnum15);
+	DDX_Text(pDX, IDC_EDIT_ANIMATIONENUM16, m_AnimationEnum16);
 	//
 	DDX_Text(pDX, IDC_FRAMECOUNT, m_frameCount);
 	DDX_Text(pDX, IDC_FRAMECOUNT2, m_frameCount2);
@@ -1327,6 +1357,11 @@ void CSequencePropPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_FRAMECOUNT9, m_frameCount9);
 	DDX_Text(pDX, IDC_FRAMECOUNT10, m_frameCount10);
 	DDX_Text(pDX, IDC_FRAMECOUNT11, m_frameCount11);
+	DDX_Text(pDX, IDC_FRAMECOUNT12, m_frameCount12);
+	DDX_Text(pDX, IDC_FRAMECOUNT13, m_frameCount13);
+	DDX_Text(pDX, IDC_FRAMECOUNT14, m_frameCount14);
+	DDX_Text(pDX, IDC_FRAMECOUNT15, m_frameCount15);
+	DDX_Text(pDX, IDC_FRAMECOUNT16, m_frameCount16);
 	//
 	DDX_Text(pDX, IDC_FRAMESPEED, m_frameSpeed);
 	DDX_Text(pDX, IDC_FRAMESPEED2, m_frameSpeed2);
@@ -1339,6 +1374,11 @@ void CSequencePropPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_FRAMESPEED9, m_frameSpeed9);
 	DDX_Text(pDX, IDC_FRAMESPEED10, m_frameSpeed10);
 	DDX_Text(pDX, IDC_FRAMESPEED11, m_frameSpeed11);
+	DDX_Text(pDX, IDC_FRAMESPEED12, m_frameSpeed12);
+	DDX_Text(pDX, IDC_FRAMESPEED13, m_frameSpeed13);
+	DDX_Text(pDX, IDC_FRAMESPEED14, m_frameSpeed14);
+	DDX_Text(pDX, IDC_FRAMESPEED15, m_frameSpeed15);
+	DDX_Text(pDX, IDC_FRAMESPEED16, m_frameSpeed16);
 	//
 	DDX_Text(pDX, IDC_LOOPFRAME, m_iLoopFrame);
 	DDX_Text(pDX, IDC_LOOPFRAME2, m_iLoopFrame2);
@@ -1351,6 +1391,11 @@ void CSequencePropPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_LOOPFRAME9, m_iLoopFrame9);
 	DDX_Text(pDX, IDC_LOOPFRAME10, m_iLoopFrame10);
 	DDX_Text(pDX, IDC_LOOPFRAME11, m_iLoopFrame11);
+	DDX_Text(pDX, IDC_LOOPFRAME12, m_iLoopFrame12);
+	DDX_Text(pDX, IDC_LOOPFRAME13, m_iLoopFrame13);
+	DDX_Text(pDX, IDC_LOOPFRAME14, m_iLoopFrame14);
+	DDX_Text(pDX, IDC_LOOPFRAME15, m_iLoopFrame15);
+	DDX_Text(pDX, IDC_LOOPFRAME16, m_iLoopFrame16);
 	//
 	DDX_Text(pDX, IDC_STARTFRAME, m_startFrame);
 	DDX_Text(pDX, IDC_STARTFRAME2, m_startFrame2);
@@ -1363,6 +1408,11 @@ void CSequencePropPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_STARTFRAME9, m_startFrame9);
 	DDX_Text(pDX, IDC_STARTFRAME10, m_startFrame10);
 	DDX_Text(pDX, IDC_STARTFRAME11, m_startFrame11);
+	DDX_Text(pDX, IDC_STARTFRAME12, m_startFrame12);
+	DDX_Text(pDX, IDC_STARTFRAME13, m_startFrame13);
+	DDX_Text(pDX, IDC_STARTFRAME14, m_startFrame14);
+	DDX_Text(pDX, IDC_STARTFRAME15, m_startFrame15);
+	DDX_Text(pDX, IDC_STARTFRAME16, m_startFrame16);
 	//
 	DDX_Check(pDX, IDC_CHECK_GENLOOPFRAME, m_bGenLoopFrame);
 	//}}AFX_DATA_MAP
@@ -1382,6 +1432,11 @@ BEGIN_MESSAGE_MAP(CSequencePropPage, CPropertyPage)
 	ON_BN_CLICKED(IDC_BUTTON_CHOOSEANIMATIONENUM9, OnButtonChooseanimationenum9)
 	ON_BN_CLICKED(IDC_BUTTON_CHOOSEANIMATIONENUM10, OnButtonChooseanimationenum10)
 	ON_BN_CLICKED(IDC_BUTTON_CHOOSEANIMATIONENUM11, OnButtonChooseanimationenum11)
+	ON_BN_CLICKED(IDC_BUTTON_CHOOSEANIMATIONENUM12, OnButtonChooseanimationenum12)
+	ON_BN_CLICKED(IDC_BUTTON_CHOOSEANIMATIONENUM13, OnButtonChooseanimationenum13)
+	ON_BN_CLICKED(IDC_BUTTON_CHOOSEANIMATIONENUM14, OnButtonChooseanimationenum14)
+	ON_BN_CLICKED(IDC_BUTTON_CHOOSEANIMATIONENUM15, OnButtonChooseanimationenum15)
+	ON_BN_CLICKED(IDC_BUTTON_CHOOSEANIMATIONENUM16, OnButtonChooseanimationenum16)
 	//
 	ON_BN_CLICKED(IDC_BUTTON_CLEARANIMATIONENUM, OnButtonClearanimationenum)
 	ON_BN_CLICKED(IDC_BUTTON_CLEARANIMATIONENUM2, OnButtonClearanimationenum2)
@@ -1394,6 +1449,11 @@ BEGIN_MESSAGE_MAP(CSequencePropPage, CPropertyPage)
 	ON_BN_CLICKED(IDC_BUTTON_CLEARANIMATIONENUM9, OnButtonClearanimationenum9)
 	ON_BN_CLICKED(IDC_BUTTON_CLEARANIMATIONENUM10, OnButtonClearanimationenum10)
 	ON_BN_CLICKED(IDC_BUTTON_CLEARANIMATIONENUM11, OnButtonClearanimationenum11)
+	ON_BN_CLICKED(IDC_BUTTON_CLEARANIMATIONENUM12, OnButtonClearanimationenum12)
+	ON_BN_CLICKED(IDC_BUTTON_CLEARANIMATIONENUM13, OnButtonClearanimationenum13)
+	ON_BN_CLICKED(IDC_BUTTON_CLEARANIMATIONENUM14, OnButtonClearanimationenum14)
+	ON_BN_CLICKED(IDC_BUTTON_CLEARANIMATIONENUM15, OnButtonClearanimationenum15)
+	ON_BN_CLICKED(IDC_BUTTON_CLEARANIMATIONENUM16, OnButtonClearanimationenum16)
 	//
 	ON_EN_KILLFOCUS(IDC_STARTFRAME, OnKillfocusStartframe)
 	ON_EN_KILLFOCUS(IDC_STARTFRAME2, OnKillfocusStartframe2)
@@ -1406,6 +1466,11 @@ BEGIN_MESSAGE_MAP(CSequencePropPage, CPropertyPage)
 	ON_EN_KILLFOCUS(IDC_STARTFRAME9, OnKillfocusStartframe9)
 	ON_EN_KILLFOCUS(IDC_STARTFRAME10, OnKillfocusStartframe10)
 	ON_EN_KILLFOCUS(IDC_STARTFRAME11, OnKillfocusStartframe11)
+	ON_EN_KILLFOCUS(IDC_STARTFRAME12, OnKillfocusStartframe12)
+	ON_EN_KILLFOCUS(IDC_STARTFRAME13, OnKillfocusStartframe13)
+	ON_EN_KILLFOCUS(IDC_STARTFRAME14, OnKillfocusStartframe14)
+	ON_EN_KILLFOCUS(IDC_STARTFRAME15, OnKillfocusStartframe15)
+	ON_EN_KILLFOCUS(IDC_STARTFRAME16, OnKillfocusStartframe16)
 	//
 	ON_EN_KILLFOCUS(IDC_LOOPFRAME, OnKillfocusLoopframe)
 	ON_EN_KILLFOCUS(IDC_LOOPFRAME2, OnKillfocusLoopframe2)
@@ -1418,6 +1483,11 @@ BEGIN_MESSAGE_MAP(CSequencePropPage, CPropertyPage)
 	ON_EN_KILLFOCUS(IDC_LOOPFRAME9, OnKillfocusLoopframe9)
 	ON_EN_KILLFOCUS(IDC_LOOPFRAME10, OnKillfocusLoopframe10)
 	ON_EN_KILLFOCUS(IDC_LOOPFRAME11, OnKillfocusLoopframe11)
+	ON_EN_KILLFOCUS(IDC_LOOPFRAME12, OnKillfocusLoopframe12)
+	ON_EN_KILLFOCUS(IDC_LOOPFRAME13, OnKillfocusLoopframe13)
+	ON_EN_KILLFOCUS(IDC_LOOPFRAME14, OnKillfocusLoopframe14)
+	ON_EN_KILLFOCUS(IDC_LOOPFRAME15, OnKillfocusLoopframe15)
+	ON_EN_KILLFOCUS(IDC_LOOPFRAME16, OnKillfocusLoopframe16)
 	//
 	ON_EN_KILLFOCUS(IDC_FRAMESPEED, OnKillfocusFramespeed)
 	ON_EN_KILLFOCUS(IDC_FRAMESPEED2, OnKillfocusFramespeed2)
@@ -1430,6 +1500,11 @@ BEGIN_MESSAGE_MAP(CSequencePropPage, CPropertyPage)
 	ON_EN_KILLFOCUS(IDC_FRAMESPEED9, OnKillfocusFramespeed9)
 	ON_EN_KILLFOCUS(IDC_FRAMESPEED10, OnKillfocusFramespeed10)
 	ON_EN_KILLFOCUS(IDC_FRAMESPEED11, OnKillfocusFramespeed11)
+	ON_EN_KILLFOCUS(IDC_FRAMESPEED12, OnKillfocusFramespeed12)
+	ON_EN_KILLFOCUS(IDC_FRAMESPEED13, OnKillfocusFramespeed13)
+	ON_EN_KILLFOCUS(IDC_FRAMESPEED14, OnKillfocusFramespeed14)
+	ON_EN_KILLFOCUS(IDC_FRAMESPEED15, OnKillfocusFramespeed15)
+	ON_EN_KILLFOCUS(IDC_FRAMESPEED16, OnKillfocusFramespeed16)
 	//
 	ON_EN_KILLFOCUS(IDC_FRAMECOUNT, OnKillfocusFramecount)
 	ON_EN_KILLFOCUS(IDC_FRAMECOUNT2, OnKillfocusFramecount2)
@@ -1442,6 +1517,11 @@ BEGIN_MESSAGE_MAP(CSequencePropPage, CPropertyPage)
 	ON_EN_KILLFOCUS(IDC_FRAMECOUNT9, OnKillfocusFramecount9)
 	ON_EN_KILLFOCUS(IDC_FRAMECOUNT10, OnKillfocusFramecount10)
 	ON_EN_KILLFOCUS(IDC_FRAMECOUNT11, OnKillfocusFramecount11)
+	ON_EN_KILLFOCUS(IDC_FRAMECOUNT12, OnKillfocusFramecount12)
+	ON_EN_KILLFOCUS(IDC_FRAMECOUNT13, OnKillfocusFramecount13)
+	ON_EN_KILLFOCUS(IDC_FRAMECOUNT14, OnKillfocusFramecount14)
+	ON_EN_KILLFOCUS(IDC_FRAMECOUNT15, OnKillfocusFramecount15)
+	ON_EN_KILLFOCUS(IDC_FRAMECOUNT16, OnKillfocusFramecount16)
 	//
 	ON_EN_KILLFOCUS(IDC_EDIT_ANIMATIONENUM, OnKillfocusEditAnimationenum)
 	ON_EN_KILLFOCUS(IDC_EDIT_ANIMATIONENUM2, OnKillfocusEditAnimationenum2)
@@ -1454,6 +1534,11 @@ BEGIN_MESSAGE_MAP(CSequencePropPage, CPropertyPage)
 	ON_EN_KILLFOCUS(IDC_EDIT_ANIMATIONENUM9, OnKillfocusEditAnimationenum9)
 	ON_EN_KILLFOCUS(IDC_EDIT_ANIMATIONENUM10, OnKillfocusEditAnimationenum10)
 	ON_EN_KILLFOCUS(IDC_EDIT_ANIMATIONENUM11, OnKillfocusEditAnimationenum11)
+	ON_EN_KILLFOCUS(IDC_EDIT_ANIMATIONENUM12, OnKillfocusEditAnimationenum12)
+	ON_EN_KILLFOCUS(IDC_EDIT_ANIMATIONENUM13, OnKillfocusEditAnimationenum13)
+	ON_EN_KILLFOCUS(IDC_EDIT_ANIMATIONENUM14, OnKillfocusEditAnimationenum14)
+	ON_EN_KILLFOCUS(IDC_EDIT_ANIMATIONENUM15, OnKillfocusEditAnimationenum15)
+	ON_EN_KILLFOCUS(IDC_EDIT_ANIMATIONENUM16, OnKillfocusEditAnimationenum16)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -1668,6 +1753,98 @@ void CSequencePropPage::OnButtonChooseanimationenum11()
 	}
 }
 
+void CSequencePropPage::OnButtonChooseanimationenum12()
+{
+	char sReturnString[200];	// OTT
+
+	if (UpdateData(DIALOG_TO_DATA))
+	{
+		CAnimPicker animDialog(&sReturnString[0]);
+		if (animDialog.DoModal() == IDOK)
+		{
+			SetModified(true);	// enable the apply button
+			DEFAULT_FROM_MASTER(12);
+			m_AnimationEnum12 = sReturnString;
+			UpdateData(DATA_TO_DIALOG);
+			HandleAllItemsGraying();
+		}
+	}
+}
+
+void CSequencePropPage::OnButtonChooseanimationenum13()
+{
+	char sReturnString[200];	// OTT
+
+	if (UpdateData(DIALOG_TO_DATA))
+	{
+		CAnimPicker animDialog(&sReturnString[0]);
+		if (animDialog.DoModal() == IDOK)
+		{
+			SetModified(true);	// enable the apply button
+			DEFAULT_FROM_MASTER(13);
+			m_AnimationEnum13 = sReturnString;
+			UpdateData(DATA_TO_DIALOG);
+			HandleAllItemsGraying();
+		}
+	}
+}
+
+void CSequencePropPage::OnButtonChooseanimationenum14()
+{
+	char sReturnString[200];	// OTT
+
+	if (UpdateData(DIALOG_TO_DATA))
+	{
+		CAnimPicker animDialog(&sReturnString[0]);
+		if (animDialog.DoModal() == IDOK)
+		{
+			SetModified(true);	// enable the apply button
+			DEFAULT_FROM_MASTER(14);
+			m_AnimationEnum14 = sReturnString;
+			UpdateData(DATA_TO_DIALOG);
+			HandleAllItemsGraying();
+		}
+	}
+}
+
+void CSequencePropPage::OnButtonChooseanimationenum15()
+{
+	char sReturnString[200];	// OTT
+
+	if (UpdateData(DIALOG_TO_DATA))
+	{
+		CAnimPicker animDialog(&sReturnString[0]);
+		if (animDialog.DoModal() == IDOK)
+		{
+			SetModified(true);	// enable the apply button
+			DEFAULT_FROM_MASTER(15);
+			m_AnimationEnum15 = sReturnString;
+			UpdateData(DATA_TO_DIALOG);
+			HandleAllItemsGraying();
+		}
+	}
+}
+
+void CSequencePropPage::OnButtonChooseanimationenum16()
+{
+	char sReturnString[200];	// OTT
+
+	if (UpdateData(DIALOG_TO_DATA))
+	{
+		CAnimPicker animDialog(&sReturnString[0]);
+		if (animDialog.DoModal() == IDOK)
+		{
+			SetModified(true);	// enable the apply button
+			DEFAULT_FROM_MASTER(16);
+			m_AnimationEnum16 = sReturnString;
+			UpdateData(DATA_TO_DIALOG);
+			HandleAllItemsGraying();
+		}
+	}
+}
+
+/////////////////////////////////////////////////////////////////
+
 void CSequencePropPage::OnButtonClearanimationenum() 
 {
 	if (UpdateData(DIALOG_TO_DATA))
@@ -1789,6 +1966,63 @@ void CSequencePropPage::OnButtonClearanimationenum11()
 	}
 }
 
+void CSequencePropPage::OnButtonClearanimationenum12()
+{
+	if (UpdateData(DIALOG_TO_DATA))
+	{
+		SetModified(true);	// enable the apply button
+		m_AnimationEnum12 = "";
+		UpdateData(DATA_TO_DIALOG);
+		HandleAllItemsGraying();
+	}
+}
+
+void CSequencePropPage::OnButtonClearanimationenum13()
+{
+	if (UpdateData(DIALOG_TO_DATA))
+	{
+		SetModified(true);	// enable the apply button
+		m_AnimationEnum13 = "";
+		UpdateData(DATA_TO_DIALOG);
+		HandleAllItemsGraying();
+	}
+}
+
+void CSequencePropPage::OnButtonClearanimationenum14()
+{
+	if (UpdateData(DIALOG_TO_DATA))
+	{
+		SetModified(true);	// enable the apply button
+		m_AnimationEnum14 = "";
+		UpdateData(DATA_TO_DIALOG);
+		HandleAllItemsGraying();
+	}
+}
+
+void CSequencePropPage::OnButtonClearanimationenum15()
+{
+	if (UpdateData(DIALOG_TO_DATA))
+	{
+		SetModified(true);	// enable the apply button
+		m_AnimationEnum15 = "";
+		UpdateData(DATA_TO_DIALOG);
+		HandleAllItemsGraying();
+	}
+}
+
+void CSequencePropPage::OnButtonClearanimationenum16()
+{
+	if (UpdateData(DIALOG_TO_DATA))
+	{
+		SetModified(true);	// enable the apply button
+		m_AnimationEnum16 = "";
+		UpdateData(DATA_TO_DIALOG);
+		HandleAllItemsGraying();
+	}
+}
+
+/////////////////////////////////////////////////////////////////
+
 void CSequencePropPage::OnCancel() 
 {
 	UpdateData(DATA_TO_DIALOG);		// stops a nasty bug in MFC whereby having crap data (eg 'a' in an int-box) gets you stuck in a loop if you ESC from a prop page
@@ -1850,6 +2084,33 @@ void CSequencePropPage::OnKillfocusStartframe11()
 	ONKILLFOCUS;
 }
 
+void CSequencePropPage::OnKillfocusStartframe12()
+{
+	ONKILLFOCUS;
+}
+
+void CSequencePropPage::OnKillfocusStartframe13()
+{
+	ONKILLFOCUS;
+}
+
+void CSequencePropPage::OnKillfocusStartframe14()
+{
+	ONKILLFOCUS;
+}
+
+void CSequencePropPage::OnKillfocusStartframe15()
+{
+	ONKILLFOCUS;
+}
+
+void CSequencePropPage::OnKillfocusStartframe16()
+{
+	ONKILLFOCUS;
+}
+
+/////////////////////////////////////////////////////////////////
+
 void CSequencePropPage::OnKillfocusLoopframe() 
 {
 	ONKILLFOCUS;	
@@ -1904,6 +2165,33 @@ void CSequencePropPage::OnKillfocusLoopframe11()
 {
 	ONKILLFOCUS;
 }
+
+void CSequencePropPage::OnKillfocusLoopframe12()
+{
+	ONKILLFOCUS;
+}
+
+void CSequencePropPage::OnKillfocusLoopframe13()
+{
+	ONKILLFOCUS;
+}
+
+void CSequencePropPage::OnKillfocusLoopframe14()
+{
+	ONKILLFOCUS;
+}
+
+void CSequencePropPage::OnKillfocusLoopframe15()
+{
+	ONKILLFOCUS;
+}
+
+void CSequencePropPage::OnKillfocusLoopframe16()
+{
+	ONKILLFOCUS;
+}
+
+/////////////////////////////////////////////////////////////////
 
 void CSequencePropPage::OnKillfocusFramespeed()
 {
@@ -1960,6 +2248,33 @@ void CSequencePropPage::OnKillfocusFramespeed11()
 	ONKILLFOCUS;
 }
 
+void CSequencePropPage::OnKillfocusFramespeed12()
+{
+	ONKILLFOCUS;
+}
+
+void CSequencePropPage::OnKillfocusFramespeed13()
+{
+	ONKILLFOCUS;
+}
+
+void CSequencePropPage::OnKillfocusFramespeed14()
+{
+	ONKILLFOCUS;
+}
+
+void CSequencePropPage::OnKillfocusFramespeed15()
+{
+	ONKILLFOCUS;
+}
+
+void CSequencePropPage::OnKillfocusFramespeed16()
+{
+	ONKILLFOCUS;
+}
+
+/////////////////////////////////////////////////////////////////
+
 void CSequencePropPage::OnKillfocusFramecount()
 {
 	ONKILLFOCUS;
@@ -2014,6 +2329,33 @@ void CSequencePropPage::OnKillfocusFramecount11()
 {
 	ONKILLFOCUS;
 }
+
+void CSequencePropPage::OnKillfocusFramecount12()
+{
+	ONKILLFOCUS;
+}
+
+void CSequencePropPage::OnKillfocusFramecount13()
+{
+	ONKILLFOCUS;
+}
+
+void CSequencePropPage::OnKillfocusFramecount14()
+{
+	ONKILLFOCUS;
+}
+
+void CSequencePropPage::OnKillfocusFramecount15()
+{
+	ONKILLFOCUS;
+}
+
+void CSequencePropPage::OnKillfocusFramecount16()
+{
+	ONKILLFOCUS;
+}
+
+/////////////////////////////////////////////////////////////////
 
 void CSequencePropPage::OnKillfocusEditAnimationenum()
 {
@@ -2070,6 +2412,31 @@ void CSequencePropPage::OnKillfocusEditAnimationenum11()
 	ONKILLFOCUS;
 }
 
+void CSequencePropPage::OnKillfocusEditAnimationenum12()
+{
+	ONKILLFOCUS;
+}
+
+void CSequencePropPage::OnKillfocusEditAnimationenum13()
+{
+	ONKILLFOCUS;
+}
+
+void CSequencePropPage::OnKillfocusEditAnimationenum14()
+{
+	ONKILLFOCUS;
+}
+
+void CSequencePropPage::OnKillfocusEditAnimationenum15()
+{
+	ONKILLFOCUS;
+}
+
+void CSequencePropPage::OnKillfocusEditAnimationenum16()
+{
+	ONKILLFOCUS;
+}
+
 // this is called by the OK and/or Apply buttons...
 
 void CSequencePropPage::OkOrApply()
@@ -2098,10 +2465,15 @@ void CSequencePropPage::OkOrApply()
 	OK_ADDITIONAL(9);
 	OK_ADDITIONAL(10);
 	OK_ADDITIONAL(11);
+	OK_ADDITIONAL(12);
+	OK_ADDITIONAL(13);
+	OK_ADDITIONAL(14);
+	OK_ADDITIONAL(15);
+	OK_ADDITIONAL(16);
 
 	// ensure I don't forget any future expansions by putting the next index in the sequence in an err-check...
 
-	#if !(12 == (MAX_ADDITIONAL_SEQUENCES+2))
+	#if !(17 == (MAX_ADDITIONAL_SEQUENCES+2))
 	#error Need more OK_ code...
 	#endif
 
@@ -2156,10 +2528,15 @@ BOOL CSequencePropPage::OnInitDialog()
 	INIT_ADDITIONAL(9);
 	INIT_ADDITIONAL(10);
 	INIT_ADDITIONAL(11);
+	INIT_ADDITIONAL(12);
+	INIT_ADDITIONAL(13);
+	INIT_ADDITIONAL(14);
+	INIT_ADDITIONAL(15);
+	INIT_ADDITIONAL(16);
 
 	// ensure I don't forget any future expansions by putting the next index in the sequence in an err-check...
 
-	#if !(12 == (MAX_ADDITIONAL_SEQUENCES+2))
+	#if !(17 == (MAX_ADDITIONAL_SEQUENCES+2))
 	#error Need more INIT_ code...
 	#endif
 
@@ -2203,10 +2580,15 @@ void CSequencePropPage::HandleAdditionalEditBoxesGraying()
 	GRAY_ADDITIONAL(9);
 	GRAY_ADDITIONAL(10);
 	GRAY_ADDITIONAL(11);
+	GRAY_ADDITIONAL(12);
+	GRAY_ADDITIONAL(13);
+	GRAY_ADDITIONAL(14);
+	GRAY_ADDITIONAL(15);
+	GRAY_ADDITIONAL(16);
 
 	// ensure I don't forget any future expansions by putting the next index in the sequence in an err-check...
 
-	#if !(12 == (MAX_ADDITIONAL_SEQUENCES+2))
+	#if !(17 == (MAX_ADDITIONAL_SEQUENCES+2))
 	#error Need more gray-handler code...
 	#endif
 }
