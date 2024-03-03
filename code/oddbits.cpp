@@ -167,6 +167,20 @@ void Filename_RemoveBASEQ(CString &string)
 	}	
 }
 
+// takes (eg) "textures/borg/name.tga"
+// and produces "textures/borg/name"
+
+void Filename_RemoveExt(CString& string)
+{
+	string.Replace("\\", "/");
+
+	int loc = string.ReverseFind('.');
+	if (loc >= 0)
+	{
+		string = string.Left(loc);
+	}
+}
+
 
 // takes (eg) "textures/borg/name.tga"
 // and produces "textures/borg"

@@ -22,6 +22,7 @@ char *InputLoadFileName(char *psInitialLoadName, char *psCaption, const char *ps
 long filesize(FILE *handle);
 int  scLoadFile (LPCSTR psPathedFilename, void **bufferptr, bool bBinaryMode = true );
 void Filename_RemoveBASEQ(CString &string);
+void Filename_RemoveExt(CString& string);
 void Filename_RemoveFilename(CString &string);
 void Filename_BaseOnly(CString &string);
 void Filename_AccountForLOD(CString &string, int iLODLevel);

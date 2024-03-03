@@ -200,6 +200,8 @@ protected:
 	afx_msg void OnCheckMakeskel();
 	afx_msg void OnButtonDelpcj();
 	afx_msg void OnButtonPcj();
+	afx_msg void OnSkelPathBrowse();
+	afx_msg void OnRefGLAPathBrowse();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 

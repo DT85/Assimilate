@@ -115,11 +115,9 @@ void ReadXSIHeader(LPCSTR psFilename, int &iStartFrame, int &iFrameCount, int &i
 	// let's try the fast way of reading first, by scanning directly for the header value if it's a 3.0 file...
 	{
 		bool bGotInfo = false;
-#if (_MSC_VER >= 1900) //vs2015+
+
 		FILE *fp = fopen(psFilename, "r");
-#elif (_MSC_VER == 1310) //vs2003
-		FILE *fp = fopen(psFilename, "ra");
-#endif
+
 		if (fp)
 		{
 			fseek(fp,0,SEEK_END);

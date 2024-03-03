@@ -35,6 +35,7 @@ void CBuildAll::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CBuildAll, CDialog)
 	//{{AFX_MSG_MAP(CBuildAll)
+	ON_BN_CLICKED(IDC_BUILDPATH_BROWSE, OnBuildPathBrowse)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -59,4 +60,25 @@ void CBuildAll::GetData(CString& strPath, bool& bPreValidate)
 {
 	strPath		= m_strBuildPath;
 	bPreValidate= !!m_bPreValidateCARs;
+}
+
+void CBuildAll::OnBuildPathBrowse()
+{
+	CFolderPickerDialog theDialog;
+	//theDialog.m_ofn.lpstrInitialDir = _T("C:\\");
+
+	int result = theDialog.DoModal();
+	if (result != IDOK)
+	{
+		return;
+	}
+
+	m_strBuildPath = theDialog.GetPathName();
+
+	Filename_RemoveBASEQ(m_strBuildPath);
+
+	// May need to add a '\' for usage in GUI and for later file saving, 
+	// as there is no '\' on the returned name
+	m_strBuildPath += _T("/");
+	UpdateData(FALSE);
 }

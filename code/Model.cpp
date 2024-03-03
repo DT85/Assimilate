@@ -1417,11 +1417,47 @@ BEGIN_MESSAGE_MAP(CModelPropPage, CPropertyPage)
 	ON_BN_CLICKED(IDC_CHECK_MAKESKEL, OnCheckMakeskel)
 	ON_BN_CLICKED(IDC_BUTTON_DELPCJ, OnButtonDelpcj)
 	ON_BN_CLICKED(IDC_BUTTON_PCJ, OnButtonPcj)
+	ON_BN_CLICKED(IDC_SKELPATH_BROWSE, OnSkelPathBrowse)
+	ON_BN_CLICKED(IDC_REFGLAPATH_BROWSE, OnRefGLAPathBrowse)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CModelPropPage message handlers
+
+void CModelPropPage::OnSkelPathBrowse()
+{
+	// TODO: Add your control notification handler code here
+	CFileDialog theDialog(false, ".gla", NULL, OFN_EXPLORER | OFN_PATHMUSTEXIST, _T("GLA File (*.gla)|*.gla"), NULL);
+	int result = theDialog.DoModal();
+	if (result != IDOK)
+	{
+		return;
+	}
+	m_strSkelPath = theDialog.GetPathName();
+
+	Filename_RemoveBASEQ(m_strSkelPath);
+
+	Filename_RemoveExt(m_strSkelPath);
+
+	UpdateData(FALSE);
+}
+
+void CModelPropPage::OnRefGLAPathBrowse()
+{
+	// TODO: Add your control notification handler code here
+	CFileDialog theDialog(true, ".gla", NULL, OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST, _T("GLA File (*.gla)|*.gla"), NULL);
+	int result = theDialog.DoModal();
+	if (result != IDOK)
+	{
+		return;
+	}
+	m_strRefGLAPath = theDialog.GetPathName();
+
+	Filename_RemoveBASEQ(m_strRefGLAPath);
+
+	UpdateData(FALSE);
+}
 
 void CModelPropPage::OnOK()
 {

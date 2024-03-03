@@ -27,6 +27,8 @@
 #define IDC_ENUM                        1010
 #define IDC_ENUM_BROWSE                 1011
 #define IDC_BUFFSIZE                    1012
+#define IDC_ENUM_BROWSE2                1012
+#define IDC_REFGLAPATH_BROWSE           1012
 #define IDC_QDATA                       1013
 #define IDC_QDATA_BROWSE                1014
 #define IDC_QUAKEDIR                    1015
@@ -71,15 +73,15 @@
 #define IDC_PCJ_STATIC                  1054
 #define IDC_EDIT_REFGLAPATH             1055
 #define IDC_STATIC_REFGLAPATH           1056
-//
 #define IDC_STARTFRAME                  1057
+#define IDC_STATIC_REFGLAPATH2          1057
 #define IDC_FRAMECOUNT                  1058
+#define IDC_STATIC_REFGLAPATH3          1058
 #define IDC_FRAMESPEED                  1059
 #define IDC_LOOPFRAME                   1060
 #define IDC_EDIT_ANIMATIONENUM          1061
 #define IDC_BUTTON_CHOOSEANIMATIONENUM  1062
 #define IDC_BUTTON_CLEARANIMATIONENUM   1063
-//
 #define IDC_STARTFRAME2                 1064
 #define IDC_FRAMECOUNT2                 1065
 #define IDC_FRAMESPEED2                 1066
@@ -87,7 +89,6 @@
 #define IDC_EDIT_ANIMATIONENUM2         1068
 #define IDC_BUTTON_CHOOSEANIMATIONENUM2 1069
 #define IDC_BUTTON_CLEARANIMATIONENUM2  1070
-//
 #define IDC_STARTFRAME3                 1071
 #define IDC_FRAMECOUNT3                 1072
 #define IDC_FRAMESPEED3                 1073
@@ -95,15 +96,15 @@
 #define IDC_EDIT_ANIMATIONENUM3         1075
 #define IDC_BUTTON_CHOOSEANIMATIONENUM3 1076
 #define IDC_BUTTON_CLEARANIMATIONENUM3  1077
-//
 #define IDC_STARTFRAME4                 1078
 #define IDC_FRAMECOUNT4                 1079
 #define IDC_FRAMESPEED4                 1080
 #define IDC_LOOPFRAME4                  1081
 #define IDC_EDIT_ANIMATIONENUM4         1082
+#define IDC_BUILDPATH_BROWSE            1082
 #define IDC_BUTTON_CHOOSEANIMATIONENUM4 1083
+#define IDC_SKELPATH_BROWSE             1083
 #define IDC_BUTTON_CLEARANIMATIONENUM4  1084
-//
 #define IDC_STARTFRAME5                 1085
 #define IDC_FRAMECOUNT5                 1086
 #define IDC_FRAMESPEED5                 1087
@@ -111,7 +112,6 @@
 #define IDC_EDIT_ANIMATIONENUM5         1089
 #define IDC_BUTTON_CHOOSEANIMATIONENUM5 1090
 #define IDC_BUTTON_CLEARANIMATIONENUM5  1091
-//
 #define IDC_STARTFRAME6                 1092
 #define IDC_FRAMECOUNT6                 1093
 #define IDC_FRAMESPEED6                 1094
@@ -119,7 +119,6 @@
 #define IDC_EDIT_ANIMATIONENUM6         1096
 #define IDC_BUTTON_CHOOSEANIMATIONENUM6 1097
 #define IDC_BUTTON_CLEARANIMATIONENUM6  1098
-//
 #define IDC_STARTFRAME7                 1099
 #define IDC_FRAMECOUNT7                 1100
 #define IDC_FRAMESPEED7                 1101
@@ -127,7 +126,6 @@
 #define IDC_EDIT_ANIMATIONENUM7         1103
 #define IDC_BUTTON_CHOOSEANIMATIONENUM7 1104
 #define IDC_BUTTON_CLEARANIMATIONENUM7  1105
-//
 #define IDC_STARTFRAME8                 1106
 #define IDC_FRAMECOUNT8                 1107
 #define IDC_FRAMESPEED8                 1108
@@ -135,7 +133,6 @@
 #define IDC_EDIT_ANIMATIONENUM8         1110
 #define IDC_BUTTON_CHOOSEANIMATIONENUM8 1111
 #define IDC_BUTTON_CLEARANIMATIONENUM8  1112
-//
 #define IDC_STARTFRAME9                 1113
 #define IDC_FRAMECOUNT9                 1114
 #define IDC_FRAMESPEED9                 1115
@@ -143,7 +140,6 @@
 #define IDC_EDIT_ANIMATIONENUM9         1117
 #define IDC_BUTTON_CHOOSEANIMATIONENUM9 1118
 #define IDC_BUTTON_CLEARANIMATIONENUM9  1119
-//
 #define IDC_STARTFRAME10                1120
 #define IDC_FRAMECOUNT10                1121
 #define IDC_FRAMESPEED10                1122
@@ -151,7 +147,6 @@
 #define IDC_EDIT_ANIMATIONENUM10        1124
 #define IDC_BUTTON_CHOOSEANIMATIONENUM10 1125
 #define IDC_BUTTON_CLEARANIMATIONENUM10 1126
-//
 #define IDC_STARTFRAME11                1127
 #define IDC_FRAMECOUNT11                1128
 #define IDC_FRAMESPEED11                1129
@@ -159,7 +154,6 @@
 #define IDC_EDIT_ANIMATIONENUM11        1131
 #define IDC_BUTTON_CHOOSEANIMATIONENUM11 1132
 #define IDC_BUTTON_CLEARANIMATIONENUM11 1133
-//
 #define IDC_STARTFRAME12                1134
 #define IDC_FRAMECOUNT12                1135
 #define IDC_FRAMESPEED12                1136
@@ -167,7 +161,6 @@
 #define IDC_EDIT_ANIMATIONENUM12        1138
 #define IDC_BUTTON_CHOOSEANIMATIONENUM12 1139
 #define IDC_BUTTON_CLEARANIMATIONENUM12 1140
-//
 #define IDC_STARTFRAME13                1141
 #define IDC_FRAMECOUNT13                1142
 #define IDC_FRAMESPEED13                1143
@@ -175,7 +168,6 @@
 #define IDC_EDIT_ANIMATIONENUM13        1145
 #define IDC_BUTTON_CHOOSEANIMATIONENUM13 1146
 #define IDC_BUTTON_CLEARANIMATIONENUM13 1147
-//
 #define IDC_STARTFRAME14                1148
 #define IDC_FRAMECOUNT14                1149
 #define IDC_FRAMESPEED14                1150
@@ -183,7 +175,6 @@
 #define IDC_EDIT_ANIMATIONENUM14        1152
 #define IDC_BUTTON_CHOOSEANIMATIONENUM14 1153
 #define IDC_BUTTON_CLEARANIMATIONENUM14 1154
-//
 #define IDC_STARTFRAME15                1155
 #define IDC_FRAMECOUNT15                1156
 #define IDC_FRAMESPEED15                1157
@@ -191,7 +182,6 @@
 #define IDC_EDIT_ANIMATIONENUM15        1159
 #define IDC_BUTTON_CHOOSEANIMATIONENUM15 1160
 #define IDC_BUTTON_CLEARANIMATIONENUM15 1161
-//
 #define IDC_STARTFRAME16                1162
 #define IDC_FRAMECOUNT16                1163
 #define IDC_FRAMESPEED16                1164
@@ -199,7 +189,6 @@
 #define IDC_EDIT_ANIMATIONENUM16        1166
 #define IDC_BUTTON_CHOOSEANIMATIONENUM16 1167
 #define IDC_BUTTON_CLEARANIMATIONENUM16 1168
-
 #define IDM_ADDFILES                    32771
 #define IDM_EXTERNAL                    32772
 #define IDM_RESEQUENCE                  32773
@@ -225,7 +214,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        143
 #define _APS_NEXT_COMMAND_VALUE         32790
-#define _APS_NEXT_CONTROL_VALUE         1082
+#define _APS_NEXT_CONTROL_VALUE         1084
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

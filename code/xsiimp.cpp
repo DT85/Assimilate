@@ -744,11 +744,12 @@ int XSI_LoadFile(const char *filename)
 	char *filebin=0;
 	TxtNode *root;
 
-	FILE *fp=fopen(filename,"ra");
+	FILE* fp = fopen(filename, "r");
 	if (!fp){
 		InfoBox(va("File not found: \"%s\"",filename));
 		return 0;
 	}
+
 	fseek(fp,0,SEEK_END);
 	int len=ftell(fp);
 	filebin=new char[len];

@@ -18,6 +18,8 @@ public:
 
 	void GetData(CString& strPath, bool& bPreValidate);
 
+	afx_msg void OnBuildPathBrowse();
+
 // Dialog Data
 	//{{AFX_DATA(CBuildAll)
 	enum { IDD = IDD_BUILD_ALL };
