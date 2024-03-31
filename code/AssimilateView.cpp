@@ -130,7 +130,8 @@ void CAssimilateView::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 typedef enum
 {
 	TS_BY_ENUMTYPE = 0,			// sort enums by type
-	TS_BY_ENUMTYPENAME = 1,		// sort enums by type & name
+	TS_BY_ENUMTYPENAME,			// sort enums by type & name
+	TS_BY_XSIPATH,				// sort by .xsi path
 } TREESORTTYPE;
 
 // tree item compare callback,
@@ -147,6 +148,55 @@ int CALLBACK TreeCompareFunc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 
 	switch (lParamSort)
 	{
+		case TS_BY_XSIPATH:
+		{
+			// sort by .xsi file path
+			CString seq1Path = seq1->GetPath();
+			CString seq2Path = seq2->GetPath();
+
+			Filename_RemoveFilename(seq1Path);
+			Filename_RemoveFilename(seq2Path);
+
+			int j = strcmp(seq1Path, seq2Path);
+
+			if (j < 0)
+			{
+				return ITEM1_BEFORE_ITEM2;
+			}
+
+			if (j > 0)
+			{
+				return ITEM1_AFTER_ITEM2;
+			}
+
+			// now sort by enum type
+			if (seq1->GetEnumType() < seq2->GetEnumType())
+			{
+				return ITEM1_BEFORE_ITEM2;
+			}
+
+			if (seq1->GetEnumType() > seq2->GetEnumType())
+			{
+				return ITEM1_AFTER_ITEM2;
+			}
+
+			// and lastly, sort alphabetically
+
+			int i = strcmp(seq1->GetEnum(), seq2->GetEnum());
+
+			if (i < 0)
+			{
+				return ITEM1_BEFORE_ITEM2;
+			}
+
+			if (i > 0)
+			{
+				return ITEM1_AFTER_ITEM2;
+			}
+			
+			return ITEM1_MATCHES_ITEM2;
+		}
+
 		case TS_BY_ENUMTYPE:
 		{
 			// enumtypes are enum'd lower-numbers-more-important...
@@ -275,11 +325,23 @@ bool CAssimilateView::DeleteCurrentItem(bool bNoQueryForSequenceDelete)
 // also re-orders model(s) sequences to match tree order...
 void CAssimilateView::SortTree()
 {
-	// Whether to sort anim enums alphabetically...
+	// Sort anims alphabetically...
 	if (gbReSortAnimList)
+	{
 		TreeSort(GetTreeCtrl(), TS_BY_ENUMTYPENAME);
-	else
+	}
+	
+	// Sort anims by .xsi file path...
+	if (gbReSortAnimListByPath)
+	{
+		TreeSort(GetTreeCtrl(), TS_BY_XSIPATH);
+	}
+	// We want the tree to reflect the organisation of the loaded .car,
+	// so we're not going to sort by enum type by default.
+	/*else
+	{
 		TreeSort(GetTreeCtrl(), TS_BY_ENUMTYPE);
+	}*/
 
 	// now update models to reflect their positions within the tree struct...
 	HTREEITEM hTreeItem_Model = GetTreeCtrl().GetRootItem();

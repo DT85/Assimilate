@@ -165,6 +165,8 @@ protected:
 	afx_msg void OnUpdateEditLaunchmodviewoncurrent(CCmdUI* pCmdUI);
 	afx_msg void OnResort();
 	afx_msg void OnUpdateResort(CCmdUI* pCmdUI);
+	afx_msg void OnResortByPath();
+	afx_msg void OnUpdateResortByPath(CCmdUI* pCmdUI);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

@@ -11,6 +11,7 @@ bool gbViewAnimEnums = false;
 bool gbViewFrameDetails = false;
 bool gbViewFrameDetails_Additional = false;
 bool gbReSortAnimList = false;
+bool gbReSortAnimListByPath = false;
 
 /////////////////////////////////////////////////////////////////////////////
 // CAssimilateApp

@@ -152,6 +152,8 @@ BEGIN_MESSAGE_MAP(CAssimilateDoc, CDocument)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_LAUNCHMODVIEWONCURRENT, OnUpdateEditLaunchmodviewoncurrent)
 	ON_COMMAND(IDM_RESORT, OnResort)
 	ON_UPDATE_COMMAND_UI(IDM_RESORT, OnUpdateResort)
+	ON_COMMAND(IDM_RESORTBYPATH, OnResortByPath)
+	ON_UPDATE_COMMAND_UI(IDM_RESORTBYPATH, OnUpdateResortByPath)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -1540,6 +1542,22 @@ void CAssimilateDoc::OnResort()
 	{
 		SetModifiedFlag();
 		UpdateAllViews(NULL, AS_FILESUPDATED, NULL);
+
+		gbReSortAnimList = false;
+	}
+}
+
+void CAssimilateDoc::OnResortByPath()
+{
+	extern bool gbReSortAnimListByPath;
+	gbReSortAnimListByPath = GetYesNo(va("Do you want to sort all animations by .xsi file path, regardless of enum type?"));
+
+	if (gbReSortAnimListByPath)
+	{
+		SetModifiedFlag();
+		UpdateAllViews(NULL, AS_FILESUPDATED, NULL);
+
+		gbReSortAnimListByPath = false;
 	}
 }
 
@@ -2852,6 +2870,11 @@ void CAssimilateDoc::OnUpdateEditLaunchmodviewoncurrent(CCmdUI* pCmdUI)
 }
 
 void CAssimilateDoc::OnUpdateResort(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable(!!GetNumModels());
+}
+
+void CAssimilateDoc::OnUpdateResortByPath(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable(!!GetNumModels());
 }

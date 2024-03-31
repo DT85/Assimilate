@@ -205,7 +205,8 @@
 #define ID_VIEW_FRAMEDETAILSONADDITIONALSEQUENCES 32784
 #define ID_BUTTON_RESEQUENCE            32785
 #define IDM_RESORT                      32786
-#define ID_EDIT_LAUNCHMODVIEWONCURRENT  32787
+#define IDM_RESORTBYPATH                32787
+#define ID_EDIT_LAUNCHMODVIEWONCURRENT  32788
 
 // Next default values for new objects
 // 

@@ -13,6 +13,7 @@
 
 #define APPROX_LONGEST_ASE_NAME 20
 extern bool gbReSortAnimList;
+extern bool gbReSortAnimListByPath;
 extern bool gbViewAnimEnums;
 extern bool gbViewFrameDetails;
 extern bool gbViewFrameDetails_Additional;
