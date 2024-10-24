@@ -744,7 +744,7 @@ int XSI_LoadFile(const char *filename)
 	char *filebin=0;
 	TxtNode *root;
 
-	FILE* fp = fopen(filename, "r");
+	FILE* fp = fopen(filename, "rb");	// "ra"	-stefind
 	if (!fp){
 		InfoBox(va("File not found: \"%s\"",filename));
 		return 0;
@@ -754,10 +754,11 @@ int XSI_LoadFile(const char *filename)
 	int len=ftell(fp);
 	filebin=new char[len];
 	fseek(fp,0,SEEK_SET);
-	if (fread(filebin,1,len,fp)!=(size_t)len)
+	unsigned int uiFileBytesRead;
+	if (uiFileBytesRead = fread(filebin,1,len,fp)!=(size_t)len)
 	{	
 		fclose(fp);
-		InfoBox(va("Bad XSI file\n",filename));
+		InfoBox(va("Read error in XSI file '%s', Expected %d bytes, read %d bytes\n", filename, len, uiFileBytesRead));
 		delete(filebin);
 		return 0;
 	}
