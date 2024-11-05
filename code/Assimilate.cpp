@@ -587,7 +587,7 @@ void CAssimilatePropPage::OnEnumBrowse()
 void CAssimilatePropPage::OnQdataBrowse()
 {
 	// TODO: Add your control notification handler code here
-	CFileDialog theDialog(true, ".exe", NULL, OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST, _T("QData File (*.exe)|*.exe|All Files|*.*||"), NULL);
+	CFileDialog theDialog(true, ".exe", NULL, OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST, _T("QData/Carcass File (*.exe)|*.exe|All Files|*.*||"), NULL);
 	int result = theDialog.DoModal();
 	if (result != IDOK)
 	{

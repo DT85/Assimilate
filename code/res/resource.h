@@ -11,6 +11,7 @@
 #define IDR_MAINFRAME                   128
 #define IDR_ASSIMITYPE                  129
 #define IDD_ANIMPICKER                  131
+#define IDR_TOOLBAR                     132
 #define IDD_DIALOG_YESNOYESNOALL        134
 #define IDD_BUILD_ALL                   135
 #define IDB_TREEIMAGES                  155
@@ -203,10 +204,11 @@
 #define ID_EDIT_BUILDALL                32782
 #define IDM_EDIT_BUILDDEPENDANT         32783
 #define ID_VIEW_FRAMEDETAILSONADDITIONALSEQUENCES 32784
-#define ID_BUTTON_RESEQUENCE            32785
-#define IDM_RESORT                      32786
-#define IDM_RESORTBYPATH                32787
-#define ID_EDIT_LAUNCHMODVIEWONCURRENT  32788
+#define IDM_RESORT                      32785
+#define IDM_RESORTBYPATH                32786
+#define ID_EDIT_LAUNCHMODVIEWONCURRENT  32787
+#define ID_Menu                         32788
+#define ID_BUTTON32792                  32792
 
 // Next default values for new objects
 // 
@@ -214,7 +216,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        143
-#define _APS_NEXT_COMMAND_VALUE         32790
+#define _APS_NEXT_COMMAND_VALUE         32793
 #define _APS_NEXT_CONTROL_VALUE         1084
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

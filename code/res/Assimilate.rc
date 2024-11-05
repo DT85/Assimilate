@@ -74,7 +74,7 @@ IDR_ASSIMITYPE          ICON                    "AssimilateDoc.ico"
 // Bitmap
 //
 
-IDR_MAINFRAME           BITMAP                  "Toolbar.bmp"
+IDR_TOOLBAR             BITMAP                  "Toolbar.bmp"
 
 IDB_TREEIMAGES          BITMAP                  "treeimage.bmp"
 
@@ -84,26 +84,8 @@ IDB_TREEIMAGES          BITMAP                  "treeimage.bmp"
 // Toolbar
 //
 
-IDR_MAINFRAME TOOLBAR 23, 21
+IDR_TOOLBAR TOOLBAR 85, 21
 BEGIN
-    BUTTON      ID_FILE_NEW
-    BUTTON      ID_FILE_OPEN
-    BUTTON      ID_FILE_SAVE
-    SEPARATOR
-    BUTTON      ID_EDIT_CUT
-    BUTTON      ID_EDIT_COPY
-    BUTTON      ID_EDIT_PASTE
-    SEPARATOR
-    BUTTON      ID_FILE_PRINT
-    SEPARATOR
-    BUTTON      ID_APP_ABOUT
-    BUTTON      IDM_RESEQUENCE
-    BUTTON      IDM_BUILD
-    BUTTON      ID_EDIT_BUILDALL
-    BUTTON      IDM_EDIT_BUILDDEPENDANT
-    BUTTON      IDM_VALIDATE
-    BUTTON      IDM_CARWASH
-    BUTTON      ID_EDIT_LAUNCHMODVIEWONCURRENT
     BUTTON      IDM_RESORT
     BUTTON      IDM_RESORTBYPATH
 END
@@ -123,10 +105,10 @@ BEGIN
         MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
         MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
         MENUITEM SEPARATOR
-        MENUITEM "Add sequences...",            IDM_ADDFILES
-        MENUITEM "Write animation.cfg...",      IDM_EXTERNAL
+        MENUITEM "Add sequence(s)...",          IDM_ADDFILES
+        MENUITEM "Save animation.cfg...",       IDM_EXTERNAL
         MENUITEM SEPARATOR
-        MENUITEM "Recent file",                 ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM "Recent file",                 ID_FILE_MRU_FILE1
         MENUITEM SEPARATOR
         MENUITEM "E&xit",                       ID_APP_EXIT
     END
@@ -138,28 +120,30 @@ BEGIN
         MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
         MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
         MENUITEM SEPARATOR
-        MENUITEM "Build model",                 IDM_BUILD
-        MENUITEM "Validate",                    IDM_VALIDATE
-        MENUITEM "View current model via ModView", ID_EDIT_LAUNCHMODVIEWONCURRENT
-        MENUITEM SEPARATOR
-        MENUITEM "Validate "" *.CAR(s) """,     IDM_CARWASH
-        MENUITEM SEPARATOR
-        MENUITEM "Build every *.CAR file in the project... ", ID_EDIT_BUILDALL
-        MENUITEM "Build dependant models",      IDM_EDIT_BUILDDEPENDANT
-        MENUITEM SEPARATOR
         MENUITEM "Preferences...",              IDM_PROPERTIES
+    END
+    POPUP "Tools"
+    BEGIN
+        MENUITEM "Compile",                     IDM_BUILD
+        MENUITEM "Compile all *.CAR files within the ""base"" directory", ID_EDIT_BUILDALL
+        MENUITEM "Compile all dependant *.CAR files", IDM_EDIT_BUILDDEPENDANT
+        MENUITEM SEPARATOR
+        MENUITEM "Validate",                    IDM_VALIDATE
+        MENUITEM "Validate all *.CAR files",    IDM_CARWASH
+        MENUITEM "View compiled model with ModView", ID_EDIT_LAUNCHMODVIEWONCURRENT
+        MENUITEM SEPARATOR
+        MENUITEM "Sort animations alphabetically", IDM_RESORT
+        MENUITEM "Sort animations by file path", IDM_RESORTBYPATH
     END
     POPUP "&View"
     BEGIN
-        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
-        MENUITEM "&Status bar",                 ID_VIEW_STATUS_BAR
-        MENUITEM "Anim enums",                  ID_VIEW_ANIMENUMS
-        MENUITEM "Frame details",               ID_VIEW_FRAMEDETAILS
-        MENUITEM "Frame details on additional sequences", ID_VIEW_FRAMEDETAILSONADDITIONALSEQUENCES
+        MENUITEM "Show sequence names",         ID_VIEW_ANIMENUMS
+        MENUITEM "Show sequence details",       ID_VIEW_FRAMEDETAILS
+        MENUITEM "Show sequence details for additional sequences", ID_VIEW_FRAMEDETAILSONADDITIONALSEQUENCES
     END
     POPUP "&Help"
     BEGIN
-        MENUITEM "&About Assimilate...",        ID_APP_ABOUT
+        MENUITEM "&About",                      ID_APP_ABOUT
     END
 END
 
@@ -198,18 +182,19 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION
 CAPTION "About Assimilate"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
-    ICON            IDR_MAINFRAME,IDC_STATIC,95,12,21,20,0,WS_EX_TRANSPARENT
+    ICON            IDR_MAINFRAME,IDC_STATIC,95,12,20,20,0,WS_EX_TRANSPARENT
     CTEXT           "Assimilate",IDC_STATIC,7,34,201,8,SS_NOPREFIX,WS_EX_TRANSPARENT
-    CTEXT           "Copyright (C) 1999 Raven Software.",IDC_STATIC,7,58,201,11,0,WS_EX_TRANSPARENT
+    CTEXT           "Copyright (C) 1999 - 2003 Raven Software.",IDC_STATIC,7,58,201,11,0,WS_EX_TRANSPARENT
     DEFPUSHBUTTON   "OK",IDOK,82,110,50,14,WS_GROUP
     CTEXT           "Written by: M.Crowns and S.Cork",IDC_STATIC,7,68,201,8,0,WS_EX_TRANSPARENT
-    CTEXT           "Modified by: DT (Discord:Tempust85)",IDC_STATIC,7,86,201,8
+    CTEXT           "Modified by: Tempust85 (Discord: Tempust85#9333)",IDC_STATIC,7,86,201,8
     CTEXT           "v3.15",IDC_STATIC,7,43,201,8,SS_NOPREFIX,WS_EX_TRANSPARENT
+    CTEXT           "2024",IDC_STATIC,7,95,201,8
 END
 
 IDD_PP_MODEL DIALOGEX 0, 0, 315, 366
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "Model Properties"
+CAPTION "Properties"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     GROUPBOX        "",IDC_STATIC,7,6,301,353
@@ -403,8 +388,8 @@ BEGIN
     PUSHBUTTON      "...",IDC_QDATA_BROWSE,210,32,23,11
     EDITTEXT        IDC_QUAKEDIR,80,49,125,12,ES_AUTOHSCROLL | ES_READONLY
     LTEXT           "Base Path:",IDC_STATIC,41,51,36,8
-    PUSHBUTTON      "Default the base directory field to Jedi Outcast",IDC_BUTTON_DEFAULTS,43,107,158,14
-    PUSHBUTTON      "Default the base directory field to Jedi Academy",IDC_BUTTON_DEFAULTS_JA,43,126,157,14
+    PUSHBUTTON      "Default the 'Base Path' to Jedi Outcast",IDC_BUTTON_DEFAULTS,43,107,158,14
+    PUSHBUTTON      "Default the 'Base Path' to Jedi Academy",IDC_BUTTON_DEFAULTS_JA,43,126,157,14
     RTEXT           "Buffer size:",IDC_STATIC,38,72,38,8,NOT WS_VISIBLE | WS_DISABLED
     EDITTEXT        IDC_BUFFSIZE,80,71,32,12,ES_AUTOHSCROLL | NOT WS_VISIBLE | WS_DISABLED
     PUSHBUTTON      "...",IDC_BASE_BROWSE,210,50,23,11
@@ -646,7 +631,7 @@ END
 
 STRINGTABLE
 BEGIN
-    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
+    ID_APP_ABOUT            "About"
     ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
 END
 
@@ -698,12 +683,6 @@ END
 
 STRINGTABLE
 BEGIN
-    ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
-    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
-END
-
-STRINGTABLE
-BEGIN
     AFX_IDS_SCSIZE          "Change the window size"
     AFX_IDS_SCMOVE          "Change the window position"
     AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
@@ -726,28 +705,27 @@ END
 
 STRINGTABLE
 BEGIN
-    IDM_ADDFILES            "Add files"
-    IDM_EXTERNAL            "Creates a .CFG file with a list of animations and their data"
-    IDM_RESEQUENCE          "Resequences model\nResequence model"
+    IDM_ADDFILES            "Adds sequence(s)"
+    IDM_EXTERNAL            "Saves an ""animation.cfg"" file with a list of sequences and their data"
+    IDM_RESEQUENCE          "Resequence all .xsi files\nResequence all .xsi files"
     IDM_PROPERTIES          "View/edit properties"
-    ID_VIEW_ANIMENUMS       "Toggles viewing of animation enums in treeview"
-    ID_VIEW_FRAMEDETAILS    "Various frame info stuff, may well be removed after app finished"
-    IDM_BUILD               "Performs a build on all models within this .QDT/.CAR file\nBuild"
-    IDM_VALIDATE            "Validate: Checks for existance of all model files\nValidate"
-    IDM_CARWASH             "Validates every .CAR file in base\nValidate all"
-    ID_EDIT_BUILDALL        "Builds everything in the current single or multiplayer dir\nBuild all"
-    IDM_EDIT_BUILDDEPENDANT "Build all models who are dependant on the skeleton produced by this .CAR file\nBuild model + all dependants"
+    ID_VIEW_ANIMENUMS       "Whether to show sequence names"
+    ID_VIEW_FRAMEDETAILS    "Whether to show all sequence details"
+    IDM_BUILD               "Compiles this *.CAR file\nCompiles this *.CAR file"
+    IDM_VALIDATE            "Validates the existance of all files referenced in this *.CAR file\nValidates the existance of all files referenced in this *.CAR file"
+    IDM_CARWASH             "Validates all *.CAR files in the ""base"" directory\nValidates all *.CAR files in the ""base"" directory"
+    ID_EDIT_BUILDALL        "Compiles all *.CAR files within the ""base"" directory\nCompiles all *.CAR files within the ""base"" directory"
+    IDM_EDIT_BUILDDEPENDANT "Compiles all *.CAR files that are dependant on the GLA produced by this *.CAR file\nCompiles all *.CAR files that are dependant on the GLA produced by this *.CAR file"
 END
 
 STRINGTABLE
 BEGIN
     ID_VIEW_FRAMEDETAILSONADDITIONALSEQUENCES 
-                            "Displays frame details on additional sequences, as opposed to primary"
-    ID_BUTTON_RESEQUENCE    "Resequence"
-    IDM_RESORT              "Sorts the animations list by alphabet\nSort animations alphabetically"
-    IDM_RESORTBYPATH        "Sorts the animations list by .xsi file path\nSort animations by .xsi file path"
+                            "Whether to show all sequence details for additional sequences"
+    IDM_RESORT              "Sorts the animations alphabetically\nSorts the animations alphabetically"
+    IDM_RESORTBYPATH        "Sorts the animations by file path\nSorts the animations by file path"
     ID_EDIT_LAUNCHMODVIEWONCURRENT 
-                            "View compiled model with ModView\nView with ModView"
+                            "View compiled model with ModView\nView with ModView. GLA exluded."
 END
 
 #endif    // English (United States) resources

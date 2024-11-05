@@ -1536,7 +1536,7 @@ void CAssimilateDoc::OnResequence()
 void CAssimilateDoc::OnResort()
 {
 	extern bool gbReSortAnimList;
-	gbReSortAnimList = GetYesNo(va("Do you want to sort all animations alphabetically?"));
+	gbReSortAnimList = GetYesNo(va("Do you want to sort all sequences alphabetically?"));
 
 	if (gbReSortAnimList)
 	{
@@ -1550,7 +1550,7 @@ void CAssimilateDoc::OnResort()
 void CAssimilateDoc::OnResortByPath()
 {
 	extern bool gbReSortAnimListByPath;
-	gbReSortAnimListByPath = GetYesNo(va("Do you want to sort all animations by .xsi file path, regardless of enum type?"));
+	gbReSortAnimListByPath = GetYesNo(va("Do you want to sort all sequences so they're grouped together by file path?\n\n(This is useful when adding custom sequences to the retail game's main animation set, so they're easier to find. The custom sequences must be located in a different directory than the retail game's sequences)"));
 
 	if (gbReSortAnimListByPath)
 	{
