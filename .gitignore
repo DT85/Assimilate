@@ -12,3 +12,4 @@ vs2003/build/*.*
 vs2019/debug/*.*
 vs2019/release/*.*
 vs2019/build/*.*
+/vs2019/.vs
