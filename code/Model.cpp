@@ -78,7 +78,7 @@ bool CModel::DoProperties()
 	bool dirty = false;
 
 	{
-		CPropertySheet* propSheet = new CPropertySheet(m_name);
+		CPropertySheet* propSheet = new CPropertySheet("Properties"/*m_name*/);
 
 		CModelPropPage* propPage = new CModelPropPage();
 		propPage->m_model = this;

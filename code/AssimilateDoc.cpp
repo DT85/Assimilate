@@ -920,7 +920,8 @@ void CAssimilateDoc::ParseConvert(CTokenizer* tokenizer, int iTokenType)
 	}
 	tokenizer->PutBackToken(curToken);
 	path.MakeLower();
-	m_lastModel->DeriveName(path);
+	//m_lastModel->DeriveName(path);
+	m_lastModel->SetName("List of Animations (double-click for properties)");
 	m_lastModel->SetParms(parm1, parm2, parm3, parm4);
 	m_lastModel->SetOrigin(originx, originy, originz);
 	m_lastModel->SetConvertType(iTokenType);
@@ -1443,7 +1444,7 @@ void CAssimilateDoc::AddFile(LPCTSTR name)
 			{
 				curModel = AddModel();
 
-				CString path = name;
+				/*CString path = name;
 				path.MakeLower();
 				path.Replace('\\', '/');
 				int loc = path.ReverseFind('.');
@@ -1454,7 +1455,8 @@ void CAssimilateDoc::AddFile(LPCTSTR name)
 				loc = path.ReverseFind('/');
 				path = path.Left(loc);
 				path = path + "/root";
-				curModel->DeriveName(path);
+				curModel->DeriveName(path);*/
+				curModel->SetName("List of Animations (double-click for properties)");
 			}
 
 			// check that we don't already have this file...

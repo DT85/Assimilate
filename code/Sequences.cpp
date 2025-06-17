@@ -396,7 +396,7 @@ bool CSequence::DoProperties()
 	}
 	else
 	{
-		CPropertySheet* propSheet = new CPropertySheet(m_name);
+		CPropertySheet* propSheet = new CPropertySheet(va("'%s' Properties", m_name));
 
  		CSequencePropPage* propPage = new CSequencePropPage();
 		propPage->m_sequence = this;
