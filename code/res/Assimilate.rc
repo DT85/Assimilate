@@ -216,7 +216,7 @@ BEGIN
     CONTROL         "Remove duplicate vertices",IDC_CHECK_LOSEDUPVERTS,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,189,32,100,10
     CONTROL         "Create skeleton",IDC_CHECK_MAKESKEL,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,24,64,64,10
-    GROUPBOX        "Physics Controllable Joints (PCJ) List",IDC_PCJ_STATIC,17,202,281,149
+    GROUPBOX        "Player Controllable Joints (PCJ) List",IDC_PCJ_STATIC,17,202,281,149
     LISTBOX         IDC_LIST_PCJ,23,214,269,109,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     EDITTEXT        IDC_EDIT_PCJ,23,331,126,14,ES_AUTOHSCROLL
     PUSHBUTTON      "<---- Add PCJ entry",IDC_BUTTON_PCJ,152,331,68,14
@@ -703,25 +703,25 @@ END
 
 STRINGTABLE
 BEGIN
-    IDM_ADDFILES            "Adds sequence(s)"
-    IDM_EXTERNAL            "Saves an ""animation.cfg"" file with a list of sequences and their data"
+    IDM_ADDFILES            "Add sequence(s)"
+    IDM_EXTERNAL            "Save a "".CFG"" file with a list of sequences and their data"
     IDM_RESEQUENCE          "Resequence all .xsi files\nResequence all .xsi files"
     IDM_PROPERTIES          "View/edit properties"
     ID_VIEW_ANIMENUMS       "Whether to show sequence names"
     ID_VIEW_FRAMEDETAILS    "Whether to show all sequence details"
-    IDM_BUILD               "Compiles this *.CAR file\nCompiles this *.CAR file"
-    IDM_VALIDATE            "Validates the existance of all files referenced in this *.CAR file\nValidates the existance of all files referenced in this *.CAR file"
-    IDM_CARWASH             "Validates all *.CAR files in the ""base"" directory\nValidates all *.CAR files in the ""base"" directory"
-    ID_EDIT_BUILDALL        "Compiles all *.CAR files within the ""base"" directory\nCompiles all *.CAR files within the ""base"" directory"
-    IDM_EDIT_BUILDDEPENDANT "Compiles all *.CAR files that are dependant on the GLA produced by this *.CAR file\nCompiles all *.CAR files that are dependant on the GLA produced by this *.CAR file"
+    IDM_BUILD               "Compile this *.CAR file\nCompile this *.CAR file"
+    IDM_VALIDATE            "Validate existance of all files referenced in this *.CAR file\nValidate existance of all files referenced in this *.CAR file"
+    IDM_CARWASH             "Validate all *.CAR files in the ""base"" directory\nValidate all *.CAR files in the ""base"" directory"
+    ID_EDIT_BUILDALL        "Compile all *.CAR files within the ""base"" directory\nCompile all *.CAR files within the ""base"" directory"
+    IDM_EDIT_BUILDDEPENDANT "Compile all *.CAR files that are dependant on the GLA produced by this *.CAR file\nCompile all *.CAR files that are dependant on the GLA produced by this *.CAR file"
 END
 
 STRINGTABLE
 BEGIN
     ID_VIEW_FRAMEDETAILSONADDITIONALSEQUENCES 
                             "Whether to show all sequence details for additional sequences"
-    IDM_RESORT              "Sorts the animations alphabetically\nSorts the animations alphabetically"
-    IDM_RESORTBYPATH        "Sorts the animations by file path\nSorts the animations by file path"
+    IDM_RESORT              "Sort animations alphabetically\nSort animations alphabetically"
+    IDM_RESORTBYPATH        "Sort animations by file path\nSort animations by file path"
     ID_EDIT_LAUNCHMODVIEWONCURRENT 
                             "View compiled model with ModView\nView with ModView. GLA exluded."
 END
