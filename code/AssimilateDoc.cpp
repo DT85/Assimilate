@@ -921,6 +921,7 @@ void CAssimilateDoc::ParseConvert(CTokenizer* tokenizer, int iTokenType)
 	tokenizer->PutBackToken(curToken);
 	path.MakeLower();
 	//m_lastModel->DeriveName(path);
+	m_lastModel->SetPath(path);
 	m_lastModel->SetName("List of Animations (double-click for properties)");
 	m_lastModel->SetParms(parm1, parm2, parm3, parm4);
 	m_lastModel->SetOrigin(originx, originy, originz);
@@ -1456,6 +1457,7 @@ void CAssimilateDoc::AddFile(LPCTSTR name)
 				path = path.Left(loc);
 				path = path + "/root";
 				curModel->DeriveName(path);*/
+				curModel->SetPath(name);
 				curModel->SetName("List of Animations (double-click for properties)");
 			}
 
