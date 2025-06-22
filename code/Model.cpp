@@ -1046,6 +1046,7 @@ bool CModel::WriteExternal(bool bPromptForNames, bool& bCFGWritten)
 	CString strPrePend;
 
 	// single-player format...
+	Filename_RemoveBASEQ(filename);
 	CString commentLine;
 	CTime time = CTime::GetCurrentTime();
 	commentLine.Format("// %s %d frames; %d sequences; updated %s", filename, m_totFrames, GetTotSequences(), time.Format("%H:%M %A, %B %d, %Y"));
