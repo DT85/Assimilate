@@ -1075,7 +1075,7 @@ bool CModel::WriteExternal(bool bPromptForNames, bool& bCFGWritten)
 		//_unlink(filename);	// zap it, since it's meaningless here (only has one seq/enum: the whole GLA)
 		bCFGWritten = true;
 		CString strReport;
-		strReport = "\n\n( .cfg file written )";
+		strReport = "\n\n\nSuccessfully saved .CFG file";
 	}
 	else
 	{

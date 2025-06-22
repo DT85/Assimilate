@@ -1482,11 +1482,11 @@ void CAssimilateDoc::OnExternal()
 
 		if (bCFGWritten)
 		{
-			strReport = "\n\n( .cfg file written)";
+			strReport = "\n\n\nSuccessfully saved .CFG file";
 		}
 		else
 		{
-			strReport = "\n\n( .cfg not needed, not written )";
+			strReport = "\n\n\n( .cfg not needed, not written )";
 		}
 
 		InfoBox(strReport);
@@ -1675,13 +1675,13 @@ bool CAssimilateDoc::Build(bool bAllowedToShowSuccessBox, int iLODLevel, bool bS
 
 							if (bCFGWritten)
 							{
-								strReport += " and .cfg files written";
-								strReport += "\n\n\n\n( .cfg file written )";
+								strReport += " and .CFG files saved";
+								strReport += "\n\n\n\nSuccessfully saved .CFG file";
 							}
 							else
 							{
-								strReport += " file written";
-								strReport += "\n\n\n\n( .cfg file not written for GLA-referencing model )";
+								strReport += " file saved";
+								strReport += "\n\n\n\n( .CFG file not saved for GLA-referencing model )";
 							}
 
 							InfoBox(strReport);
